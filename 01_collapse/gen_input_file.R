@@ -8,7 +8,7 @@ setwd('/home/j/LIMITED_USE/LU_GEOSPATIAL/collapsed/wash')
 
 indi_fam <- 'water'
 if (indi_fam == 'water') {
-  ptdat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/water_2018_03_08_clean.feather')
+  ptdat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/water_2018_09_07.feather')
   ptdat <- filter(ptdat, !(is.na(lat)))
   
   w_piped_cr <- ptdat
@@ -44,7 +44,7 @@ if (indi_fam == 'water') {
 rm(list = ls())
 indi_fam <- 'sani'
 if (indi_fam == 'sani') {
-  ptdat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/sani_2018_03_08_clean.feather')
+  ptdat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/sani_2018_09_07.feather')
   ptdat <- filter(ptdat, !(is.na(lat)))
 
   s_imp <- ptdat

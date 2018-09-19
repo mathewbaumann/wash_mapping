@@ -10,17 +10,17 @@ water_outliers <- c(30394, 151568, 22114, 32189, 19557,
 
 
 if (indi_fam == 'water' ) {
-  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/water/imp/2018-03-09/'))
+  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/water/imp/2018-09-07/'))
   imp <- lapply(list.files(), read.csv, stringsAsFactors = F)
   imp <- do.call(rbind, imp)
   imp <- filter(imp, !(nid %in% water_outliers))
 
-  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/water/piped/2018-03-09/'))
+  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/water/piped/2018-09-07/'))
   piped <- lapply(list.files(), read.csv, stringsAsFactors = F)
   piped <- do.call(rbind, piped)
   piped <- filter(piped, !(nid %in% water_outliers))
 
-  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/water/unimp/2018-03-09/'))
+  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/water/unimp/2018-09-07/'))
   unimp <- lapply(list.files(), read.csv, stringsAsFactors = F)
   unimp <- do.call(rbind, unimp)
   unimp <- filter(unimp, !(nid %in% water_outliers))
@@ -95,12 +95,12 @@ sani_outliers <- c(214640, 30394, 22114, 21970, 235215,
                     2039, 2063, 11516, 11540, 4818)
 
 if (indi_fam == 'sani' ) {
-  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/sani/imp/2018-03-09/'))
+  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/sani/imp/2018-09-07/'))
   imp <- lapply(list.files(), read.csv, stringsAsFactors = F)
   imp <- do.call(rbind, imp)
   imp <- filter(imp, !(nid %in% sani_outliers))
 
-  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/sani/unimp/2018-03-09/'))
+  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/sani/unimp/2018-09-07/'))
   unimp <- lapply(list.files(), read.csv, stringsAsFactors = F)
   unimp <- do.call(rbind, unimp)
   unimp <- filter(unimp, !(nid %in% sani_outliers))

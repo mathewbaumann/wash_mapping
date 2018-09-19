@@ -5,6 +5,14 @@ rm(list = ls())
 # Define if you are running code loally
 local <- F
 
+files <- file.info(list.files(paste0('/home/j/LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash'), pattern = '*.feather', full.names=TRUE))
+files <- files[with(files, order(as.POSIXct(ctime), decreasing = TRUE)), ]
+latest_postextraction <- unlist(strsplit(rownames(files)[1], "/"))
+latest_postextraction <- latest_postextraction[length(latest_postextraction)]
+input_version <- gsub('.feather', '', latest_postextraction)
+input_version <- gsub('poly_', '', input_version)
+input_version <- gsub('points_', '', input_version)
+
 # Set repo & library path 
 if(Sys.info()[1]!="Windows") {
   if(!local) {
@@ -22,9 +30,7 @@ if(Sys.info()[1]!="Windows") {
   root <- 'J:/'
 }
 
-repo <- ifelse(Sys.info()[1]=="Windows", 'C:/Users/adesh/Documents/WASH/wash_code/01_collapse/',
-               ifelse(local, '/home/adesh/Documents/wash_mapping/01_collapse',
-                '/share/code/geospatial/adesh/wash_mapping/01_collapse/'))
+repo <- '/share/code/geospatial/baumannm/wash_mapping/01_collapse/'
 
 # Detach all but base packages
 detachAllPackages <- function() {
@@ -45,13 +51,13 @@ if(length(new.packages)) install.packages(new.packages)
 lapply(packages, library, character.only = T)
 
 #### Load functions ####
-for (file_type in c('poly', 'pt', 'ipums')){
+for (file_type in c('poly', 'pt')){
   message(paste("Loading",file_type, "data"))
   rm(pt_collapse)
   message('Loading Data...')
   # Load data
   if (!("pt_collapse" %in% ls()) & file_type == 'pt') {
-    pt_collapse <- read_feather(paste0(root,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/points_2018_01_02.feather'))
+    pt_collapse <- read_feather(paste0(root,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/points_', input_version, '.feather'))
     Encoding(pt_collapse$w_source_drink) <- "UTF-8"
     Encoding(pt_collapse$w_source_other) <- "UTF-8"
     Encoding(pt_collapse$t_type) <- "UTF-8"
@@ -62,7 +68,7 @@ for (file_type in c('poly', 'pt', 'ipums')){
   } 
     
   if (!("pt_collapse" %in% ls()) & file_type == 'poly') {
-    pt_collapse <- read_feather(paste0(root,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly_2018_01_02.feather'))
+    pt_collapse <- read_feather(paste0(root,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly_', input_version, '.feather'))
     Encoding(pt_collapse$w_source_drink) <- "UTF-8"
     Encoding(pt_collapse$w_source_other) <- "UTF-8"
     Encoding(pt_collapse$t_type) <- "UTF-8"
@@ -140,11 +146,11 @@ for (file_type in c('poly', 'pt', 'ipums')){
         } else {
           if (!("definitions" %in% ls())) {
             if (indi_fam == "sani") {
-              definitions <- read.csv(paste0(root,'WORK/11_geospatial/wash/definitions/t_type_defined_2018_01_24.csv'),
+              definitions <- read.csv(paste0(root,'WORK/11_geospatial/wash/definitions/t_type_defined_2018_08_24.csv'),
                                       encoding="windows-1252", stringsAsFactors = F)
               definitions <- select(definitions, string, sdg)
             } else {
-              definitions <- read.csv(paste0(root,'WORK/11_geospatial/wash/definitions/w_source_defined_2018_01_24.csv'),
+              definitions <- read.csv(paste0(root,'WORK/11_geospatial/wash/definitions/w_source_defined_2018_08_24.csv'),
                                       encoding="windows-1252", stringsAsFactors = F) 
               definitions <- select(definitions, string, sdg, jmp)
             }
@@ -162,7 +168,7 @@ for (file_type in c('poly', 'pt', 'ipums')){
         
         rm(list = setdiff(ls(),c('definitions','pt_collapse','definitions2','indi_fam',
           'repo','data_type','root','agg_level', 'sdg', 'ipums', 'files', 'index', 'files_length',
-          'file_type', 'ipums_dir')))
+          'file_type', 'ipums_dir', 'input_version')))
 
         message("Importing functions...")
         setwd(repo)

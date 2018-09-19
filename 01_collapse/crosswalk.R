@@ -20,43 +20,52 @@ if(Sys.info()[1]!="Windows") {
   root <- 'J:/'
 }
 
-repo <- ifelse(Sys.info()[1]=="Windows", 'C:/Users/adesh/Documents/WASH/wash_code/01_collapse/',
-               ifelse(local, '/home/adesh/Documents/wash_mapping/01_collapse',
-                '/share/code/geospatial/adesh/wash_mapping/01_collapse/'))
+repo <- '/share/code/geospatial/baumannm/wash_mapping/01_collapse/'
+
+files <- file.info(list.files(paste0('/home/j/LIMITED_USE/LU_GEOSPATIAL/collapsed/wash'), pattern = '*.feather', full.names=TRUE))
+files <- files[with(files, order(as.POSIXct(ctime), decreasing = TRUE)), ]
+latest_postextraction <- unlist(strsplit(rownames(files)[1], "/"))
+latest_postextraction <- latest_postextraction[length(latest_postextraction)]
+input_version <- gsub('.feather', '', latest_postextraction)
+input_version <- gsub('ptdat_sani_unconditional__', '', input_version)
+input_version <- gsub('polydat_sani_unconditional__', '', input_version)
+input_version <- gsub('ptdat_water_unconditional__', '', input_version)
+input_version <- gsub('polydat_water_unconditional__', '', input_version)
 
 setwd(repo)
 source('functions/cw_indi.R')
 
-library(tidyverse)
+library(dplyr)
 library(feather)
 
 setwd('/home/j/LIMITED_USE/LU_GEOSPATIAL/collapsed/wash')
-points <- read_feather('ptdat_sani_unconditional__2018_02_06.feather')
-poly <- read_feather('polydat_sani_unconditional__2018_02_06.feather')
+points <- read_feather(paste0('ptdat_sani_unconditional__', input_version,'.feather'))
+poly <- read_feather(paste0('polydat_sani_unconditional__', input_version,'.feather'))
 
 setwd('/home/j/LIMITED_USE/LU_GEOSPATIAL/collapsed/wash/IPUMS/feather')
 ipums <- list.files(pattern = 'sani_')
 ipums <- lapply(ipums, read_feather)
 ipums <- do.call(rbind, ipums)
 
+ipums$location_code <- as.character(ipums$location_code)
 alldat <- as.data.frame(bind_rows(points, poly, ipums))
 alldat$iso3 <- substr(alldat$iso3, 1, 3)
 cw_dat <- cw_sani(alldat)
 today <- gsub("-", "_", Sys.Date())
 
 write_feather(cw_dat, 
-			  paste0('/home/j/WORK/11_geospatial/wash/data/cwed/sani_',
+			  paste0('/home/j/WORK/11_geospatial/wash/data/sani_',
 			  	     today, '.feather'))
 
 ###
 setwd('/home/j/LIMITED_USE/LU_GEOSPATIAL/collapsed/wash')
-points <- read_feather('ptdat_water_unconditional__2018_02_06.feather')
-poly <- read_feather('polydat_water_unconditional__2018_02_06.feather')
+points <- read_feather(paste0('ptdat_water_unconditional__', input_version,'.feather'))
+poly <- read_feather(paste0('polydat_water_unconditional__', input_version,'.feather'))
 
 alldat <- as.data.frame(bind_rows(points, poly))
 alldat$iso3 <- substr(alldat$iso3, 1, 3)
 cw_dat <- cw_water(alldat)
 
 write_feather(cw_dat, 
-			  paste0('/home/j/WORK/11_geospatial/wash/data/cwed/water_',
+			  paste0('/home/j/WORK/11_geospatial/wash/data/water_',
 			  	     today, '.feather'))

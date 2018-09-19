@@ -23,10 +23,10 @@ run_date <- commandArgs()[5]
 
 if (indic == 'water') {
   levels <- c('piped','imp','unimp','surface')
-  polydat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/water_2018_03_08.feather')
+  polydat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/water_2018_09_07.feather')
 } else {
   levels <- c('imp','unimp','od')
-  polydat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/sani_2018_03_08.feather')
+  polydat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/sani_2018_09_07.feather')
 }
 
 polydat <- filter(polydat, is.na(lat) & !is.na(shapefile) & !is.na(location_code))

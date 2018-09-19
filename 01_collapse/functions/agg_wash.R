@@ -63,7 +63,7 @@ agg_indi <- function(mydat = ptdat, var_family = indi_fam, dt_type = data_type, 
                                            eff_n_num = hhweight*hh_size, eff_n_denom = (hhweight^2)*hh_size) %>% 
                           group_by(id_short, nid, iso3, lat, long, survey_series, urban, year_start, shapefile, location_code) %>% 
                           summarize(wtavg_indi = sum(wt_indi, na.rm = T)/sum(wt_denom, na.rm = T),
-                          total_hh = ((sum(eff_n_num))^2)/sum(eff_n_denom))
+                          total_hh = ((sum(eff_n_num))^2)/sum(eff_n_denom), sum_weight = sum(hhweight))
       }
     }
     
@@ -84,7 +84,7 @@ agg_indi <- function(mydat = ptdat, var_family = indi_fam, dt_type = data_type, 
                                        eff_n_num = hhweight*hh_size, eff_n_denom = (hhweight^2)*hh_size) %>% 
                       group_by(id_short, nid, iso3, lat, long, survey_series, year_start, shapefile, location_code) %>% 
                       summarize(wtavg_indi = sum(wt_indi, na.rm = T)/sum(wt_denom, na.rm = T),
-                      total_hh = ((sum(eff_n_num))^2)/sum(eff_n_denom)) %>%
+                      total_hh = ((sum(eff_n_num))^2)/sum(eff_n_denom), sum_weight = sum(hhweight)) %>%
                       mutate(urban = NA)
       }
     }
