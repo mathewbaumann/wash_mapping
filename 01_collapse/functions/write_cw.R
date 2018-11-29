@@ -6,27 +6,63 @@ write_cw_ratio <- function(mydat = ptdat, dt = data_type, census = ipums,
   if (census) {
   	dt <- 'ipums'
   }
-  # Define regions
-  sssa_hi <- c('NAM','BWA','ZAF')
-  cssa <- c('CAF','GAB','GNQ','COD','COG','AGO','STP')
-  name_hi <- c('MAR','DZA','TUN','LBY','EGY')
-  essa_hilo <- c('SDN','ERI','DJI','SOM','ETH','SSD',
-                 'SSD','UGA','KEN','RWA','BDI','TZA',
-                 'MWI','MOZ','ZMB','MDG','ZWE','SWZ','LSO',
-                 'COM')
-  wssa <- c('CPV','SEN','GMB','GIN','GNB','SLE','MLI','LBR',
-            'CIV','GHA','TGO','BEN','NGA','NER','TCD','CMR',
-            'BFA','MRT')
-  africa <- c(sssa_hi, cssa, name_hi, essa_hilo, wssa)
-
-  # Assign regions
+  # # Define regions
+  # sssa_hi <- c('NAM','BWA','ZAF')
+  # cssa <- c('CAF','GAB','GNQ','COD','COG','AGO','STP')
+  # name_hi <- c('MAR','DZA','TUN','LBY','EGY')
+  # essa_hilo <- c('SDN','ERI','DJI','SOM','ETH','SSD',
+  #                'SSD','UGA','KEN','RWA','BDI','TZA',
+  #                'MWI','MOZ','ZMB','MDG','ZWE','SWZ','LSO',
+  #                'COM')
+  # wssa <- c('CPV','SEN','GMB','GIN','GNB','SLE','MLI','LBR',
+  #           'CIV','GHA','TGO','BEN','NGA','NER','TCD','CMR',
+  #           'BFA','MRT')
+  # africa <- c(sssa_hi, cssa, name_hi, essa_hilo, wssa)
+  # 
+  # # Assign regions
+  # mydat$reg <- NA
+  # mydat$reg <- ifelse(!(mydat$iso3 %in% africa), 'not-africa', mydat$reg)
+  # mydat$reg <- ifelse(mydat$iso3 %in% sssa_hi, 'sssa_hi', mydat$reg)
+  # mydat$reg <- ifelse(mydat$iso3 %in% cssa, 'cssa', mydat$reg)
+  # mydat$reg <- ifelse(mydat$iso3 %in% name_hi, 'name_hi', mydat$reg)
+  # mydat$reg <- ifelse(mydat$iso3 %in% essa_hilo, 'essa_hilo', mydat$reg)
+  # mydat$reg <- ifelse(mydat$iso3 %in% wssa, 'wssa', mydat$reg)
+  # 
+  
+  
+  regions <- read.csv('/home/j/WORK/11_geospatial/diarrhea/01_data/00_identifiers/geoid_stg2.csv')
+  regions <- regions[,c('iso3', 'region')]
+  regions$iso3 <- as.character(regions$iso3)
+  regions$region <- as.character(regions$region)
+  regions <- regions[complete.cases(regions),]
+  
+  region_list <- unique(regions$region)
+  
+  region_list <- region_list[region_list != 'excluded']
+  
+  for(reg in region_list){
+    sub_reg <- subset(regions, region == reg)
+    list <- as.vector(sub_reg$iso3)
+    assign(reg, list)
+  }
+  
   mydat$reg <- NA
-  mydat$reg <- ifelse(!(mydat$iso3 %in% africa), 'not-africa', mydat$reg)
-  mydat$reg <- ifelse(mydat$iso3 %in% sssa_hi, 'sssa_hi', mydat$reg)
+  mydat$reg <- ifelse(mydat$iso3 %in% essa, 'essa', mydat$reg)
+  mydat$reg <- ifelse(mydat$iso3 %in% afr_horn, 'afr_horn', mydat$reg)
   mydat$reg <- ifelse(mydat$iso3 %in% cssa, 'cssa', mydat$reg)
-  mydat$reg <- ifelse(mydat$iso3 %in% name_hi, 'name_hi', mydat$reg)
-  mydat$reg <- ifelse(mydat$iso3 %in% essa_hilo, 'essa_hilo', mydat$reg)
   mydat$reg <- ifelse(mydat$iso3 %in% wssa, 'wssa', mydat$reg)
+  mydat$reg <- ifelse(mydat$iso3 %in% name, 'name', mydat$reg)
+  mydat$reg <- ifelse(mydat$iso3 %in% sssa, 'sssa', mydat$reg)
+  mydat$reg <- ifelse(mydat$iso3 %in% mcacaf, 'mcacaf', mydat$reg)
+  mydat$reg <- ifelse(mydat$iso3 %in% s_america, 's_america', mydat$reg)
+  mydat$reg <- ifelse(mydat$iso3 %in% central_asia, 'central_asia', mydat$reg)
+  mydat$reg <- ifelse(mydat$iso3 %in% chn_mng, 'chn_mng', mydat$reg)
+  mydat$reg <- ifelse(mydat$iso3 %in% se_asia, 'se_asia', mydat$reg)
+  mydat$reg <- ifelse(mydat$iso3 %in% malay, 'malay', mydat$reg)
+  mydat$reg <- ifelse(mydat$iso3 %in% south_asia, 'south_asia', mydat$reg)
+  mydat$reg <- ifelse(mydat$iso3 %in% mid_east, 'mid_east', mydat$reg)
+  mydat$reg <- ifelse(mydat$iso3 %in% oceania, 'oceania', mydat$reg)
+  
 
   # Summarize number of observations by each indicator level and write to cw .csv
   if (var_family == 'sani') {
@@ -57,7 +93,7 @@ write_cw_ratio <- function(mydat = ptdat, dt = data_type, census = ipums,
 		  		   		  	 data = dt)
 
 	# Read in original cw file if it exists
-	original <- try(read.csv('/home/j/WORK/11_geospatial/wash/definitions/cw_sani.csv', stringsAsFactors = F),
+	original <- try(read.csv('/home/j/WORK/11_geospatial/wash/definitions/cw_sani_2.csv', stringsAsFactors = F),
 					silent = T)
 	
 	if (class(original) == 'try-error') {
@@ -76,7 +112,7 @@ write_cw_ratio <- function(mydat = ptdat, dt = data_type, census = ipums,
 	
 	# if current data type is in the cw csv overwrite the csv with fresh run
 	if ((dt %in% data_present) & dt != 'ipums') {
-		write.csv(mydat, '/home/j/WORK/11_geospatial/wash/definitions/cw_sani.csv')
+		write.csv(mydat, '/home/j/WORK/11_geospatial/wash/definitions/cw_sani_2.csv')
 	} else {
 
 		# If it current data type isnt represented rbind and re-collapse
@@ -112,7 +148,7 @@ write_cw_ratio <- function(mydat = ptdat, dt = data_type, census = ipums,
 	  		   		  	   flush_cw = sum(flush_cw),
 	  		   		  	   sources = sum(sources))
 
-	  	write.csv(mydat, '/home/j/WORK/11_geospatial/wash/definitions/cw_sani.csv')
+	  	write.csv(mydat, '/home/j/WORK/11_geospatial/wash/definitions/cw_sani_2.csv')
 
 	}
 
@@ -150,7 +186,7 @@ write_cw_ratio <- function(mydat = ptdat, dt = data_type, census = ipums,
 		  		   		  	 data = dt)
 	
 	# Read in original cw file if it exists
-	original <- try(read.csv('/home/j/WORK/11_geospatial/wash/definitions/cw_water.csv'),
+	original <- try(read.csv('/home/j/WORK/11_geospatial/wash/definitions/cw_water_2.csv'),
 					silent = T)
 	
 	if (class(original) == 'try-error') {
@@ -169,7 +205,7 @@ write_cw_ratio <- function(mydat = ptdat, dt = data_type, census = ipums,
 	
 	# if current data type is in the cw csv overwrite the csv with fresh run
 	if ((dt %in% data_present) & dt != 'ipums') {
-		write.csv(mydat, '/home/j/WORK/11_geospatial/wash/definitions/cw_water.csv')
+		write.csv(mydat, '/home/j/WORK/11_geospatial/wash/definitions/cw_water_2.csv')
 	} else {
 
 		# If it current data type isnt represented rbind and re-collapse
@@ -208,7 +244,7 @@ write_cw_ratio <- function(mydat = ptdat, dt = data_type, census = ipums,
 		  		   		   piped_cw = sum(piped_cw),
 	  		   		  	   sources = sum(sources))
 
-	  	write.csv(mydat, '/home/j/WORK/11_geospatial/wash/definitions/cw_water.csv')
+	  	write.csv(mydat, '/home/j/WORK/11_geospatial/wash/definitions/cw_water_2.csv')
 
 		}
 

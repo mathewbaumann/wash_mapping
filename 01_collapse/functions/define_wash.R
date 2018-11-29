@@ -34,6 +34,7 @@ define_indi <- function(mydat = ptdat, var_family = indi_fam, define = definitio
       mydat <- left_join(mydat, define, by = c("t_type", "sewage", "nid"))
     } else {
       define <- rename(define, t_type = string)
+      #mydat <- merge(mydat, define, by = 't_type', allow.cartesian = TRUE)
       mydat <- left_join(mydat, define, by = "t_type")
     }
   }

@@ -8,34 +8,34 @@ setwd('/home/j/LIMITED_USE/LU_GEOSPATIAL/collapsed/wash')
 
 indi_fam <- 'water'
 if (indi_fam == 'water') {
-  ptdat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/water_2018_09_07.feather')
+  ptdat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/water_2018_11_15.feather')
   ptdat <- filter(ptdat, !(is.na(lat)))
   
-  w_piped_cr <- ptdat
-  w_piped_cr <- dplyr::select(w_piped_cr, -unimp, -surface)
-  w_piped_cr <- mutate(w_piped_cr, point = 1, weight = 1, w_piped_cr = (piped*N), N = (imp*N))
-  w_piped_cr <- rename(w_piped_cr, country = iso3, year = year_start, N = N, latitude = lat,
-                  longitude = long)
-  w_piped_cr <- mutate(w_piped_cr, prop = w_piped_cr/N) %>% 
-                select(-imp, -piped) %>%
-                filter(N > 0)
-  write.csv(w_piped_cr, file = '/home/j/WORK/11_geospatial/10_mbg/input_data/w_piped_cr.csv')
+  w_piped <- ptdat
+  w_piped <- dplyr::select(w_piped, -unimp, -surface)
+  w_piped <- mutate(w_piped, point = 1, weight = 1, w_piped = (piped*N))
+  w_piped <- rename(w_piped, country = iso3, year = year_start, prop = piped, N = N, latitude = lat,
+                  longitude = long) %>% select(-imp) %>%
+                  filter(N > 0)
+  write.csv(w_piped, file = '/home/j/WORK/11_geospatial/10_mbg/input_data/w_piped.csv')
 
-  w_imp <- ptdat
-  w_imp <- select(w_imp, -surface, -piped, -unimp)
-  w_imp <- mutate(w_imp, point = 1, weight = 1, w_imp = (imp*N))
-  w_imp <- rename(w_imp, country = iso3, year = year_start, prop = imp, N = N, latitude = lat,
+  w_imp_cr <- ptdat
+  w_imp_cr <- select(w_imp_cr, -surface, -unimp)
+  w_imp_cr <- mutate(w_imp_cr, point = 1, weight = 1, w_imp_cr = (imp*N), w_piped = (piped*N))
+  w_imp_cr <- rename(w_imp_cr, country = iso3, year = year_start, N = N, latitude = lat,
                   longitude = long)
-  w_imp <- mutate(w_imp, N = (N))
-  write.csv(w_imp, '/home/j/WORK/11_geospatial/10_mbg/input_data/w_imp.csv')
+  w_imp_cr <- mutate(w_imp_cr, N = ((N)) - (w_piped), prop = w_imp_cr/N) %>%
+                  select(-piped, -w_piped, -imp) %>%
+                  filter(N > 0)
+  write.csv(w_imp_cr, '/home/j/WORK/11_geospatial/10_mbg/input_data/w_imp_cr.csv')
 
   w_unimp_cr <- ptdat
-  w_unimp_cr <- select(w_unimp_cr, -surface, -piped)
-  w_unimp_cr <- mutate(w_unimp_cr, point = 1, weight = 1, w_unimp_cr = (unimp*N), w_imp = (imp*N))
+  w_unimp_cr <- select(w_unimp_cr, -surface)
+  w_unimp_cr <- mutate(w_unimp_cr, point = 1, weight = 1, w_unimp_cr = (unimp*N), w_imp = (imp*N), w_piped = (piped*N))
   w_unimp_cr <- rename(w_unimp_cr, country = iso3, year = year_start, N = N, latitude = lat,
                   longitude = long)
-  w_unimp_cr <- mutate(w_unimp_cr, N = ((N)) - (w_imp), prop = w_unimp_cr/N) %>%
-                select(-imp, -w_imp, -unimp) %>%
+  w_unimp_cr <- mutate(w_unimp_cr, N = ((N)) - (w_imp) - w_piped, prop = w_unimp_cr/N) %>%
+                select(-imp, -w_imp, -unimp, w_piped, piped) %>%
                 filter(N > 0)
   write.csv(w_unimp_cr, '/home/j/WORK/11_geospatial/10_mbg/input_data/w_unimp_cr.csv')
 
@@ -44,7 +44,7 @@ if (indi_fam == 'water') {
 rm(list = ls())
 indi_fam <- 'sani'
 if (indi_fam == 'sani') {
-  ptdat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/sani_2018_09_07.feather')
+  ptdat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/sani_2018_11_15.feather')
   ptdat <- filter(ptdat, !(is.na(lat)))
 
   s_imp <- ptdat

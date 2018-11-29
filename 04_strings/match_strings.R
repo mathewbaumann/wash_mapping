@@ -3,6 +3,7 @@ package_lib <- '/snfs1/temp/geospatial/geos_packages'
 .libPaths(package_lib)
 library(magrittr)
 library(data.table)
+library(feather)
 j <- ifelse(Sys.info()[1]=="Windows", "J:/", "/snfs1/")
 
 message("Rounding up necessary file paths")
@@ -35,7 +36,11 @@ message("Loading big extraction .Rdata")
 # #rm(all)
 point <- read_feather(most_recent_point)
 poly <- read_feather(most_recent_poly)
-packaged <- rbind(point, poly)
+packaged <- as.data.table(rbind(point, poly))
+#packaged <- subset(packaged, )
+packaged[!is.na(sewage) & !is.na(t_type), t_type := paste0(t_type, ' ', sewage)]
+packaged[is.na(t_type) & !is.na(sewage), t_type := sewage]
+
 
 message("Making data.frames of new strings")
 new_w <- packaged$w_source_drink %>% unique
@@ -64,3 +69,5 @@ message("Writing to J")
 write.csv(w, paste0(j, "WORK/11_geospatial/wash/definitions/w_source_defined_", today, ".csv"), row.names=F, na="")
 write.csv(w_o, paste0(j, "WORK/11_geospatial/wash/definitions/w_other_defined_", today, ".csv"), row.names=F, na="")
 write.csv(t, paste0(j, "WORK/11_geospatial/wash/definitions/t_type_defined_", today, ".csv"), row.names=F, na="")
+
+

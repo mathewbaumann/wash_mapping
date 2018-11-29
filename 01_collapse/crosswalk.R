@@ -20,7 +20,7 @@ if(Sys.info()[1]!="Windows") {
   root <- 'J:/'
 }
 
-repo <- '/share/code/geospatial/baumannm/wash_mapping/01_collapse/'
+repo <- '/share/code/geospatial/baumannm/wash_mapping_current/01_collapse/'
 
 files <- file.info(list.files(paste0('/home/j/LIMITED_USE/LU_GEOSPATIAL/collapsed/wash'), pattern = '*.feather', full.names=TRUE))
 files <- files[with(files, order(as.POSIXct(ctime), decreasing = TRUE)), ]
@@ -54,7 +54,7 @@ cw_dat <- cw_sani(alldat)
 today <- gsub("-", "_", Sys.Date())
 
 write_feather(cw_dat, 
-			  paste0('/home/j/WORK/11_geospatial/wash/data/sani_',
+			  paste0('/home/j/WORK/11_geospatial/wash/data/cwed/sani_',
 			  	     today, '.feather'))
 
 ###
@@ -69,3 +69,4 @@ cw_dat <- cw_water(alldat)
 write_feather(cw_dat, 
 			  paste0('/home/j/WORK/11_geospatial/wash/data/water_',
 			  	     today, '.feather'))
+

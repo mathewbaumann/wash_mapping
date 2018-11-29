@@ -215,7 +215,7 @@ message("end of table")
 
 if (topic == "wash"){
   message("WaSH-specific Fixes")
-  source("/snfs2/HOME/gmanny/backups/Documents/Repos/geospatial-data-prep/common/wash_specific_post_extract.R")
+  source("/share/code/geospatial/baumannm/wash_mapping_current/00_extract/wash_specific_post_extract.R")
 }
 
 #####################################################################
