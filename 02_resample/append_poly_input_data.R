@@ -1,4 +1,5 @@
 library(dplyr)
+library(data.table)
 
 rm(list = ls())
 indi_fam <- 'water'
@@ -10,17 +11,17 @@ indi_fam <- 'water'
 
 
 if (indi_fam == 'water' ) {
-  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/water/imp/2018-11-16/'))
+  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/water/imp/2019-03-29/'))
   imp <- lapply(list.files(), read.csv, stringsAsFactors = F)
   imp <- do.call(rbind, imp)
   #imp <- filter(imp, !(nid %in% water_outliers))
 
-  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/water/piped/2018-11-16/'))
+  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/water/piped/2019-03-29/'))
   piped <- lapply(list.files(), read.csv, stringsAsFactors = F)
   piped <- do.call(rbind, piped)
   #piped <- filter(piped, !(nid %in% water_outliers))
 
-  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/water/unimp/2018-11-16/'))
+  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/water/unimp/2019-03-29/'))
   unimp <- lapply(list.files(), read.csv, stringsAsFactors = F)
   unimp <- do.call(rbind, unimp)
   #unimp <- filter(unimp, !(nid %in% water_outliers))
@@ -34,8 +35,7 @@ if (indi_fam == 'water' ) {
       rename(latitude = lat.x, longitude = long.x,
              year = year_start,
              country = iso3) %>% 
-      mutate(indi_bin = round(indi*N)) %>%
-      mutate(N = round(N)) %>%
+      mutate(indi_bin = indi*N) %>%
       rename(indi_prop = indi)
     
     names(mydat)[which(names(mydat) == 'indi_bin')] <- paste0('w_',i)
@@ -61,7 +61,7 @@ if (indi_fam == 'water' ) {
   unimp <- left_join(unimp, imp_denom, by = c('shapefile','location_code','nid','year'))
   unimp <- left_join(unimp, piped_denom, by = c('shapefile','location_code','nid','year'))
   
-  unimp <- mutate(unimp, N = ((N)) - (w_imp) - w_piped, unimp_prop = w_unimp/N) %>%
+  unimp <- mutate(unimp, N = ((N)) - (w_imp) - w_piped) %>% mutate(unimp_prop = w_unimp/N) %>%
     rename(prop = unimp_prop, w_unimp_cr = w_unimp) %>%
     dplyr::select(-w_imp, -w_piped) %>%
     filter(N > 0)
@@ -75,7 +75,7 @@ if (indi_fam == 'water' ) {
   #imp <- rename(imp, prop = imp_prop)
   imp <- left_join(imp, piped_denom, by = c('shapefile','location_code','nid','year'))
   
-  imp <- mutate(imp, N = ((N)) - w_piped, imp_prop = w_imp/N) %>%
+  imp <- mutate(imp, N = ((N)) - w_piped) %>% mutate(imp_prop = w_imp/N) %>%
     rename(prop = imp_prop, w_imp_cr = w_imp) %>%
     dplyr::select(-w_piped) %>%
     filter(N > 0)
@@ -83,24 +83,37 @@ if (indi_fam == 'water' ) {
   
   piped_pt <- read.csv('/home/j/WORK/11_geospatial/10_mbg/input_data/w_piped.csv',
                        stringsAsFactors = F)
+  setnames(piped_pt,"year", "surv_year")
+  setnames(piped_pt,"int_year", "year")
   piped_pt <- dplyr::select(piped_pt, -X)
   piped <- rbind(piped, piped_pt)
+  piped <- as.data.table(piped)
+  piped[is.na(year_median), year_median := surv_year]
   write.csv(piped, '/home/j/WORK/11_geospatial/10_mbg/input_data/w_piped.csv')
   write.csv(piped, '/share/geospatial/mbg/input_data/w_piped.csv')
   rm(piped_pt)
   
   unimp_pt <- read.csv('/home/j/WORK/11_geospatial/10_mbg/input_data/w_unimp_cr.csv',
                        stringsAsFactors = F)
-  unimp_pt <- select(unimp_pt, -X)
+  setnames(unimp_pt,"year", "surv_year")
+  setnames(unimp_pt,"int_year", "year")
+  #X <- c('piped','w_piped')
+  unimp_pt <- select(unimp_pt, -X, -piped,-w_piped)
   unimp <- rbind(unimp, unimp_pt)
+  unimp <- as.data.table(unimp)
+  unimp[is.na(year_median), year_median := surv_year]
   write.csv(unimp, '/home/j/WORK/11_geospatial/10_mbg/input_data/w_unimp_cr.csv')
   write.csv(unimp, '/share/geospatial/mbg/input_data/w_unimp_cr.csv')
   rm(unimp_pt)
   
   imp_pt <- read.csv('/home/j/WORK/11_geospatial/10_mbg/input_data/w_imp_cr.csv',
                      stringsAsFactors = F)
+  setnames(imp_pt,"year", "surv_year")
+  setnames(imp_pt,"int_year", "year")
   imp_pt <- select(imp_pt, -X)
   imp <- rbind(imp, imp_pt)
+  imp <- as.data.table(imp)
+  imp[is.na(year_median), year_median := surv_year]
   write.csv(imp, '/home/j/WORK/11_geospatial/10_mbg/input_data/w_imp_cr.csv')
   write.csv(imp, '/share/geospatial/mbg/input_data/w_imp_cr.csv')
   rm(imp_pt)
@@ -117,17 +130,21 @@ indi_fam <- 'sani'
 #                     2039, 2063, 11516, 11540, 4818)
 
 if (indi_fam == 'sani' ) {
-  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/sani/imp/2018-11-16/'))
+  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/sani/piped/2019-03-29/'))
+  piped <- lapply(list.files(), read.csv, stringsAsFactors = F)
+  piped <- do.call(rbind, piped)
+  
+  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/sani/imp/2019-03-29/'))
   imp <- lapply(list.files(), read.csv, stringsAsFactors = F)
   imp <- do.call(rbind, imp)
   #imp <- filter(imp, !(nid %in% sani_outliers))
 
-  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/sani/unimp/2018-11-16/'))
+  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/sani/unimp/2019-03-29/'))
   unimp <- lapply(list.files(), read.csv, stringsAsFactors = F)
   unimp <- do.call(rbind, unimp)
   #unimp <- filter(unimp, !(nid %in% sani_outliers))
 
-  for (i in c('imp', 'unimp')) {  
+  for (i in c('piped', 'imp', 'unimp')) {  
     mydat <- get(i)
     
     names(mydat)[which(names(mydat) == i)] <- 'indi'
@@ -136,8 +153,7 @@ if (indi_fam == 'sani' ) {
       rename(latitude = lat.x, longitude = long.x,
              year = year_start,
              country = iso3) %>% 
-      mutate(indi_bin = round(indi*N)) %>%
-      mutate(N = round(N)) %>%
+      mutate(indi_bin = indi*N) %>%
       rename(indi_prop = indi)
     
     names(mydat)[which(names(mydat) == 'indi_bin')] <- paste0('s_',i)
@@ -148,29 +164,62 @@ if (indi_fam == 'sani' ) {
   
   imp_denom <- select(imp, s_imp, shapefile, location_code, nid, year)
   imp_denom <- distinct(imp_denom)
+  piped_denom <- select(piped, s_piped, shapefile, location_code, nid, year)
+  piped_denom <- distinct(piped_denom)
   
-  unimp <- left_join(unimp, imp_denom, by = c('shapefile','location_code','nid','year'))
-  unimp <- mutate(unimp, N = N - s_imp) %>% mutate(unimp_prop = s_unimp/N) %>%
-    rename(s_unimp_cr = s_unimp, prop = unimp_prop) %>%
-    select(-s_imp) %>%
+  
+  imp <- left_join(imp, piped_denom, by = c('shapefile','location_code','nid','year'))
+  imp <- mutate(imp, N = N - s_piped) %>% mutate(imp_prop = s_imp/N) %>%
+    rename(s_imp_cr = s_imp, prop = imp_prop) %>%
+    select(-s_piped) %>%
     filter(N > 0)
   
-  imp <- rename(imp, prop = imp_prop)
-  rm(mydat, imp_denom)
+  unimp <- left_join(unimp, imp_denom, by = c('shapefile','location_code','nid','year'))
+  unimp <- left_join(unimp, piped_denom, by = c('shapefile','location_code','nid','year'))
+  unimp <- mutate(unimp, N = N - s_imp - s_piped) %>% mutate(unimp_prop = s_unimp/N) %>%
+    rename(s_unimp_cr = s_unimp, prop = unimp_prop) %>%
+    select(-s_imp, -s_piped) %>%
+    filter(N > 0)
+  
+  piped <- rename(piped, prop = piped_prop)
+  rm(mydat, imp_denom, piped_denom)
   
   unimp_pt <- read.csv('/home/j/WORK/11_geospatial/10_mbg/input_data/s_unimp_cr.csv',
                        stringsAsFactors = F)
+  setnames(unimp_pt,"year", "surv_year")
+  setnames(unimp_pt,"int_year", "year")
   unimp_pt <- select(unimp_pt, -X)
+  #unimp <- select(unimp, -surv_year)
+  unimp_pt <- select(unimp_pt, -piped)
   unimp <- rbind(unimp, unimp_pt)
+  unimp <- as.data.table(unimp)
+  #unimp[is.na(year_median), year_median := surv_year]
   write.csv(unimp, '/home/j/WORK/11_geospatial/10_mbg/input_data/s_unimp_cr.csv')
   write.csv(unimp, '/share/geospatial/mbg/input_data/s_unimp_cr.csv')
   rm(unimp_pt)
   
-  imp_pt <- read.csv('/home/j/WORK/11_geospatial/10_mbg/input_data/s_imp.csv',
+  imp_pt <- read.csv('/home/j/WORK/11_geospatial/10_mbg/input_data/s_imp_cr.csv',
                      stringsAsFactors = F)
+  setnames(imp_pt,"year", "surv_year")
+  setnames(imp_pt,"int_year", "year")
+  setnames(imp_pt,"s_imp", "s_imp_cr")
   imp_pt <- select(imp_pt, -X)
   imp <- rbind(imp, imp_pt)
-  write.csv(imp, '/home/j/WORK/11_geospatial/10_mbg/input_data/s_imp.csv')
-  write.csv(imp, '/share/geospatial/mbg/input_data/s_imp.csv')
+  imp <- as.data.table(imp)
+  imp[is.na(year_median), year_median := surv_year]
+  write.csv(imp, '/home/j/WORK/11_geospatial/10_mbg/input_data/s_imp_cr.csv')
+  write.csv(imp, '/share/geospatial/mbg/input_data/s_imp_cr.csv')
   rm(imp_pt)
+  
+  piped_pt <- read.csv('/home/j/WORK/11_geospatial/10_mbg/input_data/s_piped.csv',
+                     stringsAsFactors = F)
+  setnames(piped_pt,"year", "surv_year")
+  setnames(piped_pt,"int_year", "year")
+  piped_pt <- select(piped_pt, -X)
+  piped <- rbind(piped, piped_pt)
+  piped <- as.data.table(piped)
+  piped[is.na(year_median), year_median := surv_year]
+  write.csv(piped, '/home/j/WORK/11_geospatial/10_mbg/input_data/s_piped.csv')
+  write.csv(piped, '/share/geospatial/mbg/input_data/s_piped.csv')
+  rm(piped_pt)
 }

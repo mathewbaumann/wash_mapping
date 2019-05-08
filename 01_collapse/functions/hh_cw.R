@@ -34,7 +34,7 @@ cw <- function(data, debug = F, var_family = indi_fam) {
               total_hh = sum(hh_size)) 
   
   # Fit a binomial model and get a ratio estimate for crosswalking missing household sizes
-  model <- glm(data = data, formula = wtavg_indi ~ cw, family = binomial(link = 'logit'),
+  model <- glm(data = data, formula = total_hh ~ cw, family = poisson,
                weights = data$total_hh)
   ratio <- model$coefficients['cw']
   ratio <- exp(ratio)

@@ -5,7 +5,7 @@ rm(list = ls())
 # Define if you are running code loally
 local <- F
 
-files <- file.info(grep('IPUMS', list.files(paste0('/home/j/LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash'), pattern = '.feather', full.names=TRUE), invert = T, value = T ))
+files <- file.info(grep('IPUMS', list.files(paste0('/ihme/limited_use/LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash'), pattern = '.feather', full.names=TRUE), invert = T, value = T ))
 files <- files[with(files, order(as.POSIXct(ctime), decreasing = TRUE)), ]
 latest_postextraction <- unlist(strsplit(rownames(files)[1], "/"))
 latest_postextraction <- latest_postextraction[length(latest_postextraction)]
@@ -14,25 +14,10 @@ input_version <- gsub('poly_', '', input_version)
 input_version <- gsub('points_', '', input_version)
 input_version <- gsub('poly1_', '', input_version)
 input_version <- gsub('poly2_', '', input_version)
-
-# Set repo & library path 
-# if(Sys.info()[1]!="Windows") {
-#   if(!local) {
-#     root <- "/home/j/"
-#     package_lib <- ifelse(grepl("geos", Sys.info()[4]),
-#                           paste0(root,'temp/geospatial/geos_packages'),
-#                           paste0(root,'temp/geospatial/packages'))
-#     .libPaths(package_lib)
-#   } else {
-#     package_lib <- .libPaths()
-#     root <- '/home/j/'
-#   }
-# } else {
-#   package_lib <- .libPaths()
-#   root <- 'J:/'
-# }
+input_version <- gsub('poly3_', '', input_version)
 
 root <- "/home/j/"
+l <- '/ihme/limited_use/'
 
 repo <- '/share/code/geospatial/baumannm/wash_mapping_current/01_collapse/'
 
@@ -57,19 +42,19 @@ lapply(packages, library, character.only = T)
 
 increment <- 1
 
-file_type <- 'poly'
-indi_fam <- 'water'
-index <- 1
-agg_level <- 'country'
+# file_type <- 'poly'
+# indi_fam <- 'sani'
+# index <- 1
+# agg_level <- ''
 
 #### Load functions ####
-for (file_type in c('pt','poly')){
+for (file_type in c('pt','poly','ipums')){
   message(paste("Loading",file_type, "data"))
   rm(pt_collapse)
   message('Loading Data...')
   # Load data
   if (!("pt_collapse" %in% ls()) & file_type == 'pt') {
-    pt_collapse <- as.data.table(read_feather(paste0(root,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/points_', input_version, '.feather')))
+    pt_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/points_', input_version, '.feather')))
     #pt_collapse <- subset(pt_collapse, nid == 365281)
     # Encoding(pt_collapse$w_source_drink) <- "UTF-8"
     # Encoding(pt_collapse$w_source_other) <- "UTF-8"
@@ -83,16 +68,22 @@ for (file_type in c('pt','poly')){
   } 
   
   if (!("pt_collapse" %in% ls()) & file_type == 'poly') {
-    pt1_collapse <- as.data.table(read_feather(paste0(root,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly1_', input_version, '.feather')))
-    pt2_collapse <- as.data.table(read_feather(paste0(root,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly2_', input_version, '.feather')))
+    pt1_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly1_', input_version, '.feather')))
+    pt2_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly2_', input_version, '.feather')))
+    pt3_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly3_', input_version, '.feather')))
     pt_collapse <- rbind(pt1_collapse, pt2_collapse, fill = TRUE)
-    pt_collapse <- subset(pt_collapse, nid == 148344)
+    rm(pt1_collapse, pt2_collapse)
+    pt_collapse <- rbind(pt_collapse, pt3_collapse, fill = TRUE)
+    rm(pt3_collapse)
+    #pt_collapse <- subset(pt_collapse, nid == 148344)
     # Encoding(pt_collapse$w_source_drink) <- "UTF-8"
     # Encoding(pt_collapse$w_source_other) <- "UTF-8"
     # Encoding(pt_collapse$t_type) <- "UTF-8"
     # Encoding(pt_collapse$sewage) <- "UTF-8"
     pt_collapse$w_source_drink <- tolower(pt_collapse$w_source_drink)
     pt_collapse$w_source_other <- tolower(pt_collapse$w_source_other)
+    
+    pt_collapse[nid %in% c(14063, 14027) & t_type %like% '/ANOTHER HOUSEHOLD', t_type := "neighbour's/another household's pit latrine"]
     pt_collapse$t_type <- tolower(pt_collapse$t_type)
     pt_collapse$sewage <- tolower(pt_collapse$sewage)
     data_type <- 'poly'
@@ -105,7 +96,7 @@ for (file_type in c('pt','poly')){
   }
   
   if (file_type == 'ipums') {
-    ipums_dir <- '/home/j/LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/IPUMS_feathers'
+    ipums_dir <- '/ihme/limited_use/LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/IPUMS_feathers'
     files <- list.files(ipums_dir, '.feather')
     files_length <- length(files)
   } else {
@@ -154,9 +145,10 @@ for (file_type in c('pt','poly')){
         
         if (ipums) {
           if (indi_fam == 'sani') {
-            definitions <- read.csv(paste0(root,'WORK/11_geospatial/wash/definitions/IPUMS_sani_defs.csv'),
+            definitions <- read.csv(paste0(root,'WORK/11_geospatial/wash/definitions/IPUMS_sani_defs_2019_05_07.csv'),
                                     encoding="windows-1252", stringsAsFactors = F)
-            definitions <- select(definitions, nid, toilet, sewage, sani)
+            definitions <- select(definitions, nid, toilet, sewage, sani_3) %>% 
+              dplyr::rename(sani = sani_3)
             
             definitions$toilet <- tolower(definitions$toilet)
             definitions$sewage <- tolower(definitions$sewage)
@@ -172,11 +164,13 @@ for (file_type in c('pt','poly')){
         } else {
           if (!("definitions" %in% ls())) {
             if (indi_fam == "sani") {
-              definitions <- read.csv(paste0(root,'WORK/11_geospatial/wash/definitions/t_type_defined_2018_11_08.csv'),
+              definitions <- read.csv(paste0(root,'WORK/11_geospatial/wash/definitions/t_type_defined_2019_05_08.csv'),
                                       encoding="windows-1252", stringsAsFactors = F)
-              definitions <- select(definitions, string, sdg)
+              definitions <- select(definitions, string, sdg_2) %>%
+                rename(sdg = sdg_2)
+              definitions <- definitions[-4876,]
             } else {
-              definitions <- read.csv(paste0(root,'WORK/11_geospatial/wash/definitions/w_source_defined_2018_11_08.csv'),
+              definitions <- read.csv(paste0(root,'WORK/11_geospatial/wash/definitions/w_source_defined_2019_05_07.csv'),
                                       encoding="windows-1252", stringsAsFactors = F) 
               definitions <- select(definitions, string, sdg, jmp)
             }
@@ -193,7 +187,7 @@ for (file_type in c('pt','poly')){
         }
         
         rm(list = setdiff(ls(),c('definitions','pt_collapse','definitions2','indi_fam',
-                                 'repo','data_type','root','agg_level', 'sdg', 'ipums', 'files', 'index', 'files_length',
+                                 'repo','data_type','root', 'l','agg_level', 'sdg', 'ipums', 'files', 'index', 'files_length',
                                  'file_type', 'ipums_dir', 'input_version', 'increment')))
         
         message("Importing functions...")
@@ -220,15 +214,25 @@ for (file_type in c('pt','poly')){
         message("Addressing Missingness...")
         
         # Remove clusters with more than 20% weighted missingness
-        ptdat <- rm_miss()
+        ptdat <- data.table(rm_miss())
         if (nrow(ptdat) == 0) {
           next
         }
         
         # Remove cluster_ids with missing hhweight or invalid hhs
-        miss_wts <- unique(ptdat$id_short[which(is.na(ptdat$hhweight))])
-        ptdat <- filter(ptdat, !(id_short %in% miss_wts))
-        ptdat <- filter(ptdat, hhweight != 0)
+        #ID cluster_ids with missing hhweight
+        #decided to use 10% unweighted criteria instead of 0 tolerance
+        missing.wts <- idMissing(ptdat, this.var="hhweight", criteria=.1, wt.var=NA)
+        #ID points with hhweight|hh_size<=0 (invalid)
+        #drop clusters with more than 20% invalid, then drop invalid rows 
+        invalid.wts <- idMissing(ptdat, this.var="hhweight", criteria=.1, wt.var=NA, check.threshold = T, threshold=0)
+        remove.clusters <- c(missing.wts,
+                             invalid.wts) %>% unique
+        #remove these clusters and proceed
+        message('dropping ', length(remove.clusters), 
+                ' clusters based on variable missingness/invalidity above cluster-level criteria thresholds')
+        ptdat <- ptdat[!(id_short %in% remove.clusters)]
+        
         
         #invalid_hhs <- unique(ptdat$id_short[which(ptdat$hh_size <= 0)])
         # ptdat <- filter(ptdat, !(id_short %in% invalid_hhs))
@@ -305,16 +309,16 @@ for (file_type in c('pt','poly')){
           if (data_type == "poly") {
             polydat <- ptdat
             rm(ptdat)
-            write_feather(polydat, paste0(root,"LIMITED_USE/LU_GEOSPATIAL/collapsed/wash/polydat_",
+            write_feather(polydat, paste0(l,"LIMITED_USE/LU_GEOSPATIAL/collapsed/wash/polydat_",
                                           indi_fam, '_', conditional, '_', agg_level, '_', today, ".feather"))
           } else{
-            write_feather(ptdat, paste0(root,"LIMITED_USE/LU_GEOSPATIAL/collapsed/wash/ptdat_",
+            write_feather(ptdat, paste0(l,"LIMITED_USE/LU_GEOSPATIAL/collapsed/wash/ptdat_",
                                         indi_fam, '_', conditional, '_', agg_level, '_', today, ".feather"))
           }
         }
         
         if (ipums) {
-          write_feather(ptdat, paste0(root,"LIMITED_USE/LU_GEOSPATIAL/collapsed/wash/IPUMS/",
+          write_feather(ptdat, paste0(l,"LIMITED_USE/LU_GEOSPATIAL/collapsed/wash/IPUMS/feather/",
                                       indi_fam, '_', conditional, '_', agg_level, '_', today, '_', files[index]))
         }
         

@@ -39,19 +39,24 @@ for(package in package_list) {
 
 if (indic == 'water') {
   levels <- c('piped','imp','unimp','surface')
-  polydat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/water_2018_11_15.feather')
+  polydat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/water_2019_03_29.feather')
 } else {
-  levels <- c('imp','unimp','od')
-  polydat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/sani_2018_11_15.feather')
+  levels <- c('piped','imp','unimp','od')
+  polydat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/sani_2019_03_29.feather')
 }
 
 polydat <- filter(polydat, is.na(lat) & !is.na(shapefile) & !is.na(location_code))
+setnames(polydat,"year_start", "surv_year")
+setnames(polydat,"int_year", "year_start")
 subset <- polydat[which(polydat$shapefile == shp),]
+if (shp == 'admin2013_2'){
+  subset <- subset(subset, location_code != 2277)
+}
 
 shape_master <- readRDS(paste0('/share/geospatial/rds_shapefiles/',shp,'.rds'))
 
 for (pid in levels) {
-  setwd('/home/j/WORK/11_geospatial/wash/data/resamp/')
+  setwd('/home/j/WORK/11_geospatial/wash/data/resamp')
   generated_pts <- list()
   
   subset_loc <- subset[,setdiff(names(subset),setdiff(levels,pid))]

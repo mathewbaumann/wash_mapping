@@ -23,9 +23,9 @@ agg_indi <- function(mydat = ptdat, var_family = indi_fam, dt_type = data_type, 
       levels <- c('shared')
       mydat <- filter(mydat, imp == 1|latrine_imp == 1)
     } else {
-      levels <- c('imp', 'unimp','od',
+      levels <- c('network','s_piped','imp', 'unimp','od',
                   'latrine_cw','latrine_imp','latrine_unimp',
-                  'flush_imp','flush_unimp','flush_cw')
+                  'flush_imp','flush_unimp','flush_cw', 'flush_imp_sewer','flush_imp_septic')
     }
     
   }
@@ -51,7 +51,7 @@ agg_indi <- function(mydat = ptdat, var_family = indi_fam, dt_type = data_type, 
       if(agg == 'country') {
         
         mydatresults <- mydat %>% mutate(wt_indi = hhweight*indi*hh_size, wt_denom = hhweight*hh_size,
-                                         eff_n_num = hhweight*hh_size, eff_n_denom = (hhweight^2)*hh_size) %>% 
+                                         eff_n_num = hhweight*hh_size, eff_n_denom = (hhweight^2)*hh_size, year_binned = weighted) %>% 
           group_by(nid, iso3, survey_series, year_start) %>% 
           summarize(wtavg_indi = sum(wt_indi, na.rm = T)/sum(wt_denom, na.rm = T),
                     total_hh = ((sum(eff_n_num))^2)/sum(eff_n_denom)) %>%
@@ -59,11 +59,25 @@ agg_indi <- function(mydat = ptdat, var_family = indi_fam, dt_type = data_type, 
         
       } else {
         
-          mydatresults <- mydat %>% mutate(wt_indi = hhweight*indi*hh_size, wt_denom = hhweight*hh_size,
-                                           eff_n_num = hhweight*hh_size, eff_n_denom = (hhweight^2)*hh_size) %>% 
-                          group_by(id_short, nid, iso3, lat, long, survey_series, urban, year_start, shapefile, location_code) %>% 
-                          summarize(wtavg_indi = sum(wt_indi, na.rm = T)/sum(wt_denom, na.rm = T),
-                          total_hh = ((sum(eff_n_num))^2)/sum(eff_n_denom), sum_weight = sum(hhweight))
+          # mydatresults <- mydat %>% mutate(wt_indi = hhweight*indi*hh_size, wt_denom = hhweight*hh_size,
+          #                                  eff_n_num = hhweight*hh_size, eff_n_denom = (hhweight^2)*hh_size) %>%
+          #                 group_by(id_short, nid, iso3, lat, long, survey_series, urban, year_start, int_year, shapefile, location_code) %>%
+          #                 summarize(wtavg_indi = sum(wt_indi, na.rm = T)/sum(wt_denom, na.rm = T),
+          #                 total_hh = ((sum(eff_n_num))^2)/sum(eff_n_denom), sum_weight = sum(true_weight*hh_size))
+        
+        mydatresults <- mydat %>% 
+                          mutate(# effective sample size by kish: OKAY
+                                 eff_n_num = hhweight*hh_size, eff_n_denom = (hhweight^2)*hh_size) %>%
+          
+          group_by(id_short, nid, iso3, lat, long, survey_series, urban, year_start, int_year, year_median, shapefile, location_code) %>%
+          
+          
+          summarize(wtavg_indi = (sum(indi*hh_size*hhweight, na.rm = TRUE)/sum(hh_size*hhweight, na.rm = T)),
+                    
+                    total_hh = ((sum(eff_n_num, na.rm = T))^2)/sum(eff_n_denom, na.rm = T), 
+                    
+                    sum_of_sample_weights = sum(true_weight*hh_size, na.rm = T),
+                    sum_old_N = sum(hh_size, na.rm = T))
       }
     }
     
@@ -80,14 +94,29 @@ agg_indi <- function(mydat = ptdat, var_family = indi_fam, dt_type = data_type, 
         
       } else {
       
-      mydatresults <- mydat %>% mutate(wt_indi = hhweight*indi*hh_size, wt_denom = hhweight*hh_size,
-                                       eff_n_num = hhweight*hh_size, eff_n_denom = (hhweight^2)*hh_size) %>% 
-                      group_by(id_short, nid, iso3, lat, long, survey_series, year_start, shapefile, location_code) %>% 
-                      summarize(wtavg_indi = sum(wt_indi, na.rm = T)/sum(wt_denom, na.rm = T),
-                      total_hh = ((sum(eff_n_num))^2)/sum(eff_n_denom), sum_weight = sum(hhweight)) %>%
-                      mutate(urban = NA)
+      # mydatresults <- mydat %>% mutate(wt_indi = hhweight*indi*hh_size, wt_denom = hhweight*hh_size,
+      #                                  eff_n_num = hhweight*hh_size, eff_n_denom = (hhweight^2)*hh_size) %>% 
+      #                 group_by(id_short, nid, iso3, lat, long, survey_series, year_start, int_year, shapefile, location_code) %>% 
+      #                 summarize(wtavg_indi = sum(wt_indi, na.rm = T)/sum(wt_denom, na.rm = T),
+      #                 total_hh = ((sum(eff_n_num))^2)/sum(eff_n_denom), sum_of_sample_weights = sum(true_weight*hh_size)) %>%
+      #                 mutate(urban = NA)
+        
+        mydatresults <- mydat %>% 
+          mutate(# effective sample size by kish: OKAY
+            eff_n_num = hhweight*hh_size, eff_n_denom = (hhweight^2)*hh_size) %>%
+          
+          group_by(id_short, nid, iso3, lat, long, survey_series, year_start, int_year, year_median, shapefile, location_code) %>%
+          
+          
+          summarize(wtavg_indi = (sum(indi*hh_size*hhweight, na.rm = TRUE)/sum(hh_size*hhweight, na.rm = T)),
+                    
+                    total_hh = ((sum(eff_n_num, na.rm = T))^2)/sum(eff_n_denom, na.rm = T), 
+                    
+                    sum_of_sample_weights = sum(true_weight*hh_size, na.rm = T),
+                    sum_old_N = sum(hh_size, na.rm = T))%>%
+          mutate(urban = NA)
       }
-    }
+    } 
     
     names(mydatresults)[which(names(mydatresults) == 'wtavg_indi')] <- paste0(i)
     results[[length(results)+1]] <- mydatresults

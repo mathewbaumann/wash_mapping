@@ -105,20 +105,19 @@ cw_water <- function(mydat) {
 		}
 
 		subdat <- subdat %>%
-				 mutate(piped = piped + piped_cw * (1 - ipiped_pct),
+				 mutate(piped = piped + piped_cw + piped_imp,
 				 		unimp = unimp + well_unimp + 
 				 				(well_cw * (1 - iwell_pct)) +
 				 				spring_unimp + (spring_cw * (1 - ispring_pct)),
 				 		surface = surface) %>%
-				 mutate(imp = (piped_cw * ipiped_pct) +
-				 			  well_imp + (well_cw * iwell_pct) +
+				 mutate(imp = well_imp + (well_cw * iwell_pct) +
 				 			  spring_imp + (spring_cw * ispring_pct) +
 				 			  imp) %>%
 				 rename(N = total_hh) %>%
 				 select(nid, iso3, survey_series, 
 				 		lat, long, shapefile, location_code,
-				 		year_start,
-				 		N,
+				 		year_start, int_year, year_median, sum_old_N,
+				 		N, sum_of_sample_weights,
 				 		piped, imp, unimp, surface, row_id)
 		results[[length(results) + 1]] <- subdat
 
@@ -223,20 +222,34 @@ cw_sani <- function(mydat) {
 			subdat$flush_cw <- 0
 		}
 
+		# subdat <- subdat %>%
+		# 		 mutate(imp = imp + 
+		# 		 			  (ilatrine_pct * latrine_cw) + latrine_imp +
+		# 		 			  (iflush_pct * flush_cw) + flush_imp,
+		# 		 		unimp = unimp + 
+		# 		 				(latrine_cw * (1 - ilatrine_pct)) + latrine_unimp +
+		# 		 				(flush_cw * (1 - iflush_pct)) + flush_unimp,
+		# 		 		od = od) %>%
+		# 		 rename(N = total_hh) %>%
+		# 		 select(nid, iso3, survey_series, 
+		# 		 		lat, long, shapefile, location_code,
+		# 		 		year_start, int_year, year_median, sum_old_N,
+		# 		 		N, sum_of_sample_weights, 
+		# 		 		imp, unimp, od, row_id)
 		subdat <- subdat %>%
-				 mutate(imp = imp + 
-				 			  (ilatrine_pct * latrine_cw) + latrine_imp +
-				 			  (iflush_pct * flush_cw) + flush_imp,
-				 		unimp = unimp + 
-				 				(latrine_cw * (1 - ilatrine_pct)) + latrine_unimp +
-				 				(flush_cw * (1 - iflush_pct)) + flush_unimp,
-				 		od = od) %>%
-				 rename(N = total_hh) %>%
-				 select(nid, iso3, survey_series, 
-				 		lat, long, shapefile, location_code,
-				 		year_start,
-				 		N,
-				 		imp, unimp, od, row_id)
+		  mutate(piped = (iflush_pct * flush_cw) + flush_imp + s_piped,
+		         imp = imp + 
+		           (ilatrine_pct * latrine_cw) + latrine_imp,
+		         unimp = unimp + 
+		           (latrine_cw * (1 - ilatrine_pct)) + latrine_unimp +
+		           (flush_cw * (1 - iflush_pct)) + flush_unimp,
+		         od = od) %>%
+		  rename(N = total_hh) %>%
+		  select(nid, iso3, survey_series, 
+		         lat, long, shapefile, location_code,
+		         year_start, int_year, year_median, sum_old_N,
+		         N, sum_of_sample_weights, piped,
+		         imp, unimp, od, row_id)
 		results[[length(results) + 1]] <- subdat
 
 	}

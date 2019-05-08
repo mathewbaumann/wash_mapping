@@ -115,7 +115,11 @@ define_indi <- function(mydat = ptdat, var_family = indi_fam, define = definitio
            # Define crosswalking indicators for flush toilets
            flush_cw = ifelse(mydat$sdg == "flush_cw", 1, ifelse(is.na(mydat$sdg), NA, 0)),
            flush_imp = ifelse(mydat$sdg == "flush_imp", 1, ifelse(is.na(mydat$sdg), NA, 0)),
-           flush_unimp = ifelse(mydat$sdg == "flush_unimp", 1, ifelse(is.na(mydat$sdg), NA, 0))
+           flush_unimp = ifelse(mydat$sdg == "flush_unimp", 1, ifelse(is.na(mydat$sdg), NA, 0)),
+           flush_imp_sewer = ifelse(mydat$sdg == "flush_imp_sewer", 1, ifelse(is.na(mydat$sdg), NA, 0)),
+           flush_imp_septic = ifelse(mydat$sdg == "flush_imp_septic", 1, ifelse(is.na(mydat$sdg), NA, 0)),
+           s_piped = ifelse(mydat$sdg %in% c('sewer','septic','flush_imp_sewer','flush_imp_septic'), 1, ifelse(is.na(mydat$sdg), NA, 0)),
+           network = ifelse(mydat$sdg == "sewer", 1, ifelse(is.na(mydat$sdg), NA, 0))
            )
   }
   return(mydat)

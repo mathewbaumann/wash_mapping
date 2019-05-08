@@ -1,4 +1,3 @@
-
 #####################################################################
 # POST UBCOV EXTRACTION DATA CLEANING FOR GEOSPATIAL DATA EXTRACTIONS & GEOGRAPHY MATCHING
 # PIONEERED BY ANNIE BROWNE
@@ -8,9 +7,10 @@
 # EMAIL GMANNY@UW.EDU
 # EMAIL SSWARTZ@UW.EDU
 
-# INSTRUCTIONS: 
+# INSTRUCTIONS:
 # UBCOV OUTPUTS MUST BE SAVED IN LIMITED USE DIRECTORY
 #####################################################################
+#RAM USED: 214.1gb
 
 #####################################################################
 ############################## SETUP ################################
@@ -20,31 +20,31 @@ rm(list=ls())
 #Define values
 topic <- "wash"
 cluster <- TRUE #running on cluster true/false
-geos <- TRUE #running on geos nodes true/false
-cores <- 30
+geos <- FALSE #running on geos nodes true/false
+cores <- 10
 #FOR THE CLUSTER:
-#qlogin -now n -pe multi_slot 30 -P proj_geospatial -l geos_node=TRUE
+#qlogin -now n -pe multi_slot 5 -P proj_geospatial -l geos_node=TRUE
 #source('/snfs2/HOME/gmanny/backups/Documents/Repos/geospatial-data-prep/common/post_extraction_3.R')
 
 #Setup
 j <- ifelse(Sys.info()[1]=="Windows", "J:/", "/snfs1/")
-folder_in <- paste0(j, "LIMITED_USE/LU_GEOSPATIAL/ubCov_extractions/", topic, "_2") #where your extractions are stored
-folder_out <- paste0(j, "LIMITED_USE/LU_GEOSPATIAL/geo_matched/", topic) #where you want to save the big csv of all your extractions together
+l <- ifelse(Sys.info()[1]=="Windows", "L:/", "/ihme/limited_use/")
+folder_in <- paste0(l, "LIMITED_USE/LU_GEOSPATIAL/ubCov_extractions/", topic, "_2") #where your extractions are stored
+folder_out <- paste0(l, "LIMITED_USE/LU_GEOSPATIAL/geo_matched/", topic) #where you want to save the big csv of all your extractions together
 
 ####### YOU SHOULDN'T NEED TO CHANGE ANYTHING BELOW THIS LINE. SORRY IF YOU DO ##################################################
 
 today <- gsub("-", "_", Sys.Date())
 stages <- read.csv(paste0(j, "temp/gmanny/geospatial_stages_priority.csv"), stringsAsFactors=F)
-if (geos){
-  package_lib <- '/snfs1/temp/geospatial/geos_packages'
-  library(feather) #as of 11/20/2017 feather does not work on prod
-} else {
-  package_lib <- '/snfs1/temp/geospatial/packages'}
-.libPaths(package_lib)
+# package_lib <- '/home/j/temp/geospatial/singularity_packages'
+# .libPaths(package_lib)
 
 #Load packages
-packages <- c('haven', 'stringr', 'data.table', 'dplyr', 'magrittr', 'parallel', 'doParallel')
-packages <- lapply(packages, library, character.only=T)
+package_list <- c('haven', 'stringr', 'data.table', 'dplyr', 'magrittr', 'parallel', 'doParallel')
+lapply(package_list, library, character.only = T)
+# source("/share/code/geospatial/lbd_core/mbg_central/setup.R")
+# mbg_setup(package_list = package_list, repos="/share/code/geospatial/lbd_core/mbg_central")
+# packages <- lapply(packages, library, character.only=T)
 #haven to read in stata
 #data.table for speed & syntax
 #dplyr for distinct (strange behavior from data.table unique)
@@ -73,23 +73,24 @@ read_add_name_col <- function(file){
 ######################## BIND UBCOV EXTRACTS ########################
 #####################################################################
 #Generate list of extraction filepaths
-extractions <- list.files(folder_in, full.names=T, pattern = ".dta$", ignore.case=T, recursive = F)
+extractions <- list.files(folder_in, full.names=T, pattern = ".dta", ignore.case=T, recursive = F)
 extractions <- grep("IPUMS_CENSUS", extractions, invert=T, value = T) #IPUMS is handled separately
-extractions <- grep("234353|233917", extractions, invert=T, value=T) 
-  #234353 is a massive India dataset that slows everything down and gets us killed on the cluster. It is handled separately.
-  #233917 is another IND survey that isn't quite as large but it also has to be loaded and collapsed separately. 
+extractions <- grep("234353|233917", extractions, invert=T, value=T)
+#234353 is a massive India dataset that slows everything down and gets us killed on the cluster. It is handled separately.
+#233917 is another IND survey that isn't quite as large but it also has to be loaded and collapsed separately.
 
 #append all ubcov extracts together
 if(cluster == TRUE) {
   message("Make cluster")
   cl <- makeCluster(cores)
+  clusterEvalQ(cl, .libPaths('/home/j/temp/geospatial/singularity_packages/3.5.0'))
   message("Register cluster")
-  clusterCall(cl, function(x) .libPaths(x), .libPaths())
   registerDoParallel(cl)
   message("Start foreach")
   #Read in each .dta file in parallel - returns a list of data frames
-  top <- foreach(i=1:length(extractions), .packages="haven") %dopar% {
-    dta <- read_dta(extractions[i])
+  top <- foreach(i=1:length(extractions), .packages = c('haven')) %dopar% {
+    dta <- read_dta(extractions[i], encoding = 'latin1')
+    return(dta)
   }
   message("Foreach finished")
   message("Closing cluster")
@@ -102,12 +103,13 @@ if(cluster == TRUE) {
   }
 }
 
+
 message("rbindlist all extractions together")
 topics <- rbindlist(top, fill=T, use.names=T)
 rm(top)
 
 ##Save raw data file, if desired
-#save(topics, file=paste0(folder_out, "/topics_no_geogs_", today, ".Rdata")) 
+#save(topics, file=paste0(folder_out, "/topics_no_geogs_", today, ".Rdata"))
 
 #####################################################################
 ######################## PULL IN GEO CODEBOOKS ######################
@@ -116,7 +118,7 @@ rm(top)
 #Get all geog codebooks and package them together
 message("Retrieve geo codebook filepaths")
 files <- list.files(paste0(j, "WORK/11_geospatial/05_survey shapefile library/codebooks"), pattern=".csv$", ignore.case = T, full.names = T)
-files <- grep("IPUMS|special", files, value = T, invert = T) # list any strings from geo codebooks you want excluded here 
+files <- grep("IPUMS|special", files, value = T, invert = T) # list any strings from geo codebooks you want excluded here
 
 message("Read geo codebooks into list")
 geogs <- lapply(files, read_add_name_col)
@@ -125,6 +127,7 @@ message("Append geo codebooks together")
 geo <- rbindlist(geogs, fill=T, use.names=T)
 geo[is.na(admin_level), admin_level := "NA"] #set NA values for admin_level to "NA" as a string to keep the following line from dropping them because of bad R logic
 geo <- geo[admin_level != "0", ] #drop anything matched to admin0
+geo <- geo[survey_module != "GSEC1"] #drop this geomatch which is creating a m:m mismatch on different keys issue
 rm(geogs)
 
 #Dedupe the geography codebook by geospatial_id, iso3, and nid
@@ -158,7 +161,10 @@ geo_k <- geo[, geo_keep, with=F]
 #####################################################################
 
 message("Merge ubCov outputs & geo codebooks together")
-all <- merge(geo_k, topics, by.x=c("nid", "iso3", "geospatial_id"), by.y=c("nid", "ihme_loc_id", "geospatial_id"), all.x=F, all.y=T)
+names(topics)[names(topics) == 'ihme_loc_id'] <- 'iso3'
+geo_k$geospatial_id <- as.character(geo_k$geospatial_id)
+topics$geospatial_id <- as.character(topics$geospatial_id)
+all <- merge(geo_k, topics, by.x=c("nid", "iso3", "geospatial_id"), by.y=c("nid", "iso3", "geospatial_id"), all.x=F, all.y=T)
 all[iso3 == "KOSOVO", iso3 := "SRB"] #GBD rolls Kosovo data into Serbia
 
 #####################################################################
@@ -209,6 +215,11 @@ message("if a table longer than 0 rows appears here diagnose issues with year_ex
 unique(all[is.na(year_experiment), .(nid, iso3)])
 message("end of table")
 
+rm(geo_k)
+rm(geo)
+rm(topics)
+rm(merged_correctly)
+
 #####################################################################
 ######################### TOPIC-SPECIFIC CODE #######################
 #####################################################################
@@ -218,6 +229,16 @@ if (topic == "wash"){
   source("/share/code/geospatial/baumannm/wash_mapping_current/00_extract/wash_specific_post_extract.R")
 }
 
+#######
+#wash spercific post extract saves dataset
+
+
+
+
+
+
+
+
 #####################################################################
 ######################### CLEAN UP & SAVE ###########################
 #####################################################################
@@ -226,17 +247,18 @@ if (topic == "wash"){
 #all[!is.na(latitude) & is.na(lat), lat := latitude]
 #all[!is.na(longitude) & is.na(long), long := longitude]
 
-#Save
-message("Saving as .Rdata")
-save(all, file=paste0(folder_out, "/", today, ".Rdata"))
-#message("Saving as .csv")
-#write.csv(all, file=paste0(folder_out, "/", today, ".csv"))
+# #Save
+# message("Saving as .Rdata")
+# save(all, file=paste0(folder_out, "/", today, ".Rdata"))
+# #message("Saving as .csv")
+# #write.csv(all, file=paste0(folder_out, "/", today, ".csv"))
+# 
+# #Create & export a list of all surveys that have not yet been matched & added to the geo codebooks
+# message("Exporting a list of surveys that need to be geo matched")
+# gnid <- unique(geo$nid)
+# fix <- subset(all, !(all$nid %in% gnid))
+# fix_collapse <- distinct(fix[,c("nid", "iso3", "year_start", "survey_name"), with=T])
+# fix_collapse <- merge(fix_collapse, stages, by.x="iso3", by.y="alpha.3", all.x=T)
+# fix_outpath <- paste0(j, "LIMITED_USE/LU_GEOSPATIAL/geo_matched/", topic, "/new_geographies_to_match.csv")
+# write.csv(fix_collapse, fix_outpath, row.names=F, na="")
 
-#Create & export a list of all surveys that have not yet been matched & added to the geo codebooks
-message("Exporting a list of surveys that need to be geo matched")
-gnid <- unique(geo$nid)
-fix <- subset(all, !(all$nid %in% gnid))
-fix_collapse <- distinct(fix[,c("nid", "iso3", "year_start", "survey_name"), with=T])
-fix_collapse <- merge(fix_collapse, stages, by.x="iso3", by.y="alpha.3", all.x=T)
-fix_outpath <- paste0(j, "LIMITED_USE/LU_GEOSPATIAL/geo_matched/", topic, "/new_geographies_to_match.csv")
-write.csv(fix_collapse, fix_outpath, row.names=F, na="")
