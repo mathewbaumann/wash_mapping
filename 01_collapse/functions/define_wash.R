@@ -19,8 +19,8 @@ define_indi <- function(mydat = ptdat, var_family = indi_fam, define = definitio
                                                                        'piped_imp','imp')),
                       'imp', define$sdg)
     }
-    define <- rename(define, w_source_drink = string)
-    mydat <- left_join(mydat, define, by = "w_source_drink")
+    #define <- rename(define, w_source_drink = string)
+    mydat <- left_join(mydat, define, by = c("nid","iso3", "year_start","w_source_drink"))
 
     if (!sdg_indi) {
       define2 <- rename(define2, w_source_other = string)
@@ -33,9 +33,9 @@ define_indi <- function(mydat = ptdat, var_family = indi_fam, define = definitio
       define <- rename(definitions, t_type = toilet, sdg = sani)
       mydat <- left_join(mydat, define, by = c("t_type", "sewage", "nid"))
     } else {
-      define <- rename(define, t_type = string)
+      #define <- rename(define, t_type = string)
       #mydat <- merge(mydat, define, by = 't_type', allow.cartesian = TRUE)
-      mydat <- left_join(mydat, define, by = "t_type")
+      mydat <- left_join(mydat, define, by = c("nid","iso3", "year_start","t_type"))
     }
   }
 
@@ -114,12 +114,12 @@ define_indi <- function(mydat = ptdat, var_family = indi_fam, define = definitio
 
            # Define crosswalking indicators for flush toilets
            flush_cw = ifelse(mydat$sdg == "flush_cw", 1, ifelse(is.na(mydat$sdg), NA, 0)),
-           flush_imp = ifelse(mydat$sdg == "flush_imp", 1, ifelse(is.na(mydat$sdg), NA, 0)),
+           flush_imp = ifelse(mydat$sdg %in% c("flush_imp"), 1, ifelse(is.na(mydat$sdg), NA, 0)),
            flush_unimp = ifelse(mydat$sdg == "flush_unimp", 1, ifelse(is.na(mydat$sdg), NA, 0)),
            flush_imp_sewer = ifelse(mydat$sdg == "flush_imp_sewer", 1, ifelse(is.na(mydat$sdg), NA, 0)),
            flush_imp_septic = ifelse(mydat$sdg == "flush_imp_septic", 1, ifelse(is.na(mydat$sdg), NA, 0)),
            s_piped = ifelse(mydat$sdg %in% c('sewer','septic','flush_imp_sewer','flush_imp_septic'), 1, ifelse(is.na(mydat$sdg), NA, 0)),
-           network = ifelse(mydat$sdg == "sewer", 1, ifelse(is.na(mydat$sdg), NA, 0))
+           network = ifelse(mydat$sdg %in% c('sewer','flush_imp_sewer'), 1, ifelse(is.na(mydat$sdg), NA, 0))
            )
   }
   return(mydat)

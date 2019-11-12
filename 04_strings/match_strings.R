@@ -36,18 +36,45 @@ message("Loading big extraction .Rdata")
 # packaged <- all[all$year_end >= 1997, ]
 # #rm(all)
 point <- read_feather(most_recent_point)
-pt1_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly1_', '2019_05_07', '.feather')))
-pt2_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly2_', '2019_05_07', '.feather')))
-pt3_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly3_', '2019_05_07', '.feather')))
+pt1_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly1_', '2019_09_03', '.feather')))
+pt2_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly2_', '2019_09_03', '.feather')))
+pt3_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly3_', '2019_09_03', '.feather')))
+pt4_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly4_', '2019_09_03', '.feather')))
+pt5_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly5_', '2019_09_03', '.feather')))
+pt6_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly6_', '2019_09_03', '.feather')))
+pt7_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly7_', '2019_09_03', '.feather')))
+pt8_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly8_', '2019_09_03', '.feather')))
+
 pt_collapse <- rbind(pt1_collapse, pt2_collapse, fill = TRUE)
 rm(pt1_collapse, pt2_collapse)
-poly <- rbind(pt_collapse, pt3_collapse, fill = TRUE)
-rm(pt3_collapse, pt_collapse)
-packaged <- as.data.table(rbind(point, poly))
+pt_collapse <- rbind(pt_collapse, pt3_collapse, fill = TRUE)
+rm(pt3_collapse)
+pt_collapse <- rbind(pt_collapse, pt4_collapse, fill = TRUE)
+rm(pt4_collapse)
+pt_collapse <- rbind(pt_collapse, pt5_collapse, fill = TRUE)
+rm(pt5_collapse)
+pt_collapse <- rbind(pt_collapse, pt6_collapse, fill = TRUE)
+rm(pt6_collapse)
+pt_collapse <- rbind(pt_collapse, pt7_collapse, fill = TRUE)
+rm(pt7_collapse)
+pt_collapse <- rbind(pt_collapse, pt8_collapse, fill = TRUE)
+rm(pt8_collapse)
+packaged <- as.data.table(rbind(point, pt_collapse))
 #packaged <- subset(packaged, )
+
+packaged$w_source_drink <- tolower(packaged$w_source_drink)
+packaged$w_source_other <- tolower(packaged$w_source_other)
+
+packaged$t_type <- tolower(packaged$t_type)
+packaged$sewage <- tolower(packaged$sewage)
+
 packaged[!is.na(sewage) & !is.na(t_type), t_type := paste0(t_type, ' ', sewage)]
 packaged[is.na(t_type) & !is.na(sewage), t_type := sewage]
 
+w$string <- tolower(w$string)
+#w_o$string <- tolower(w_o$string)
+t <- t[-4729,]
+t$string <- tolower(t$string)
 
 message("Making data.frames of new strings")
 new_w <- packaged$w_source_drink %>% unique
@@ -74,7 +101,7 @@ today <- Sys.Date() %>% gsub(pattern="-", replace="_")
 
 message("Writing to J")
 write.csv(w, paste0(j, "WORK/11_geospatial/wash/definitions/w_source_defined_", today, ".csv"), row.names=F, na="")
-write.csv(w_o, paste0(j, "WORK/11_geospatial/wash/definitions/w_other_defined_", today, ".csv"), row.names=F, na="")
+#write.csv(w_o, paste0(j, "WORK/11_geospatial/wash/definitions/w_other_defined_", today, ".csv"), row.names=F, na="")
 write.csv(t, paste0(j, "WORK/11_geospatial/wash/definitions/t_type_defined_", today, ".csv"), row.names=F, na="")
 
 

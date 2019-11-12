@@ -88,6 +88,15 @@ cw_water <- function(mydat) {
 		
 		subdat <- mydat %>%
 				 filter(iso3 == i)
+		if(length(ipiped_pct) == 0){
+		  ipiped_pct <- NA
+		}
+		if(length(iwell_pct) == 0){
+		  iwell_pct <- NA
+		}
+		if(length(ispring_pct) == 0){
+		  ispring_pct <- NA
+		}
 
 		if (is.na(ipiped_pct)) {
 			ipiped_pct <- 1
@@ -105,7 +114,8 @@ cw_water <- function(mydat) {
 		}
 
 		subdat <- subdat %>%
-				 mutate(piped = piped + piped_cw + piped_imp,
+				 mutate(network = piped + (ipiped_pct*piped_cw),
+				   piped = piped + piped_cw + piped_imp,
 				 		unimp = unimp + well_unimp + 
 				 				(well_cw * (1 - iwell_pct)) +
 				 				spring_unimp + (spring_cw * (1 - ispring_pct)),
@@ -118,7 +128,7 @@ cw_water <- function(mydat) {
 				 		lat, long, shapefile, location_code,
 				 		year_start, int_year, year_median, sum_old_N,
 				 		N, sum_of_sample_weights,
-				 		piped, imp, unimp, surface, row_id)
+				 		network, piped, imp, unimp, surface, row_id)
 		results[[length(results) + 1]] <- subdat
 
 	}
@@ -211,6 +221,12 @@ cw_sani <- function(mydat) {
 
 		subdat <- mydat %>%
 				 filter(iso3 == i)
+		if(length(ilatrine_pct) == 0){
+		  ilatrine_pct <- NA
+		}
+		if(length(iflush_pct) == 0){
+		  iflush_pct <- NA
+		}
 
 		if (is.na(ilatrine_pct)) {
 			ilatrine_pct <- 1
@@ -248,7 +264,7 @@ cw_sani <- function(mydat) {
 		  select(nid, iso3, survey_series, 
 		         lat, long, shapefile, location_code,
 		         year_start, int_year, year_median, sum_old_N,
-		         N, sum_of_sample_weights, piped,
+		         N, sum_of_sample_weights, network, piped,
 		         imp, unimp, od, row_id)
 		results[[length(results) + 1]] <- subdat
 

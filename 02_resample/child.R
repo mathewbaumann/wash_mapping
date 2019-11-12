@@ -4,23 +4,17 @@ root <- ifelse(Sys.info()[1]=="Windows", "J:/", "/home/j/")
 ## drive locations
 commondir      <- sprintf('/share/geospatial/mbg/common_inputs')
 package_list <- c(t(read.csv(sprintf('%s/package_list.csv',commondir),header=FALSE)))
+package_list <- package_list[!package_list %in% c('INLA','seegMBG')]
 
 # TBD: Remve all 'setwd()'
 core_repo <- repo <-  '/share/code/geospatial/adesh/mbg/'
 setwd(repo)
 
 # Load MBG packages and functions
-message('Loading in required R packages and MBG functions')
-#source(paste0(repo, '/mbg_central/setup.R'))
-#mbg_setup(package_list = package_list, repos = repo)
-
-
-
-shp <- commandArgs()[6]
-indic <- commandArgs()[7]
-run_date <- commandArgs()[8]
-warning(paste(shp,indic,run_date))
-
+# message('Loading in required R packages and MBG functions')
+# source(paste0(repo, '/mbg_central/setup.R'))
+# mbg_setup(package_list = package_list, repos = repo)
+library('INLA')
 library('rgdal')
 library('raster')
 library('dplyr')
@@ -28,7 +22,6 @@ library('seegMBG')
 library('rgeos')
 library('feather')
 library('pacman')
-library('INLA')
 
 package_lib <- '/home/j/temp/geospatial/singularity_packages/3.5.0'
 .libPaths(package_lib)
@@ -37,33 +30,37 @@ for(package in package_list) {
   library(package, lib.loc = package_lib, character.only=TRUE)
 }
 
+
+shp <- commandArgs()[6]
+indic <- commandArgs()[7]
+run_date <- commandArgs()[8]
+warning(paste(shp,indic,run_date))
+
 if (indic == 'water') {
-  levels <- c('piped','imp','unimp','surface')
-  polydat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/water_2019_03_29.feather')
+  levels <- c('network','piped','imp','unimp','surface')
+  polydat <- as.data.table(read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/water_2019_10_24.feather'))
 } else {
-  levels <- c('piped','imp','unimp','od')
-  polydat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/sani_2019_03_29.feather')
+  levels <- c('network','piped','imp','unimp','od')
+  polydat <- as.data.table(read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/sani_2019_10_24.feather'))
 }
 
-polydat <- filter(polydat, is.na(lat) & !is.na(shapefile) & !is.na(location_code))
+polydat <- subset(polydat, is.na(lat) & !is.na(shapefile) & !is.na(location_code))
 setnames(polydat,"year_start", "surv_year")
 setnames(polydat,"int_year", "year_start")
 subset <- polydat[which(polydat$shapefile == shp),]
-if (shp == 'admin2013_2'){
-  subset <- subset(subset, location_code != 2277)
-}
 
 shape_master <- readRDS(paste0('/share/geospatial/rds_shapefiles/',shp,'.rds'))
+subset <- subset[which(location_code %in% shape_master$GAUL_CODE),]
 
 for (pid in levels) {
   setwd('/home/j/WORK/11_geospatial/wash/data/resamp')
   generated_pts <- list()
   
-  subset_loc <- subset[,setdiff(names(subset),setdiff(levels,pid))]
+  subset_loc <- subset[,setdiff(names(subset),setdiff(levels,pid)), with = F] 
   
   for (loc in unique(subset$location_code)) {
     shape <- shape_master[shape_master$GAUL_CODE == loc,]
-    subset_loc2 <- filter(subset_loc, location_code == loc)
+    subset_loc2 <- subset_loc[which(location_code == loc),]
     
     for (q in 1:nrow(subset_loc2)) {
       
@@ -91,7 +88,7 @@ for (pid in levels) {
         samp_pts$weight <- 1
         
       } else {
-        samp_pts <- getPoints(shape = shape, raster = raster_crop, n = 0.01, perpixel = T)  
+        samp_pts <- getPoints(shape = shape, raster = raster_crop, n = 0.01, perpixel = T, prob = T)  
         samp_pts <- as.data.frame(samp_pts)
       }
       
@@ -105,14 +102,15 @@ for (pid in levels) {
     }
     
   }
-  
   generated_pts2 <- do.call(rbind, generated_pts)
-  if (!(indic %in% list.files())) {dir.create(paste0(indic))}
-  setwd(indic)
-  if (!(pid %in% list.files())) {dir.create(paste0(pid))}
-  setwd(pid)
-  if (!(run_date %in% list.files())) {dir.create(paste0(run_date))}
-  setwd(as.character(run_date))
-  write.csv(generated_pts2, file = paste0(shp,'.csv'))
+  if(nrow(generated_pts2) > 0){
+    if (!(indic %in% list.files())) {dir.create(paste0(indic))}
+    setwd(indic)
+    if (!(pid %in% list.files())) {dir.create(paste0(pid))}
+    setwd(pid)
+    if (!(run_date %in% list.files())) {dir.create(paste0(run_date))}
+    setwd(as.character(run_date))
+    write.csv(generated_pts2, file = paste0(shp,'.csv'))
+  }
 }
 

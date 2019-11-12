@@ -15,6 +15,11 @@ input_version <- gsub('points_', '', input_version)
 input_version <- gsub('poly1_', '', input_version)
 input_version <- gsub('poly2_', '', input_version)
 input_version <- gsub('poly3_', '', input_version)
+input_version <- gsub('poly4_', '', input_version)
+input_version <- gsub('poly5_', '', input_version)
+input_version <- gsub('poly6_', '', input_version)
+input_version <- gsub('poly7_', '', input_version)
+input_version <- gsub('poly8_', '', input_version)
 
 root <- "/home/j/"
 l <- '/ihme/limited_use/'
@@ -42,7 +47,7 @@ lapply(packages, library, character.only = T)
 
 increment <- 1
 
-# file_type <- 'poly'
+# file_type <- 'pt'
 # indi_fam <- 'sani'
 # index <- 1
 # agg_level <- ''
@@ -71,10 +76,18 @@ for (file_type in c('pt','poly','ipums')){
     pt1_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly1_', input_version, '.feather')))
     pt2_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly2_', input_version, '.feather')))
     pt3_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly3_', input_version, '.feather')))
-    pt_collapse <- rbind(pt1_collapse, pt2_collapse, fill = TRUE)
-    rm(pt1_collapse, pt2_collapse)
-    pt_collapse <- rbind(pt_collapse, pt3_collapse, fill = TRUE)
-    rm(pt3_collapse)
+    pt4_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly4_', input_version, '.feather')))
+    pt5_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly5_', input_version, '.feather')))
+    pt6_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly6_', input_version, '.feather')))
+    pt7_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly7_', input_version, '.feather')))
+    pt8_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly8_', input_version, '.feather')))
+    pt_collapse <- rbindlist(list(pt1_collapse, pt2_collapse, pt3_collapse,
+                                  pt4_collapse, pt5_collapse, pt6_collapse,
+                                  pt7_collapse, pt8_collapse), fill = TRUE)
+    rm(pt1_collapse, pt2_collapse, pt3_collapse,
+            pt4_collapse, pt5_collapse, pt6_collapse,
+            pt7_collapse, pt8_collapse)
+
     #pt_collapse <- subset(pt_collapse, nid == 148344)
     # Encoding(pt_collapse$w_source_drink) <- "UTF-8"
     # Encoding(pt_collapse$w_source_other) <- "UTF-8"
@@ -128,7 +141,7 @@ for (file_type in c('pt','poly','ipums')){
     } else {
       pt_collapse <- files[[1]]
       ipums <- F
-      indicators <- c('sani', 'water')
+      indicators <- c('water','sani')
       rm(files)
     }
     
@@ -139,16 +152,16 @@ for (file_type in c('pt','poly','ipums')){
       rm(definitions)
       message(paste('Processing:', indi_fam))
       
+      
       for (agg_level in c('')) {
         message(paste("Collapsing",indi_fam, "with", agg_level, "agg_level"))
         message('Loading Definitions...')
         
         if (ipums) {
           if (indi_fam == 'sani') {
-            definitions <- read.csv(paste0(root,'WORK/11_geospatial/wash/definitions/IPUMS_sani_defs_2019_05_07.csv'),
+            definitions <- read.csv(paste0(root,'WORK/11_geospatial/wash/definitions/IPUMS_sani_defs_2019_09_17.csv'),
                                     encoding="windows-1252", stringsAsFactors = F)
-            definitions <- select(definitions, nid, toilet, sewage, sani_3) %>% 
-              dplyr::rename(sani = sani_3)
+            definitions <- select(definitions, nid, toilet, sewage, sani)
             
             definitions$toilet <- tolower(definitions$toilet)
             definitions$sewage <- tolower(definitions$sewage)
@@ -164,25 +177,37 @@ for (file_type in c('pt','poly','ipums')){
         } else {
           if (!("definitions" %in% ls())) {
             if (indi_fam == "sani") {
-              definitions <- read.csv(paste0(root,'WORK/11_geospatial/wash/definitions/t_type_defined_2019_05_08.csv'),
+              definitions <- read.csv(paste0(root,'WORK/11_geospatial/wash/definitions/t_type_defined_by_nid_2019_10_22.csv'),
                                       encoding="windows-1252", stringsAsFactors = F)
-              definitions <- select(definitions, string, sdg_2) %>%
-                rename(sdg = sdg_2)
-              definitions <- definitions[-4876,]
+              definitions$iso3 <- substr(definitions$iso3, 1, 3)
+              definitions <- unique(definitions)
+              definitions$t_type <- tolower(definitions$t_type)
+              definitions$sdg <- ifelse(definitions$sdg == "" | is.na(definitions$sdg),
+                                        NA, definitions$sdg)
+              definitions$t_type <- ifelse(definitions$t_type == "" | is.na(definitions$t_type),
+                                           NA, definitions$t_type)
+              #definitions <- definitions[-4729,]
             } else {
-              definitions <- read.csv(paste0(root,'WORK/11_geospatial/wash/definitions/w_source_defined_2019_05_07.csv'),
+              definitions <- read.csv(paste0(root,'WORK/11_geospatial/wash/definitions/w_source_defined_by_nid_2019_10_22.csv'),
                                       encoding="windows-1252", stringsAsFactors = F) 
-              definitions <- select(definitions, string, sdg, jmp)
+              definitions$iso3 <- substr(definitions$iso3, 1, 3)
+              definitions <- unique(definitions)
+              #definitions <- select(definitions, w_source_drink, sdg, jmp)
+              definitions$w_source_drink <- tolower(definitions$w_source_drink)
+              definitions$sdg <- ifelse(definitions$sdg == "" | is.na(definitions$sdg),
+                                        NA, definitions$sdg)
+              definitions$w_source_drink <- ifelse(definitions$w_source_drink == "" | is.na(definitions$w_source_drink),
+                                           NA, definitions$w_source_drink)
             }
           }
           
           # Prep definitions file for further processing
           #definitions$string <- iconv(definitions$string, 'windows-1252', 'UTF-8')
-          definitions$string <- tolower(definitions$string)
-          definitions$sdg <- ifelse(definitions$sdg == "" | is.na(definitions$sdg),
-                                    NA, definitions$sdg)
-          definitions$string <- ifelse(definitions$string == "" | is.na(definitions$string),
-                                       NA, definitions$string)
+          # definitions$t_type <- tolower(definitions$t_type)
+          # definitions$sdg <- ifelse(definitions$sdg == "" | is.na(definitions$sdg),
+          #                           NA, definitions$sdg)
+          # definitions$t_type <- ifelse(definitions$t_type == "" | is.na(definitions$t_type),
+          #                              NA, definitions$t_type)
           definitions <- distinct(definitions)
         }
         
@@ -203,7 +228,8 @@ for (file_type in c('pt','poly','ipums')){
         #### Subset & Shape Data ####
         message("Initial Cleaning...")
         temp_list <- initial_cleaning(census = T)
-        ptdat <- temp_list[[1]]; ptdat_0 <- temp_list[[2]]
+        ptdat <- temp_list[[1]]
+        ptdat_0 <- temp_list[[2]]
         rm(temp_list)
         
         #### Define Indicator ####
@@ -301,10 +327,10 @@ for (file_type in c('pt','poly','ipums')){
         #save poly and point collapses
         message("Saving Collapsed Data...")
         today <- gsub("-", "_", Sys.Date())
-        
+
         ptdat$row_id <- c(increment:(nrow(ptdat) - 1 + increment))
         increment <- nrow(ptdat) + increment
-        
+
         if (!ipums) {
           if (data_type == "poly") {
             polydat <- ptdat
@@ -316,7 +342,7 @@ for (file_type in c('pt','poly','ipums')){
                                         indi_fam, '_', conditional, '_', agg_level, '_', today, ".feather"))
           }
         }
-        
+
         if (ipums) {
           write_feather(ptdat, paste0(l,"LIMITED_USE/LU_GEOSPATIAL/collapsed/wash/IPUMS/feather/",
                                       indi_fam, '_', conditional, '_', agg_level, '_', today, '_', files[index]))

@@ -21,39 +21,39 @@ all <- rbind(all, wn, fill=T, use.names=T)
 message("custom wash fixes")
 drop <- c("latitude", "longitude")
 all <- all[, (drop):=NULL]
-# 
-# #fix pma water and soap obs custom var
-# all <- all[is.na(hw_water), hw_water := hw_water_pma]
-# all <- all[is.na(hw_soap), hw_soap := hw_soap_pma]
-# 
-# #reduce number of time and distance to water variables
-# #set correct data types
-# all <- all[, mins_ws := as.numeric(mins_ws)]
-# all <- all[, mins_queue_plus_trip := as.numeric(mins_queue_plus_trip)]
-# all <- all[, mins_queue_ws := as.numeric(mins_queue_ws)]
-# 
-# #set NA queue times to 0
-# all <- all[!is.na(mins_ws) & is.na(mins_queue_ws), mins_queue_ws := 0]
-# #set NA time to water units to correct unit
-# all <- all[is.na(mins_ws_unit), mins_ws_unit := mins_ws_manual_unit]
-# #double one-way trip times
-# all <- all[!is.na(mins_ws) & mins_ways == 1, mins_ws := 2*mins_ws]
-# all <- all[!is.na(mins_queue_plus_trip) & mins_ways == 1, mins_queue_plus_trip := 2*mins_queue_plus_trip]
-# all <- all[!is.na(mins_ws) & mins_ways == 1, mins_ways := 2]
-# all <- all[!is.na(mins_queue_plus_trip) & mins_ways == 1, mins_ways := 2]
-# #fix known unit differences
-# all <- all[!is.na(mins_queue_unit) & !is.na(mins_ws_unit) & mins_ws_unit != mins_queue_unit & mins_ws_unit == "Hour", mins_ws := 60*mins_ws]
-# all <- all[!is.na(mins_queue_unit) & !is.na(mins_ws_unit) & mins_ws_unit != mins_queue_unit & mins_ws_unit == "Hour", mins_ws_unit := "Minute"]
-# all <- all[!is.na(mins_queue_unit) & !is.na(mins_ws_unit) & mins_ws_unit != mins_queue_unit & mins_queue_unit == "Hour", mins_queue_ws := 60*mins_queue_ws]
-# all <- all[!is.na(mins_queue_unit) & !is.na(mins_ws_unit) & mins_ws_unit != mins_queue_unit & mins_queue_unit == "Hour", mins_queue_unit := "Minute"]
-# 
-# #document known issues with trip and queue time
-# unit_problems <- all[!is.na(mins_queue_unit) & !is.na(mins_ws_unit) & mins_ws_unit != mins_queue_unit, list(nid, mins_queue_unit, mins_ws_unit)]
-# if (nrow(unit_problems) > 0){
-#   #alert if temporal units are different
-#   message(paste("there are time-to-water issues with nids", unique(unit_problems$nid), collapse=" "))
-#   write.csv(unit_problems, "/home/j/temp/gmanny/wash_water_trip_unit_issues.csv", row.names=F)
-# }
+
+#fix pma water and soap obs custom var
+all <- all[is.na(hw_water), hw_water := hw_water_pma]
+all <- all[is.na(hw_soap), hw_soap := hw_soap_pma]
+
+#reduce number of time and distance to water variables
+#set correct data types
+all <- all[, mins_ws := as.numeric(mins_ws)]
+all <- all[, mins_queue_plus_trip := as.numeric(mins_queue_plus_trip)]
+all <- all[, mins_queue_ws := as.numeric(mins_queue_ws)]
+
+#set NA queue times to 0
+all <- all[!is.na(mins_ws) & is.na(mins_queue_ws), mins_queue_ws := 0]
+#set NA time to water units to correct unit
+all <- all[is.na(mins_ws_unit), mins_ws_unit := mins_ws_manual_unit]
+#double one-way trip times
+all <- all[!is.na(mins_ws) & mins_ways == 1, mins_ws := 2*mins_ws]
+all <- all[!is.na(mins_queue_plus_trip) & mins_ways == 1, mins_queue_plus_trip := 2*mins_queue_plus_trip]
+all <- all[!is.na(mins_ws) & mins_ways == 1, mins_ways := 2]
+all <- all[!is.na(mins_queue_plus_trip) & mins_ways == 1, mins_ways := 2]
+#fix known unit differences
+all <- all[!is.na(mins_queue_unit) & !is.na(mins_ws_unit) & mins_ws_unit != mins_queue_unit & mins_ws_unit == "Hour", mins_ws := 60*mins_ws]
+all <- all[!is.na(mins_queue_unit) & !is.na(mins_ws_unit) & mins_ws_unit != mins_queue_unit & mins_ws_unit == "Hour", mins_ws_unit := "Minute"]
+all <- all[!is.na(mins_queue_unit) & !is.na(mins_ws_unit) & mins_ws_unit != mins_queue_unit & mins_queue_unit == "Hour", mins_queue_ws := 60*mins_queue_ws]
+all <- all[!is.na(mins_queue_unit) & !is.na(mins_ws_unit) & mins_ws_unit != mins_queue_unit & mins_queue_unit == "Hour", mins_queue_unit := "Minute"]
+
+#document known issues with trip and queue time
+unit_problems <- all[!is.na(mins_queue_unit) & !is.na(mins_ws_unit) & mins_ws_unit != mins_queue_unit, list(nid, mins_queue_unit, mins_ws_unit)]
+if (nrow(unit_problems) > 0){
+  #alert if temporal units are different
+  message(paste("there are time-to-water issues with nids", unique(unit_problems$nid), collapse=" "))
+  write.csv(unit_problems, "/home/j/temp/gmanny/wash_water_trip_unit_issues.csv", row.names=F)
+}
 
 make_negtive <- function(number){
   if (number < 0){
@@ -62,19 +62,19 @@ make_negtive <- function(number){
     return(number*-1)
   }
 }
-# 
-# #when units are equal, sum queue and trip time together
-# all <- all[, time_to_source := mins_queue_plus_trip]
-# #sum positive numbers together
-# all <- all[!is.na(mins_ws) & !is.na(mins_ws_unit) & (mins_ws_unit == mins_queue_unit | is.na(mins_ws_unit) | is.na(mins_queue_unit)) & mins_ws > 0 & mins_queue_ws > 0, time_to_source := mins_ws + mins_queue_ws]
-# #sub negative numbers together
-# all <- all[!is.na(mins_ws) & !is.na(mins_ws_unit) & mins_ws_unit == mins_queue_unit & mins_ws < 0 | mins_queue_ws < 0, time_to_source := make_negative(mins_ws) + make_negative(mins_queue_ws)]
-# 
-# all <- all[!is.na(mins_ws) & !is.na(mins_queue_ws) & is.na(mins_ws_unit), time_to_source := mins_ws + mins_queue_ws]
-# 
-# #fix missing PMA minutes to water source values
-# all[grepl("PMA2020", survey_name) & (mins_ws == -88 | mins_ws == -99), mins_ws := NA]
-# all[grepl("PMA2020", survey_name) & (mins_queue_plus_trip == -88 | mins_queue_plus_trip == -99), mins_queue_plus_trip := NA]
+
+#when units are equal, sum queue and trip time together
+all <- all[, time_to_source := mins_queue_plus_trip]
+#sum positive numbers together
+all <- all[!is.na(mins_ws) & !is.na(mins_ws_unit) & (mins_ws_unit == mins_queue_unit | is.na(mins_ws_unit) | is.na(mins_queue_unit)) & mins_ws > 0 & mins_queue_ws > 0, time_to_source := mins_ws + mins_queue_ws]
+#sub negative numbers together
+all <- all[!is.na(mins_ws) & !is.na(mins_ws_unit) & mins_ws_unit == mins_queue_unit & mins_ws < 0 | mins_queue_ws < 0, time_to_source := make_negative(mins_ws) + make_negative(mins_queue_ws)]
+
+all <- all[!is.na(mins_ws) & !is.na(mins_queue_ws) & is.na(mins_ws_unit), time_to_source := mins_ws + mins_queue_ws]
+
+#fix missing PMA minutes to water source values
+all[grepl("PMA2020", survey_name) & (mins_ws == -88 | mins_ws == -99), mins_ws := NA]
+all[grepl("PMA2020", survey_name) & (mins_queue_plus_trip == -88 | mins_queue_plus_trip == -99), mins_queue_plus_trip := NA]
 
 #recalc distances to water
 
@@ -158,19 +158,13 @@ write_feather(pt_collapse, path=paste0(folder_out, "/points_", today, ".feather"
 #break up files because feaths dont like the size of our data
 message('Poly Feathers')
 n <- nrow(poly_collapse)
-poly1 <- poly_collapse[1:ceiling(n/8),]
-poly2 <- poly_collapse[(ceiling(n/8) + 1):(ceiling(n/8) * 2),]
-poly3 <- poly_collapse[((ceiling(n/8) * 2) + 1):(ceiling(n/8) * 3),]
-poly4 <- poly_collapse[((ceiling(n/8) * 3) + 1):(ceiling(n/8) * 4),]
-poly5 <- poly_collapse[((ceiling(n/8) * 4) + 1):(ceiling(n/8) * 5),]
-poly6 <- poly_collapse[((ceiling(n/8) * 5) + 1):(ceiling(n/8) * 6),]
-poly7 <- poly_collapse[((ceiling(n/8) * 6) + 1):(ceiling(n/8) * 7),]
-poly8 <- poly_collapse[((ceiling(n/8) * 7) + 1):n,]
+poly1 <- poly_collapse[1:ceiling(n/5),]
+poly2 <- poly_collapse[(ceiling(n/5) + 1):(ceiling(n/5) * 2),]
+poly3 <- poly_collapse[((ceiling(n/5) * 2) + 1):(ceiling(n/5) * 3),]
+poly4 <- poly_collapse[((ceiling(n/5) * 3) + 1):(ceiling(n/5) * 4),]
+poly5 <- poly_collapse[((ceiling(n/5) * 4) + 1):n,]
 write_feather(poly1, path=paste0(folder_out, "/poly1_", today, ".feather"))
 write_feather(poly2, path=paste0(folder_out, "/poly2_", today, ".feather"))
 write_feather(poly3, path=paste0(folder_out, "/poly3_", today, ".feather"))
 write_feather(poly4, path=paste0(folder_out, "/poly4_", today, ".feather"))
 write_feather(poly5, path=paste0(folder_out, "/poly5_", today, ".feather"))
-write_feather(poly6, path=paste0(folder_out, "/poly6_", today, ".feather"))
-write_feather(poly7, path=paste0(folder_out, "/poly7_", today, ".feather"))
-write_feather(poly8, path=paste0(folder_out, "/poly8_", today, ".feather"))

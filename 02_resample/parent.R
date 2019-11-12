@@ -17,7 +17,7 @@ mbg_setup(package_list = package_list, repos = repo)
 library(feather)
 
 nodes <- ''
-proj <- '-P proj_geo_nodes' #'-P proj_geo_nodes_wash'
+proj <- '-P proj_geospatial' #'-P proj_geo_nodes_wash'
 user <- "baumannm"
 
 setwd('/share/code/geospatial/baumannm/wash_mapping_current/02_resample/')
@@ -26,17 +26,18 @@ run_date <- Sys.Date()
 
 for (indic in indicators) {
   if (indic == 'water') {
-    polydat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/water_2019_03_29.feather')
+    polydat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/water_2019_10_24.feather')
   } else {
-    polydat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/sani_2019_03_29.feather')
+    polydat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/sani_2019_10_24.feather')
   }
   
   polydat <- subset(polydat, is.na(lat) & !is.na(shapefile) & !is.na(location_code))
   for (shp in unique(polydat$shapefile)) { 
     jname <- paste(indic, shp, sep = "_")
-    mycores <- 4
+    mythreads <- '1'
+    mymem <- '6G'
     sys.sub <- paste0("qsub ",proj,paste0(" -e /share/temp/sgeoutput/",user,"/errors -o /share/temp/sgeoutput/",user,"/output "),
-                      "-cwd -N ", jname, " ", "-pe multi_slot ", mycores, " ")
+                      "-cwd -N ", jname, " ", "-l fthread=", mythreads, " ", "-l m_mem_free=", mymem, ' -q all.q -l h_rt=12:00:00 -l archive=TRUE')
     script <- "child.R"
     r_shell <- '/share/singularity-images/rstudio/shells/r_shell_singularity_3501.sh'
     

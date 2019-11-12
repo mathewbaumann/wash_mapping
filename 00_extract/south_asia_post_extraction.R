@@ -21,7 +21,7 @@ rm(list=ls())
 topic <- "wash"
 cluster <- TRUE #running on cluster true/false
 geos <- FALSE #running on geos nodes true/false
-cores <- 20
+cores <- 10
 #FOR THE CLUSTER:
 #qlogin -now n -pe multi_slot 5 -P proj_geospatial -l geos_node=TRUE
 #source('/snfs2/HOME/gmanny/backups/Documents/Repos/geospatial-data-prep/common/post_extraction_3.R')
@@ -62,8 +62,7 @@ read_add_name_col <- function(file){
   rn <- gsub(".csv", "", file, ignore.case=T)
   spl <- strsplit(rn, "/") %>% unlist()
   svy <- spl[length(spl)]
-  #df <- read.csv(file, encoding="windows-1252", stringsAsFactors = F) #this encoding scheme plays nice with the default excel format
-  df <- fread(file)
+  df <- read.csv(file, encoding="windows-1252", stringsAsFactors = F) #this encoding scheme plays nice with the default excel format
   df <- as.data.table(df)
   df[, survey_series := svy]
   df <- lapply(df, as.character, stringsAsFactors = FALSE)
@@ -74,9 +73,13 @@ read_add_name_col <- function(file){
 ######################## BIND UBCOV EXTRACTS ########################
 #####################################################################
 #Generate list of extraction filepaths
+south_asia <- c('_BGD_','_BTN_','_IND_','_LKA_','_NPL_','_PAK_')
+
 extractions <- list.files(folder_in, full.names=T, pattern = ".dta", ignore.case=T, recursive = F)
 extractions <- grep("IPUMS_CENSUS", extractions, invert=T, value = T) #IPUMS is handled separately
-extractions <- grep("234353|233917", extractions, invert=T, value=T)
+extractions <- grep(paste(south_asia,collapse="|"), extractions, invert=F, value=T)
+extractions <- grep("234353", extractions, invert=T, value=T)
+#extractions <- grep("IND_ANNUAL_HEALTH_SURVEY|23258|91740|240525_HHM_MEX_4649", extractions, invert=F, value=T)
 #234353 is a massive India dataset that slows everything down and gets us killed on the cluster. It is handled separately.
 #233917 is another IND survey that isn't quite as large but it also has to be loaded and collapsed separately.
 
@@ -171,22 +174,22 @@ all[iso3 == "KOSOVO", iso3 := "SRB"] #GBD rolls Kosovo data into Serbia
 #####################################################################
 ############################### MERGE DIAGNOSTIC ####################
 #####################################################################
-# 
-# geo_nids <- unique(geo$nid)
-# topic_nids <- unique(topics$nid)
-# merged_correctly <- all[(!is.na(shapefile) & !is.na(location_code)) | (!is.na(lat) & !is.na(long)),]
-# merged_nids <- unique(merged_correctly$nid)
-# 
-# missing_nids <- topic_nids[(topic_nids %in% geo_nids) & !(topic_nids %in% merged_nids)]
-# if (length(missing_nids) > 0){
-#   message(paste("Writing csv of the", length(missing_nids), "surveys that are not properly merging"))
-#   merge_issues <- all[nid %in% missing_nids, .(nid, iso3, survey_name)] %>% distinct
-#   merge_issues <- merge(merge_issues, stages, by.x="iso3", by.y="alpha.3", all.x=T)
-#   write.csv(merge_issues, paste0(folder_out, "/merge_issues.csv"), na="", row.names=F)
-# } else{
-#   message("All nids merged correctly. You are so thorough.")
-#   #Once R can handle unicode please add the clap emoji to this message.
-# }
+
+geo_nids <- unique(geo$nid)
+topic_nids <- unique(topics$nid)
+merged_correctly <- all[(!is.na(shapefile) & !is.na(location_code)) | (!is.na(lat) & !is.na(long)),]
+merged_nids <- unique(merged_correctly$nid)
+
+missing_nids <- topic_nids[(topic_nids %in% geo_nids) & !(topic_nids %in% merged_nids)]
+if (length(missing_nids) > 0){
+  message(paste("Writing csv of the", length(missing_nids), "surveys that are not properly merging"))
+  merge_issues <- all[nid %in% missing_nids, .(nid, iso3, survey_name)] %>% distinct
+  merge_issues <- merge(merge_issues, stages, by.x="iso3", by.y="alpha.3", all.x=T)
+  write.csv(merge_issues, paste0(folder_out, "/merge_issues.csv"), na="", row.names=F)
+} else{
+  message("All nids merged correctly. You are so thorough.")
+  #Once R can handle unicode please add the clap emoji to this message.
+}
 
 #####################################################################
 ######################### MAKE year_experiment COLUMN ###############
@@ -219,11 +222,13 @@ message("end of table")
 rm(geo_k)
 rm(geo)
 rm(topics)
-#rm(merged_correctly)
+rm(merged_correctly)
 
 #####################################################################
 ######################### TOPIC-SPECIFIC CODE #######################
 #####################################################################
+
+all$mins_queue_ws <- NA
 
 if (topic == "wash"){
   message("WaSH-specific Fixes")

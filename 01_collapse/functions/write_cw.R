@@ -75,7 +75,7 @@ write_cw_ratio <- function(mydat = ptdat, dt = data_type, census = ipums,
 		  		   		  latrine_imp = latrine_imp * total_hh,
 		  		   		  latrine_unimp = latrine_unimp * total_hh,
 		  		   		  latrine_cw = latrine_cw * total_hh,
-		  		   		  flush_imp = (flush_imp + flush_imp_sewer + flush_imp_septic) * total_hh,
+		  		   		  flush_imp = (flush_imp + flush_imp_sewer + flush_imp_septic),
 		  		   		  flush_unimp = flush_unimp * total_hh,
 		  		   		  flush_cw = flush_cw * total_hh) %>%
 		  		   group_by(iso3, reg) %>% 
