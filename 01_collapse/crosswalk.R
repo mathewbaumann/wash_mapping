@@ -28,15 +28,12 @@ files <- files[with(files, order(as.POSIXct(ctime), decreasing = TRUE)), ]
 latest_postextraction <- unlist(strsplit(rownames(files)[1], "/"))
 latest_postextraction <- latest_postextraction[length(latest_postextraction)]
 input_version <- gsub('.feather', '', latest_postextraction)
-input_version <- gsub('ptdat_sani_unconditional__', '', input_version)
-input_version <- gsub('polydat_sani_unconditional__', '', input_version)
-input_version <- gsub('ptdat_water_unconditional__', '', input_version)
-input_version <- gsub('polydat_water_unconditional__', '', input_version)
+input_version <- substr(input_version,(nchar(input_version) - 9),nchar(input_version))
 
 
 setwd(repo)
-source('functions/cw_indi.R')
-source('functions/swachhta_report_fix.R')
+source('functions/cw_indi.R') #cw functions
+source('functions/swachhta_report_fix.R') #handle India tabulated data
 
 library(dplyr)
 library(feather)

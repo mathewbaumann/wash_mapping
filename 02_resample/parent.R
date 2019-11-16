@@ -17,7 +17,7 @@ mbg_setup(package_list = package_list, repos = repo)
 library(feather)
 
 nodes <- ''
-proj <- '-P proj_geospatial' #'-P proj_geo_nodes_wash'
+proj <- '-P proj_geospatial'
 user <- "baumannm"
 
 setwd('/share/code/geospatial/baumannm/wash_mapping_current/02_resample/')

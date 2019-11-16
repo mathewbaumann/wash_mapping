@@ -6,30 +6,6 @@ write_cw_ratio <- function(mydat = ptdat, dt = data_type, census = ipums,
   if (census) {
   	dt <- 'ipums'
   }
-  # # Define regions
-  # sssa_hi <- c('NAM','BWA','ZAF')
-  # cssa <- c('CAF','GAB','GNQ','COD','COG','AGO','STP')
-  # name_hi <- c('MAR','DZA','TUN','LBY','EGY')
-  # essa_hilo <- c('SDN','ERI','DJI','SOM','ETH','SSD',
-  #                'SSD','UGA','KEN','RWA','BDI','TZA',
-  #                'MWI','MOZ','ZMB','MDG','ZWE','SWZ','LSO',
-  #                'COM')
-  # wssa <- c('CPV','SEN','GMB','GIN','GNB','SLE','MLI','LBR',
-  #           'CIV','GHA','TGO','BEN','NGA','NER','TCD','CMR',
-  #           'BFA','MRT')
-  # africa <- c(sssa_hi, cssa, name_hi, essa_hilo, wssa)
-  # 
-  # # Assign regions
-  # mydat$reg <- NA
-  # mydat$reg <- ifelse(!(mydat$iso3 %in% africa), 'not-africa', mydat$reg)
-  # mydat$reg <- ifelse(mydat$iso3 %in% sssa_hi, 'sssa_hi', mydat$reg)
-  # mydat$reg <- ifelse(mydat$iso3 %in% cssa, 'cssa', mydat$reg)
-  # mydat$reg <- ifelse(mydat$iso3 %in% name_hi, 'name_hi', mydat$reg)
-  # mydat$reg <- ifelse(mydat$iso3 %in% essa_hilo, 'essa_hilo', mydat$reg)
-  # mydat$reg <- ifelse(mydat$iso3 %in% wssa, 'wssa', mydat$reg)
-  # 
-  
-  
   regions <- read.csv('/home/j/WORK/11_geospatial/diarrhea/01_data/00_identifiers/geoid_stg2.csv')
   regions <- regions[,c('iso3', 'region')]
   regions$iso3 <- as.character(regions$iso3)
@@ -114,11 +90,6 @@ write_cw_ratio <- function(mydat = ptdat, dt = data_type, census = ipums,
 	if ((dt %in% data_present) & dt != 'ipums') {
 		write.csv(mydat, '/home/j/WORK/11_geospatial/wash/definitions/cw_sani_2.csv')
 	} else {
-
-		# If it current data type isnt represented rbind and re-collapse
-		# the dataset to update counts
-		# This is if csv doesn't exist then the first write is generated
-		# with the current data type being processed
 		if (data_present != '') {
 			mydat <- bind_rows(mydat, original)
 			if (dt != 'ipums') {
@@ -207,11 +178,6 @@ write_cw_ratio <- function(mydat = ptdat, dt = data_type, census = ipums,
 	if ((dt %in% data_present) & dt != 'ipums') {
 		write.csv(mydat, '/home/j/WORK/11_geospatial/wash/definitions/cw_water_2.csv')
 	} else {
-
-		# If it current data type isnt represented rbind and re-collapse
-		# the dataset to update counts
-		# This is if csv doesn't exist then the first write is generated
-		# with the current data type being processed
 		if (data_present != '') {
 			mydat <- bind_rows(mydat, original)
 			if (dt != 'ipums') {

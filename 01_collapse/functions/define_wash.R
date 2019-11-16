@@ -3,7 +3,6 @@ define_indi <- function(mydat = ptdat, var_family = indi_fam, define = definitio
   if (debug) {browser()}
 
   if ("data.table" %in% class(mydat)){
-    #make sure you are not passing this data.tables. DT drops specific strings when merging large objects together.
     message('ALERT: YOU ARE PASSING DATA.TABLES INTO THE MERGE. LARGE DATA.TABLES DROP STINGS. PLEASE MAKE THEM DATA.FRAMES.')
   }
 
@@ -33,8 +32,6 @@ define_indi <- function(mydat = ptdat, var_family = indi_fam, define = definitio
       define <- rename(definitions, t_type = toilet, sdg = sani)
       mydat <- left_join(mydat, define, by = c("t_type", "sewage", "nid"))
     } else {
-      #define <- rename(define, t_type = string)
-      #mydat <- merge(mydat, define, by = 't_type', allow.cartesian = TRUE)
       mydat <- left_join(mydat, define, by = c("nid","iso3", "year_start","t_type"))
     }
   }
@@ -45,15 +42,6 @@ define_indi <- function(mydat = ptdat, var_family = indi_fam, define = definitio
                    surface = ifelse(mydat$sdg == "surface", 1, ifelse(is.na(mydat$sdg), NA, 0)),
                    imp = ifelse(mydat$sdg == "imp", 1, ifelse(is.na(mydat$sdg), NA, 0)),
                    unimp = ifelse(mydat$sdg == "unimp", 1, ifelse(is.na(mydat$sdg), NA, 0)),
-
-                   #Define bottled and bottled crosswalks (REMOVED DUE TO SDGs)
-                   #bottled = ifelse(mydat$sdg == "bottled" &
-                   #                 !(mydat$sdg2 %in% c('imp','spring_imp','well_imp')), 1,
-                   #                 ifelse(is.na(mydat$sdg), NA, 0)),
-                   #bottled_sp = ifelse(mydat$sdg == "bottled" & mydat$sdg2 == 'spring_cw', 1,
-                   #                    ifelse(is.na(mydat$sdg), NA, 0)),
-                   #bottled_wl = ifelse(mydat$sdg == "bottled" & mydat$sdg2 == 'well_cw', 1,
-                   #                    ifelse(is.na(mydat$sdg), NA, 0)),
 
                    # Define crosswalking indicators
                    well_cw = ifelse(mydat$sdg == "well_cw", 1, ifelse(is.na(mydat$sdg), NA, 0)),
@@ -68,10 +56,6 @@ define_indi <- function(mydat = ptdat, var_family = indi_fam, define = definitio
                    piped_imp = ifelse(mydat$sdg == "piped_imp", 1, ifelse(is.na(mydat$sdg), NA, 0)),
                    piped = ifelse(mydat$sdg == "piped", 1, ifelse(is.na(mydat$sdg), NA, 0))
                    )
-
-    # relic of mdg era
-    #mydat <- mutate(mydat, imp = ifelse(mydat$imp == 1 | (mydat$sdg == "bottled" & (mydat$sdg2 %in% c('imp','spring_imp','well_imp'))),
-    #                             1, ifelse(is.na(mydat$sdg), NA, 0)))
   }
 
   if (var_family == 'hw') {
@@ -92,16 +76,7 @@ define_indi <- function(mydat = ptdat, var_family = indi_fam, define = definitio
 
   if (var_family == 'sani') {
     mydat <- mydat %>%
-    mutate(# Define straightforward sani ladder
-           ### This was old way of doing it by including shared
-           #imp = ifelse(mydat$sdg == "imp" & mydat$shared_san == 0, 1, ifelse(is.na(mydat$sdg), NA, 0)),
-           #imp_cw = ifelse(mydat$sdg == "imp" & is.na(mydat$shared_san), 1, ifelse(is.na(mydat$sdg), NA, 0)),
-           #shared = ifelse(mydat$sdg == "imp" & mydat$shared_san == 1, 1, ifelse(is.na(mydat$sdg), NA, 0)),
-           #unimp = ifelse(mydat$sdg == "unimp", 1, ifelse(is.na(mydat$sdg), NA, 0)),
-           #od = ifelse(mydat$sdg == "open", 1, ifelse(is.na(mydat$sdg), NA, 0)),
-
-           ### New Way of classifying not including shared
-           imp = ifelse(mydat$sdg == "imp", 1, ifelse(is.na(mydat$sdg), NA, 0)),
+    mutate(imp = ifelse(mydat$sdg == "imp", 1, ifelse(is.na(mydat$sdg), NA, 0)),
            unimp = ifelse(mydat$sdg == "unimp", 1, ifelse(is.na(mydat$sdg), NA, 0)),
            od = ifelse(mydat$sdg == "open", 1, ifelse(is.na(mydat$sdg), NA, 0)),
            shared = ifelse((mydat$sdg %in% c('imp','latrine_imp')),

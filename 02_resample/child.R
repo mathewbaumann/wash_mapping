@@ -10,10 +10,6 @@ package_list <- package_list[!package_list %in% c('INLA','seegMBG')]
 core_repo <- repo <-  '/share/code/geospatial/adesh/mbg/'
 setwd(repo)
 
-# Load MBG packages and functions
-# message('Loading in required R packages and MBG functions')
-# source(paste0(repo, '/mbg_central/setup.R'))
-# mbg_setup(package_list = package_list, repos = repo)
 library('INLA')
 library('rgdal')
 library('raster')

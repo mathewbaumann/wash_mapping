@@ -1,0 +1,35 @@
+This repo is used for the stage 2 (Lower and Middle Income Countries) estimation of Access to Water and Sanitation Facilities.
+Repo Structure
+	00_extract: Geo matching and other intial data cleaning steps
+		post_extraction.R - handles geo matching of non census surveys
+		wash_specific_post_extract.R - script sourced at the end of post_extraction.R which fixes hh_sizes and saves the geo matched data 
+		post_extract_IPUMS.R - handles geo matching of IPUMS and other censuses
+
+	01_collapse: Data aggregation and data crosswalking
+		collapse.R - handles aggregation as well as household size crosswalking and saves indicator crosswalk ratios
+		crosswalk.R - crosswalks indicators based on ratios saved in collapse.R, appends tabulated data sources
+		gen_input_file.R - proportions and saves point data
+		functions:
+			Used in collapse.R
+			    initial_cleaning.R - data cleaning steps including variable subsetting, weight fixing, geography data fixing, and finding median interview year for each source
+			    hh_cw.R - crosswalks missing household sizes based on ratios of hh sizes in the region
+			    functions/address_missing.R - removes data with substantial missingness
+			    functions/agg_wash.R - aggregates data 
+			    functions/define_wash.R - takes string matched categories and creates binary columns
+			    functions/write_cw.R - writes out indicator crosswalk ratios
+		    Used in crosswalk.R
+		    	cw_indi.R - crosswalks data based on saved ratios from collapse.R
+		    	tabulated_data_fix.R - fixes for specific tabulated data sources given to us by our India collaborators
+
+	02_resample: resamples polygon data into points based off of population rasters
+		parent.R - launches qsubs to resample data by shapefile
+		child.R - script called by parent.R, resamples data by shapefile and writes out new data as points
+		append_poly_input_data.R - proportions polygon data and appends it to point data
+
+	03_diagnostics: plots for vetting sources post collaspe
+		national_ts.R - plots access across time, comaring to JMP esitamtes
+		combined_indicator_ts.R - plots all proportioned indicators per survey across time
+
+	04_strings: matching string responses from surveys to team defined categories
+		match_string.R - writes out a csv for water and sanitation with unmatched strings from new sources to be manually matched
+		match_strings_IPUMS.R - IPUMS strings handled seperately

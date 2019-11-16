@@ -1,3 +1,6 @@
+# Clear environment
+rm(list = ls())
+
 #source("/snfs2/HOME/gmanny/backups/Documents/Repos/wash_mapping/04_strings/match_strings.R")
 package_lib <- '/snfs1/temp/geospatial/geos_packages'
 .libPaths(package_lib)
@@ -7,16 +10,7 @@ library(feather)
 j <- ifelse(Sys.info()[1]=="Windows", "J:/", "/home/j/")
 l <- ifelse(Sys.info()[1]=="Windows", "L:/", "/ihme/limited_use/")
 
-message("Rounding up necessary file paths")
-most_recent <- list.files(paste0(j, "WORK/11_geospatial/wash/definitions"), full.names = T, pattern=".csv$") %>% grep(value=T, ignore.case=T, pattern="IPUMS", invert=T) %>% grep(value=T, ignore.case=T, pattern="t_|w_")
-
-most_recent_water <- grep(most_recent, pattern="w_source", value=T) %>% tail(1)
-most_recent_wother <- grep(most_recent, pattern="w_other", value=T) %>% tail(1)
-most_recent_toilet <- grep(most_recent, pattern="t_type", value=T) %>% tail(1)
-
-w <- read.csv(most_recent_water, stringsAsFactors=F, encoding = 'windows-1252')
-w_o <- read.csv(most_recent_wother, stringsAsFactors=F, encoding = 'windows-1252')
-t <- read.csv(most_recent_toilet, stringsAsFactors=F, encoding = 'windows-1252')
+stg_mast <- fread('/home/j/WORK/11_geospatial/10_mbg/stage_master_list.csv')
 
 most_recent_extracts <- list.files(paste0(l, "LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/"), full.names = T, pattern=".feather$") %>% grep(value=T, pattern="poly", invert=T)
 extract_info <- file.info(most_recent_extracts)
@@ -36,14 +30,14 @@ message("Loading big extraction .Rdata")
 # packaged <- all[all$year_end >= 1997, ]
 # #rm(all)
 point <- read_feather(most_recent_point)
-pt1_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly1_', '2019_09_03', '.feather')))
-pt2_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly2_', '2019_09_03', '.feather')))
-pt3_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly3_', '2019_09_03', '.feather')))
-pt4_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly4_', '2019_09_03', '.feather')))
-pt5_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly5_', '2019_09_03', '.feather')))
-pt6_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly6_', '2019_09_03', '.feather')))
-pt7_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly7_', '2019_09_03', '.feather')))
-pt8_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly8_', '2019_09_03', '.feather')))
+pt1_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly1_', '2019_09_26', '.feather')))
+pt2_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly2_', '2019_09_26', '.feather')))
+pt3_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly3_', '2019_09_26', '.feather')))
+pt4_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly4_', '2019_09_26', '.feather')))
+pt5_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly5_', '2019_09_26', '.feather')))
+pt6_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly6_', '2019_09_26', '.feather')))
+pt7_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly7_', '2019_09_26', '.feather')))
+pt8_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly8_', '2019_09_26', '.feather')))
 
 pt_collapse <- rbind(pt1_collapse, pt2_collapse, fill = TRUE)
 rm(pt1_collapse, pt2_collapse)
@@ -60,7 +54,6 @@ rm(pt7_collapse)
 pt_collapse <- rbind(pt_collapse, pt8_collapse, fill = TRUE)
 rm(pt8_collapse)
 packaged <- as.data.table(rbind(point, pt_collapse))
-#packaged <- subset(packaged, )
 
 packaged$w_source_drink <- tolower(packaged$w_source_drink)
 packaged$w_source_other <- tolower(packaged$w_source_other)
@@ -71,37 +64,20 @@ packaged$sewage <- tolower(packaged$sewage)
 packaged[!is.na(sewage) & !is.na(t_type), t_type := paste0(t_type, ' ', sewage)]
 packaged[is.na(t_type) & !is.na(sewage), t_type := sewage]
 
-w$string <- tolower(w$string)
-#w_o$string <- tolower(w_o$string)
-t <- t[-4729,]
-t$string <- tolower(t$string)
-
-message("Making data.frames of new strings")
-new_w <- packaged$w_source_drink %>% unique
-new_wo <- packaged$w_source_other %>% unique
-new_t <- packaged$t_type %>% unique
-
-new_w <- new_w[!(new_w %in% w$string)]
-new_wo <- new_wo[!(new_wo %in% w_o$string) & !is.na(new_wo)]
-new_t <- new_t[!(new_t %in% t$string) & !is.na(new_t)]
-
-new_w <- as.data.frame(new_w, col.names="string", stringsAsFactors=F)
-new_wo <- as.data.frame(new_wo, col.names="string", stringsAsFactors=F)
-new_t <- as.data.frame(new_t, col.names="string", stringsAsFactors=F)
-colnames(new_w)[1] <- "string"
-colnames(new_wo)[1] <- "string"
-colnames(new_t)[1] <- "string"
-
-message("Attaching new data.frames to old ones")
-w <- rbindlist(list(w, new_w), fill=T, use.names=T)
-w_o <- rbindlist(list(w_o, new_wo), fill=T, use.names=T)
-t <- rbindlist(list(t, new_t), fill=T, use.names=T)
-
-today <- Sys.Date() %>% gsub(pattern="-", replace="_")
-
-message("Writing to J")
-write.csv(w, paste0(j, "WORK/11_geospatial/wash/definitions/w_source_defined_", today, ".csv"), row.names=F, na="")
-#write.csv(w_o, paste0(j, "WORK/11_geospatial/wash/definitions/w_other_defined_", today, ".csv"), row.names=F, na="")
-write.csv(t, paste0(j, "WORK/11_geospatial/wash/definitions/t_type_defined_", today, ".csv"), row.names=F, na="")
+packaged <- unique(packaged[,c('nid','iso3','year_start','w_source_drink','t_type')])
+packaged <- subset(packaged, !iso3 %in% subset(stg_mast, Stage == 3)$iso3) %>% subset(year_start > 1999)
 
 
+w <- fread(paste0(j, "WORK/11_geospatial/wash/definitions/", "w_source_defined_by_nid_2019_09_20.csv"))
+t <- fread(paste0(j, "WORK/11_geospatial/wash/definitions/", "t_type_defined_by_nid_2019_09_23.csv"))
+
+
+w_new <- merge(unique(packaged[,c('nid','iso3','year_start','w_source_drink')]), w, by = c('nid','iso3','year_start','w_source_drink'), all.x = T)
+t_new <- merge(unique(packaged[,c('nid','iso3','year_start','t_type')]), t, by = c('nid','iso3','year_start','t_type'), all.x = T)
+
+w_new <- subset(w_new, !is.na(sdg))
+t_new <- subset(t_new, !is.na(sdg))
+
+
+write.csv(w_new, paste0(j, "WORK/11_geospatial/wash/definitions/", "w_source_defined_by_nid_2019_09_27.csv"))
+write.csv(t_new, paste0(j, "WORK/11_geospatial/wash/definitions/", "t_type_defined_by_nid_2019_09_27.csv"))

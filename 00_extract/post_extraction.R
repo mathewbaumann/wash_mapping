@@ -10,7 +10,6 @@
 # INSTRUCTIONS:
 # UBCOV OUTPUTS MUST BE SAVED IN LIMITED USE DIRECTORY
 #####################################################################
-#RAM USED: 214.1gb
 
 #####################################################################
 ############################## SETUP ################################
@@ -19,12 +18,7 @@ rm(list=ls())
 
 #Define values
 topic <- "wash"
-cluster <- TRUE #running on cluster true/false
-geos <- FALSE #running on geos nodes true/false
 cores <- 20
-#FOR THE CLUSTER:
-#qlogin -now n -pe multi_slot 5 -P proj_geospatial -l geos_node=TRUE
-#source('/snfs2/HOME/gmanny/backups/Documents/Repos/geospatial-data-prep/common/post_extraction_3.R')
 
 #Setup
 j <- ifelse(Sys.info()[1]=="Windows", "J:/", "/snfs1/")
@@ -36,20 +30,11 @@ folder_out <- paste0(l, "LIMITED_USE/LU_GEOSPATIAL/geo_matched/", topic) #where 
 
 today <- gsub("-", "_", Sys.Date())
 stages <- read.csv(paste0(j, "temp/gmanny/geospatial_stages_priority.csv"), stringsAsFactors=F)
-# package_lib <- '/home/j/temp/geospatial/singularity_packages'
-# .libPaths(package_lib)
 
 #Load packages
 package_list <- c('haven', 'stringr', 'data.table', 'dplyr', 'magrittr', 'parallel', 'doParallel')
 lapply(package_list, library, character.only = T)
-# source("/share/code/geospatial/lbd_core/mbg_central/setup.R")
-# mbg_setup(package_list = package_list, repos="/share/code/geospatial/lbd_core/mbg_central")
-# packages <- lapply(packages, library, character.only=T)
-#haven to read in stata
-#data.table for speed & syntax
-#dplyr for distinct (strange behavior from data.table unique)
-#parallel for mclapply
-#doParallel for parallelized foreach
+
 
 
 #####################################################################
@@ -62,7 +47,6 @@ read_add_name_col <- function(file){
   rn <- gsub(".csv", "", file, ignore.case=T)
   spl <- strsplit(rn, "/") %>% unlist()
   svy <- spl[length(spl)]
-  #df <- read.csv(file, encoding="windows-1252", stringsAsFactors = F) #this encoding scheme plays nice with the default excel format
   df <- fread(file)
   df <- as.data.table(df)
   df[, survey_series := svy]
@@ -75,42 +59,28 @@ read_add_name_col <- function(file){
 #####################################################################
 #Generate list of extraction filepaths
 extractions <- list.files(folder_in, full.names=T, pattern = ".dta", ignore.case=T, recursive = F)
-extractions <- grep("IPUMS_CENSUS", extractions, invert=T, value = T) #IPUMS is handled separately
-extractions <- grep("234353|233917", extractions, invert=T, value=T)
-#234353 is a massive India dataset that slows everything down and gets us killed on the cluster. It is handled separately.
-#233917 is another IND survey that isn't quite as large but it also has to be loaded and collapsed separately.
 
 #append all ubcov extracts together
-if(cluster == TRUE) {
-  message("Make cluster")
-  cl <- makeCluster(cores)
-  clusterEvalQ(cl, .libPaths('/home/j/temp/geospatial/singularity_packages/3.5.0'))
-  message("Register cluster")
-  registerDoParallel(cl)
-  message("Start foreach")
-  #Read in each .dta file in parallel - returns a list of data frames
-  top <- foreach(i=1:length(extractions), .packages = c('haven')) %dopar% {
-    dta <- read_dta(extractions[i], encoding = 'latin1')
-    return(dta)
-  }
-  message("Foreach finished")
-  message("Closing cluster")
-  stopCluster(cl)
-} else if(cluster == FALSE) {
-  top <- foreach(i=1:length(extractions)) %do% {
-    message(paste0("Reading in: ", extractions[i]))
-    dta <- read_dta(extractions[i])
-    return(dta)
-  }
+message("Make cluster")
+cl <- makeCluster(cores)
+clusterEvalQ(cl, .libPaths('/home/j/temp/geospatial/singularity_packages/3.5.0'))
+message("Register cluster")
+registerDoParallel(cl)
+message("Start foreach")
+#Read in each .dta file in parallel - returns a list of data frames
+top <- foreach(i=1:length(extractions), .packages = c('haven')) %dopar% {
+  dta <- read_dta(extractions[i], encoding = 'latin1')
+  return(dta)
 }
+message("Foreach finished")
+message("Closing cluster")
+stopCluster(cl)
+
 
 
 message("rbindlist all extractions together")
 topics <- rbindlist(top, fill=T, use.names=T)
 rm(top)
-
-##Save raw data file, if desired
-#save(topics, file=paste0(folder_out, "/topics_no_geogs_", today, ".Rdata"))
 
 #####################################################################
 ######################## PULL IN GEO CODEBOOKS ######################
@@ -155,7 +125,6 @@ if (class(topics$nid) == "numeric"){
 #Drop unnecessary geo codebook columns
 geo_keep <- c("nid", "iso3", "geospatial_id", "point", "lat", "long", "shapefile", "location_code", "survey_series")
 geo_k <- geo[, geo_keep, with=F]
-## If the merge returns an 'allow.cartesian' error, we've likely over-dropped characters - contact Scott Swartz to address it ##
 
 #####################################################################
 ############################### MERGE ###############################
@@ -167,26 +136,6 @@ geo_k$geospatial_id <- as.character(geo_k$geospatial_id)
 topics$geospatial_id <- as.character(topics$geospatial_id)
 all <- merge(geo_k, topics, by.x=c("nid", "iso3", "geospatial_id"), by.y=c("nid", "iso3", "geospatial_id"), all.x=F, all.y=T)
 all[iso3 == "KOSOVO", iso3 := "SRB"] #GBD rolls Kosovo data into Serbia
-
-#####################################################################
-############################### MERGE DIAGNOSTIC ####################
-#####################################################################
-# 
-# geo_nids <- unique(geo$nid)
-# topic_nids <- unique(topics$nid)
-# merged_correctly <- all[(!is.na(shapefile) & !is.na(location_code)) | (!is.na(lat) & !is.na(long)),]
-# merged_nids <- unique(merged_correctly$nid)
-# 
-# missing_nids <- topic_nids[(topic_nids %in% geo_nids) & !(topic_nids %in% merged_nids)]
-# if (length(missing_nids) > 0){
-#   message(paste("Writing csv of the", length(missing_nids), "surveys that are not properly merging"))
-#   merge_issues <- all[nid %in% missing_nids, .(nid, iso3, survey_name)] %>% distinct
-#   merge_issues <- merge(merge_issues, stages, by.x="iso3", by.y="alpha.3", all.x=T)
-#   write.csv(merge_issues, paste0(folder_out, "/merge_issues.csv"), na="", row.names=F)
-# } else{
-#   message("All nids merged correctly. You are so thorough.")
-#   #Once R can handle unicode please add the clap emoji to this message.
-# }
 
 #####################################################################
 ######################### MAKE year_experiment COLUMN ###############
@@ -219,7 +168,7 @@ message("end of table")
 rm(geo_k)
 rm(geo)
 rm(topics)
-#rm(merged_correctly)
+
 
 #####################################################################
 ######################### TOPIC-SPECIFIC CODE #######################
@@ -229,37 +178,4 @@ if (topic == "wash"){
   message("WaSH-specific Fixes")
   source("/share/code/geospatial/baumannm/wash_mapping_current/00_extract/wash_specific_post_extract.R")
 }
-
-#######
-#wash spercific post extract saves dataset
-
-
-
-
-
-
-
-
-#####################################################################
-######################### CLEAN UP & SAVE ###########################
-#####################################################################
-
-##Fill in lat & long from ubCov extracts, if present
-#all[!is.na(latitude) & is.na(lat), lat := latitude]
-#all[!is.na(longitude) & is.na(long), long := longitude]
-
-# #Save
-# message("Saving as .Rdata")
-# save(all, file=paste0(folder_out, "/", today, ".Rdata"))
-# #message("Saving as .csv")
-# #write.csv(all, file=paste0(folder_out, "/", today, ".csv"))
-# 
-# #Create & export a list of all surveys that have not yet been matched & added to the geo codebooks
-# message("Exporting a list of surveys that need to be geo matched")
-# gnid <- unique(geo$nid)
-# fix <- subset(all, !(all$nid %in% gnid))
-# fix_collapse <- distinct(fix[,c("nid", "iso3", "year_start", "survey_name"), with=T])
-# fix_collapse <- merge(fix_collapse, stages, by.x="iso3", by.y="alpha.3", all.x=T)
-# fix_outpath <- paste0(j, "LIMITED_USE/LU_GEOSPATIAL/geo_matched/", topic, "/new_geographies_to_match.csv")
-# write.csv(fix_collapse, fix_outpath, row.names=F, na="")
 

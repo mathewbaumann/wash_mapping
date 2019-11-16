@@ -9,17 +9,7 @@ files <- file.info(grep('IPUMS', list.files(paste0('/ihme/limited_use/LIMITED_US
 files <- files[with(files, order(as.POSIXct(ctime), decreasing = TRUE)), ]
 latest_postextraction <- unlist(strsplit(rownames(files)[1], "/"))
 latest_postextraction <- latest_postextraction[length(latest_postextraction)]
-input_version <- gsub('.feather', '', latest_postextraction)
-input_version <- gsub('poly_', '', input_version)
-input_version <- gsub('points_', '', input_version)
-input_version <- gsub('poly1_', '', input_version)
-input_version <- gsub('poly2_', '', input_version)
-input_version <- gsub('poly3_', '', input_version)
-input_version <- gsub('poly4_', '', input_version)
-input_version <- gsub('poly5_', '', input_version)
-input_version <- gsub('poly6_', '', input_version)
-input_version <- gsub('poly7_', '', input_version)
-input_version <- gsub('poly8_', '', input_version)
+input_version <- gsub('poly8_', '', latest_postextraction)
 
 root <- "/home/j/"
 l <- '/ihme/limited_use/'
@@ -44,13 +34,8 @@ new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 lapply(packages, library, character.only = T)
 
-
+#create row_ids
 increment <- 1
-
-# file_type <- 'pt'
-# indi_fam <- 'sani'
-# index <- 1
-# agg_level <- ''
 
 #### Load functions ####
 for (file_type in c('pt','poly','ipums')){
@@ -60,11 +45,6 @@ for (file_type in c('pt','poly','ipums')){
   # Load data
   if (!("pt_collapse" %in% ls()) & file_type == 'pt') {
     pt_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/points_', input_version, '.feather')))
-    #pt_collapse <- subset(pt_collapse, nid == 365281)
-    # Encoding(pt_collapse$w_source_drink) <- "UTF-8"
-    # Encoding(pt_collapse$w_source_other) <- "UTF-8"
-    # Encoding(pt_collapse$t_type) <- "UTF-8"
-    # Encoding(pt_collapse$sewage) <- "UTF-8"
     pt_collapse$w_source_drink <- tolower(pt_collapse$w_source_drink)
     pt_collapse$w_source_other <- tolower(pt_collapse$w_source_other)
     pt_collapse$t_type <- tolower(pt_collapse$t_type)
@@ -88,11 +68,6 @@ for (file_type in c('pt','poly','ipums')){
             pt4_collapse, pt5_collapse, pt6_collapse,
             pt7_collapse, pt8_collapse)
 
-    #pt_collapse <- subset(pt_collapse, nid == 148344)
-    # Encoding(pt_collapse$w_source_drink) <- "UTF-8"
-    # Encoding(pt_collapse$w_source_other) <- "UTF-8"
-    # Encoding(pt_collapse$t_type) <- "UTF-8"
-    # Encoding(pt_collapse$sewage) <- "UTF-8"
     pt_collapse$w_source_drink <- tolower(pt_collapse$w_source_drink)
     pt_collapse$w_source_other <- tolower(pt_collapse$w_source_other)
     
@@ -124,8 +99,6 @@ for (file_type in c('pt','poly','ipums')){
       pt_collapse <- read_feather(files[index])
       pt_collapse$t_type <- as.character(pt_collapse$t_type)
       pt_collapse$sewage <- as.character(pt_collapse$sewage)
-      # Encoding(pt_collapse$t_type) <- "UTF-8"
-      # Encoding(pt_collapse$sewage) <- "UTF-8"
       pt_collapse$t_type <- tolower(pt_collapse$t_type)
       pt_collapse$sewage <- tolower(pt_collapse$sewage)
       
@@ -200,14 +173,6 @@ for (file_type in c('pt','poly','ipums')){
                                            NA, definitions$w_source_drink)
             }
           }
-          
-          # Prep definitions file for further processing
-          #definitions$string <- iconv(definitions$string, 'windows-1252', 'UTF-8')
-          # definitions$t_type <- tolower(definitions$t_type)
-          # definitions$sdg <- ifelse(definitions$sdg == "" | is.na(definitions$sdg),
-          #                           NA, definitions$sdg)
-          # definitions$t_type <- ifelse(definitions$t_type == "" | is.na(definitions$t_type),
-          #                              NA, definitions$t_type)
           definitions <- distinct(definitions)
         }
         
@@ -260,8 +225,6 @@ for (file_type in c('pt','poly','ipums')){
         ptdat <- ptdat[!(id_short %in% remove.clusters)]
         
         
-        #invalid_hhs <- unique(ptdat$id_short[which(ptdat$hh_size <= 0)])
-        # ptdat <- filter(ptdat, !(id_short %in% invalid_hhs))
         ptdat <- as.data.table(ptdat)
         ptdat[hh_size == 0, hh_size := NA]
         
