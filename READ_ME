@@ -1,5 +1,18 @@
 This repo is used for the stage 2 (Lower and Middle Income Countries) estimation of Access to Water and Sanitation Facilities.
-Repo Structure
+Run Order:
+	00_extract/post_extraction.R
+	00_extract/post_extract_IPUMS.R
+	04_strings/match_string.R
+	04_strings/match_strings_IPUMS.R
+	01_collapse/collapse.R (Manually change string matching CSV date)
+	01_collapse/crosswalk.R
+	01_collapse/gen_input_file.R
+	02_resample/parent.R
+	02_resample/append_poly_input_data.R
+	Input data finished!
+
+
+Repo Structure and Descriptions:
 	00_extract: Geo matching and other intial data cleaning steps
 		post_extraction.R - handles geo matching of non census surveys
 		wash_specific_post_extract.R - script sourced at the end of post_extraction.R which fixes hh_sizes and saves the geo matched data 
