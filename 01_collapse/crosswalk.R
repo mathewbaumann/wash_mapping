@@ -33,7 +33,7 @@ input_version <- substr(input_version,(nchar(input_version) - 9),nchar(input_ver
 
 setwd(repo)
 source('functions/cw_indi.R') #cw functions
-source('functions/swachhta_report_fix.R') #handle India tabulated data
+source('functions/tabulated_data_fix.R') #handle India tabulated data
 
 library(dplyr)
 library(feather)
@@ -45,7 +45,7 @@ poly <- read_feather(paste0('polydat_sani_unconditional__', input_version,'.feat
 tabs <- fread('tabulated_data/sani.csv')
 tabs <- tabs[,-c('notes','avg_hh_size','_num_hhs'), with = F]
 
-setwd('/ihme/limited_use/LIMITED_USE/LU_GEOSPATIAL/collapsed/wash/IPUMS/feather')
+setwd(paste0('/ihme/limited_use/LIMITED_USE/LU_GEOSPATIAL/collapsed/wash/IPUMS/feather/', input_version))
 ipums <- list.files(pattern = 'sani_')
 ipums <- lapply(ipums, read_feather)
 ipums <- do.call(rbind, ipums)

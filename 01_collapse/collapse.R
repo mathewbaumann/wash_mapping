@@ -38,7 +38,7 @@ lapply(packages, library, character.only = T)
 increment <- 1
 
 #### Load functions ####
-for (file_type in c('pt','poly','ipums')){
+for (file_type in c('ipums')){
   message(paste("Loading",file_type, "data"))
   rm(pt_collapse)
   message('Loading Data...')
@@ -307,7 +307,8 @@ for (file_type in c('pt','poly','ipums')){
         }
 
         if (ipums) {
-          write_feather(ptdat, paste0(l,"LIMITED_USE/LU_GEOSPATIAL/collapsed/wash/IPUMS/feather/",
+          dir.create(paste0(l,"LIMITED_USE/LU_GEOSPATIAL/collapsed/wash/IPUMS/feather/", today), showWarnings = F)
+          write_feather(ptdat, paste0(l,"LIMITED_USE/LU_GEOSPATIAL/collapsed/wash/IPUMS/feather/", today, '/',
                                       indi_fam, '_', conditional, '_', agg_level, '_', today, '_', files[index]))
         }
         

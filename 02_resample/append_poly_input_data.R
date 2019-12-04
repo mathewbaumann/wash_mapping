@@ -76,7 +76,8 @@ if (indi_fam == 'water' ) {
       rename(latitude = lat.x, longitude = long.x,
              year = year_start,
              country = iso3) %>% 
-      mutate(indi_bin = indi*N) %>%
+      arrange(nid, country, year, shapefile, location_code) %>%
+      mutate(indi_bin = indi*N, merge_id = 1:n()) %>%
       rename(indi_prop = indi)
     
     names(mydat)[which(names(mydat) == 'indi_bin')] <- paste0('w_',i)
@@ -84,37 +85,37 @@ if (indi_fam == 'water' ) {
     assign(i,mydat)
   }
   
-  imp_denom <- dplyr::select(imp, w_imp, shapefile, location_code, nid, year)
+  imp_denom <- dplyr::select(imp, w_imp, merge_id)
   imp_denom <- distinct(imp_denom)
-  piped_denom <- dplyr::select(piped, w_piped, shapefile, location_code, nid, year)
+  piped_denom <- dplyr::select(piped, w_piped, merge_id)
   piped_denom <- distinct(piped_denom)
   
-  unimp <- left_join(unimp, imp_denom, by = c('shapefile','location_code','nid','year'))
-  unimp <- left_join(unimp, piped_denom, by = c('shapefile','location_code','nid','year'))
+  unimp <- left_join(unimp, imp_denom, by = 'merge_id')
+  unimp <- left_join(unimp, piped_denom, by = 'merge_id')
   
-  network <- left_join(network, piped_denom, by = c('shapefile','location_code','nid','year'))
+  network <- left_join(network, piped_denom, by = 'merge_id')
   network <- mutate(network, N = w_piped) %>%
     rename(w_network_cr = network_prop, prop = network_prop) %>%
     mutate(w_network_cr = prop * N) %>%
-    select(-w_piped, -w_network) %>%
+    select(-w_piped, -w_network, -merge_id) %>%
     filter(N > 0)
   
   unimp <- mutate(unimp, N = ((N)) - (w_imp) - w_piped) %>% mutate(unimp_prop = w_unimp/N) %>%
     rename(prop = unimp_prop, w_unimp_cr = w_unimp) %>%
-    dplyr::select(-w_imp, -w_piped) %>%
+    dplyr::select(-w_imp, -w_piped, -merge_id) %>%
     filter(N > 0)
   
-  piped <- left_join(piped, imp_denom, by = c('shapefile','location_code','nid','year'))
+  piped <- left_join(piped, imp_denom, by = 'merge_id')
   piped <- mutate(piped, piped_prop = w_piped/N) %>%
     rename(prop = piped_prop) %>%
-    dplyr::select(-w_imp) %>%
+    dplyr::select(-w_imp, -merge_id) %>%
     filter(N > 0)
   
-  imp <- left_join(imp, piped_denom, by = c('shapefile','location_code','nid','year'))
+  imp <- left_join(imp, piped_denom, by = 'merge_id')
   
   imp <- mutate(imp, N = ((N)) - w_piped) %>% mutate(imp_prop = w_imp/N) %>%
     rename(prop = imp_prop, w_imp_cr = w_imp) %>%
-    dplyr::select(-w_piped) %>%
+    dplyr::select(-w_piped, -merge_id) %>%
     filter(N > 0)
   rm(mydat, imp_denom, piped_denom)
   
@@ -207,7 +208,8 @@ if (indi_fam == 'sani' ) {
       rename(latitude = lat.x, longitude = long.x,
              year = year_start,
              country = iso3) %>% 
-      mutate(indi_bin = indi*N) %>%
+      arrange(nid, country, year, shapefile, location_code) %>%
+      mutate(indi_bin = indi*N, merge_id = 1:n()) %>%
       rename(indi_prop = indi)
     
     names(mydat)[which(names(mydat) == 'indi_bin')] <- paste0('s_',i)
@@ -216,33 +218,31 @@ if (indi_fam == 'sani' ) {
     assign(i,mydat)
   }
   
-  imp_denom <- select(imp, s_imp, shapefile, location_code, nid, year)
-  imp_denom <- distinct(imp_denom)
-  piped_denom <- select(piped, s_piped, shapefile, location_code, nid, year)
-  piped_denom <- distinct(piped_denom)
+  imp_denom <- select(imp, s_imp, merge_id)
+  piped_denom <- select(piped, s_piped, N, merge_id)
+
   
-  
-  imp <- left_join(imp, piped_denom, by = c('shapefile','location_code','nid','year'))
+  imp <- left_join(imp, piped_denom, by = 'merge_id')
   imp <- mutate(imp, N = N - s_piped) %>% mutate(imp_prop = s_imp/N) %>%
     rename(s_imp_cr = s_imp, prop = imp_prop) %>%
-    select(-s_piped) %>%
+    select(-s_piped, -merge_id) %>%
     filter(N > 0)
   
-  unimp <- left_join(unimp, imp_denom, by = c('shapefile','location_code','nid','year'))
-  unimp <- left_join(unimp, piped_denom, by = c('shapefile','location_code','nid','year'))
+  unimp <- left_join(unimp, imp_denom, by = 'merge_id')
+  unimp <- left_join(unimp, piped_denom, by = 'merge_id')
   unimp <- mutate(unimp, N = N - s_imp - s_piped) %>% mutate(unimp_prop = s_unimp/N) %>%
     rename(s_unimp_cr = s_unimp, prop = unimp_prop) %>%
-    select(-s_imp, -s_piped) %>%
+    select(-s_imp, -s_piped, -merge_id) %>%
     filter(N > 0)
   
-  network <- left_join(network, piped_denom, by = c('shapefile','location_code','nid','year'))
+  network <- left_join(network, piped_denom, by = 'merge_id')
   network <- mutate(network, N = s_piped) %>%
     rename(s_network_cr = network_prop, prop = network_prop) %>%
     mutate(s_network_cr = prop * N) %>%
-    select(-s_piped, -s_network) %>%
+    select(-s_piped, -s_network, -merge_id) %>%
     filter(N > 0)
   
-  piped <- rename(piped, prop = piped_prop)
+  piped <- rename(piped, prop = piped_prop) %>% select(-merge_id)
   rm(mydat, imp_denom, piped_denom)
   
   unimp_pt <- read.csv('/home/j/WORK/11_geospatial/10_mbg/input_data/s_unimp_cr.csv',
