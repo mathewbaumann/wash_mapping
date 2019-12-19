@@ -26,9 +26,9 @@ run_date <- Sys.Date()
 
 for (indic in indicators) {
   if (indic == 'water') {
-    polydat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/water_2019_10_24.feather')
+    polydat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/water_2019_12_09.feather')
   } else {
-    polydat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/sani_2019_10_24.feather')
+    polydat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/sani_2019_12_09.feather')
   }
   
   polydat <- subset(polydat, is.na(lat) & !is.na(shapefile) & !is.na(location_code))

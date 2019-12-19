@@ -82,22 +82,8 @@ hh_cw <- function(data, debug = F, var_family = indi_fam, reg, dtype) {
 }
 
 hh_cw_reg <- function(data, var_family = indi_fam, dt = data_type) {
-  
   library(dplyr)
-  
-  #message('Only African Data is currently CWed by reg')
   message('The regs are sssa_hi, cssa, wsssa, name_hi, and essa_hilo')
-  # sssa_hi <- c('NAM','BWA','ZAF')
-  # cssa <- c('CAF','GAB','GNQ','COD','COG','AGO','STP')
-  # name_hi <- c('MAR','DZA','TUN','LBY','EGY')
-  # essa_hilo <- c('SDN','ERI','DJI','SOM','ETH','SSD',
-  #                'SSD','UGA','KEN','RWA','BDI','TZA',
-  #                'MWI','MOZ','ZMB','MDG','ZWE','SWZ','LSO',
-  #                'COM')
-  # wssa <- c('CPV','SEN','GMB','GIN','GNB','SLE','MLI','LBR',
-  #           'CIV','GHA','TGO','BEN','NGA','NER','TCD','CMR',
-  #           'BFA','MRT')
-  # africa <- c(sssa_hi, cssa, name_hi, essa_hilo, wssa)
   regions <- read.csv('/home/j/WORK/11_geospatial/diarrhea/01_data/00_identifiers/geoid_stg2.csv')
   regions <- regions[,c('iso3', 'region')]
   regions$iso3 <- as.character(regions$iso3)
@@ -129,61 +115,7 @@ hh_cw_reg <- function(data, var_family = indi_fam, dt = data_type) {
       message('NOOOOOOOOOO')
     }
   }
-  
-  
-  # message('essa')
-  # mydat <- filter(data, iso3 %in% sssa_hi)
-  # if (nrow(mydat)>0) {
-  #   output <- hh_cw(data = mydat, var_family = var_family,
-  #                         reg = 'essa', dtype = dt)
-  #   results[[1]] <- output[[1]]
-  #   ratios[[1]] <- output[[2]]
-  # }
-  # 
-  # message('afr_horn')
-  # mydat <- filter(data, iso3 %in% afr_horn)
-  # if (nrow(mydat)>0) {
-  #   output <- hh_cw(data = mydat, var_family = var_family,
-  #                         reg = 'afr_horn', dtype = dt)
-  #   results[[2]] <- output[[1]]
-  #   ratios[[2]] <- output[[2]]
-  # }
-  # 
-  # message('cssa')
-  # mydat <- filter(data, iso3 %in% cssa)
-  # if (nrow(mydat)>0) {
-  #   output <- hh_cw(data = mydat, var_family = var_family,
-  #                         reg = 'cssa', dtype = dt)
-  #   results[[3]] <- output[[1]]
-  #   ratios[[3]] <- output[[2]]
-  # }
-  # 
-  # message('essa_hilo')
-  # mydat <- filter(data, iso3 %in% essa_hilo)
-  # if (nrow(mydat)>0) {
-  #   output <- hh_cw(data = mydat, var_family = var_family,
-  #                         reg = 'essa_hilo', dtype = dt)
-  #   results[[4]] <- output[[1]]
-  #   ratios[[4]] <- output[[2]]
-  # }
-  # 
-  # message('name_hi')
-  # mydat <- filter(data, iso3 %in% name_hi)
-  # if (nrow(mydat)>0) {
-  #   output <- hh_cw(data = mydat, var_family = var_family,
-  #                         reg = 'name_hi', dtype = dt)
-  #   results[[5]] <- output[[1]]
-  #   ratios[[5]] <- output[[2]]
-  # }
-  # 
-  # message('non africa')
-  # mydat <- filter(data, !(iso3 %in% africa))
-  # if (nrow(mydat)>0) {
-  #   output <- hh_cw(data = mydat, var_family = var_family,
-  #                         reg = 'non africa', dtype = dt)
-  #   results[[6]] <- output[[1]]
-  #   ratios[[6]] <- output[[2]]
-  # }
+
   message('rbind results')
   results <- do.call(rbind, results)
   message('rbind ratios')
@@ -230,26 +162,6 @@ hh_cw_reg <- function(data, var_family = indi_fam, dt = data_type) {
 
 assign_ipums_hh <- function(mydat = ptdat, dt = data_type) {
   current_iso3 <- unique(mydat$iso3)
-  
-  # sssa_hi <- c('NAM','BWA','ZAF')
-  # cssa <- c('CAF','GAB','GNQ','COD','COG','AGO','STP')
-  # name_hi <- c('MAR','DZA','TUN','LBY','EGY')
-  # essa_hilo <- c('SDN','ERI','DJI','SOM','ETH','SSD',
-  #                'SSD','UGA','KEN','RWA','BDI','TZA',
-  #                'MWI','MOZ','ZMB','MDG','ZWE','SWZ','LSO',
-  #                'COM')
-  # wssa <- c('CPV','SEN','GMB','GIN','GNB','SLE','MLI','LBR',
-  #           'CIV','GHA','TGO','BEN','NGA','NER','TCD','CMR',
-  #           'BFA','MRT')
-  # africa <- c(sssa_hi, cssa, name_hi, essa_hilo, wssa)
-  # 
-  # current_reg <- ifelse(current_iso3 %in% sssa_hi, 'sssa_hi',
-  #                       ifelse(current_iso3 %in% cssa, 'cssa',
-  #                         ifelse(current_iso3 %in% name_hi, 'name_hi',
-  #                           ifelse(current_iso3 %in% essa_hilo, 'essa_hilo',
-  #                             ifelse(current_iso3 %in% wssa, 'wssa', 'non africa'
-  #                         )))))
-  
   regions <- read.csv('/home/j/WORK/11_geospatial/diarrhea/01_data/00_identifiers/geoid_stg2.csv')
   regions <- regions[,c('iso3', 'region')]
   regions$iso3 <- as.character(regions$iso3)

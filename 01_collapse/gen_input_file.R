@@ -8,7 +8,7 @@ setwd('/ihme/limited_use/LIMITED_USE/LU_GEOSPATIAL/collapsed/wash')
 
 indi_fam <- 'water'
 if (indi_fam == 'water') {
-  ptdat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/water_2019_10_24.feather')
+  ptdat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/water_2019_12_09.feather')
   ptdat <- filter(ptdat, !(is.na(lat)))
   
   w_network_cr <- ptdat
@@ -18,6 +18,7 @@ if (indi_fam == 'water') {
                          longitude = long) %>% dplyr::select(-imp,-piped, -network)
   w_network_cr <- filter(w_network_cr, N > 0)
   w_network_cr <- mutate(w_network_cr, prop = w_network_cr / N)
+  system("rm /home/j/WORK/11_geospatial/10_mbg/input_data/w_network_cr.csv")
   write.csv(w_network_cr, file = '/home/j/WORK/11_geospatial/10_mbg/input_data/w_network_cr.csv', row.names = FALSE)
   
   w_piped <- ptdat
@@ -26,6 +27,7 @@ if (indi_fam == 'water') {
   w_piped <- rename(w_piped, country = iso3, year = year_start, prop = piped, N = N, latitude = lat,
                     longitude = long) %>%
     filter(N > 0)
+  system("rm /home/j/WORK/11_geospatial/10_mbg/input_data/w_piped.csv")
   write.csv(w_piped, file = '/home/j/WORK/11_geospatial/10_mbg/input_data/w_piped.csv', row.names = FALSE)
   
   w_imp_cr <- ptdat
@@ -36,6 +38,7 @@ if (indi_fam == 'water') {
   w_imp_cr <- mutate(w_imp_cr, N = ((N)) - (w_piped)) %>% mutate(prop = w_imp_cr/N) %>%
     dplyr::select(-piped, -w_piped, -imp) %>%
     filter(N > 0)
+  system("rm /home/j/WORK/11_geospatial/10_mbg/input_data/w_imp_cr.csv")
   write.csv(w_imp_cr, '/home/j/WORK/11_geospatial/10_mbg/input_data/w_imp_cr.csv', row.names = FALSE)
   
   w_unimp_cr <- ptdat
@@ -46,6 +49,7 @@ if (indi_fam == 'water') {
   w_unimp_cr <- mutate(w_unimp_cr, N = ((N)) - (w_imp) - w_piped) %>% mutate(prop = w_unimp_cr/N) %>%
     dplyr::select(-imp, -w_imp, -unimp, w_piped, piped) %>%
     filter(N > 0)
+  system("rm /home/j/WORK/11_geospatial/10_mbg/input_data/w_unimp_cr.csv")
   write.csv(w_unimp_cr, '/home/j/WORK/11_geospatial/10_mbg/input_data/w_unimp_cr.csv', row.names = FALSE)
   
 }
@@ -53,7 +57,7 @@ if (indi_fam == 'water') {
 rm(list = ls())
 indi_fam <- 'sani'
 if (indi_fam == 'sani') {
-  ptdat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/sani_2019_10_24.feather')
+  ptdat <- read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/sani_2019_12_09.feather')
   ptdat <- filter(ptdat, !(is.na(lat)))
   
   s_network_cr <- ptdat
@@ -63,6 +67,7 @@ if (indi_fam == 'sani') {
                          longitude = long) %>% dplyr::select(-imp,-piped,-network)
   s_network_cr <- filter(s_network_cr, N > 0)
   s_network_cr <- mutate(s_network_cr, prop = s_network_cr / N)
+  system("rm /home/j/WORK/11_geospatial/10_mbg/input_data/s_network_cr.csv")
   write.csv(s_network_cr, file = '/home/j/WORK/11_geospatial/10_mbg/input_data/s_network_cr.csv', row.names = FALSE)
   
   s_piped <- ptdat
@@ -71,6 +76,7 @@ if (indi_fam == 'sani') {
   s_piped <- rename(s_piped, country = iso3, year = year_start, prop = piped, N = N, latitude = lat,
                     longitude = long)
   s_piped <- mutate(s_piped, N = (N))
+  system("rm /home/j/WORK/11_geospatial/10_mbg/input_data/s_piped.csv")
   write.csv(s_piped, '/home/j/WORK/11_geospatial/10_mbg/input_data/s_piped.csv', row.names = FALSE)
   
   s_imp_cr <- ptdat
@@ -81,6 +87,7 @@ if (indi_fam == 'sani') {
   s_imp_cr <- mutate(s_imp_cr, N = ((N)) - (s_piped)) %>% mutate(prop = s_imp_cr/N) %>%
     dplyr::select(-piped, -s_piped, -imp) %>%
     filter(N > 0)
+  system("rm /home/j/WORK/11_geospatial/10_mbg/input_data/s_imp_cr.csv")
   write.csv(s_imp_cr, '/home/j/WORK/11_geospatial/10_mbg/input_data/s_imp_cr.csv', row.names = FALSE)
   
   s_unimp_cr <- ptdat
@@ -91,6 +98,7 @@ if (indi_fam == 'sani') {
   s_unimp_cr <- mutate(s_unimp_cr, N = ((N) - s_imp)) %>% mutate(prop = s_unimp_cr/N) %>% 
     dplyr::select(-s_imp, -imp, -unimp) %>% 
     filter(N > 0)
+  system("rm /home/j/WORK/11_geospatial/10_mbg/input_data/s_unimp_cr.csv")
   write.csv(s_unimp_cr, '/home/j/WORK/11_geospatial/10_mbg/input_data/s_unimp_cr.csv', row.names = FALSE)
   
 }

@@ -23,6 +23,7 @@ if(Sys.info()[1]!="Windows") {
 
 repo <- '/share/code/geospatial/baumannm/wash_mapping_current/01_collapse/'
 
+#get latest file
 files <- file.info(list.files(paste0('/ihme/limited_use/LIMITED_USE/LU_GEOSPATIAL/collapsed/wash'), pattern = '*.feather', full.names=TRUE))
 files <- files[with(files, order(as.POSIXct(ctime), decreasing = TRUE)), ]
 latest_postextraction <- unlist(strsplit(rownames(files)[1], "/"))
@@ -39,6 +40,7 @@ library(dplyr)
 library(feather)
 library(data.table)
 
+#grab data
 setwd('/ihme/limited_use/LIMITED_USE/LU_GEOSPATIAL/collapsed/wash')
 points <- read_feather(paste0('ptdat_sani_unconditional__', input_version,'.feather'))
 poly <- read_feather(paste0('polydat_sani_unconditional__', input_version,'.feather'))
@@ -52,6 +54,7 @@ ipums <- do.call(rbind, ipums)
 
 ipums$location_code <- as.character(ipums$location_code)
 alldat <- as.data.frame(bind_rows(points, poly, ipums))
+#hotfixes for tabulated data
 tabs$admin_name <- NULL
 tabs$filepath <- NULL
 tabs$year_start <- tabs$start_year
@@ -64,7 +67,7 @@ tabs$row_id <- c((nrow(alldat) + 1) : (nrow(alldat) + nrow(tabs)))
 
 tabs$location_code <- as.character((tabs$location_code))
 tabs$total_hh <- as.numeric((tabs$total_hh))
-tabs <- subset(tabs, !survey_series %in% c('SWACHHTA_REPORT', 'NARSS', 'NATIONAL HEALTH PROFILE'))
+tabs <- subset(tabs, !survey_series %in% c('SWACHHTA_REPORT', 'NARSS', 'NATIONAL HEALTH PROFILE')) #remove specific india tabs
 alldat <- as.data.frame(bind_rows(alldat, tabs))
 alldat$iso3 <- substr(alldat$iso3, 1, 3)
 cw_dat <- cw_sani(alldat)
@@ -92,6 +95,7 @@ points <- read_feather(paste0('ptdat_water_unconditional__', input_version,'.fea
 poly <- read_feather(paste0('polydat_water_unconditional__', input_version,'.feather'))
 alldat <- as.data.frame(bind_rows(points, poly))
 tabs <- fread('tabulated_data/water.csv')
+#hot fixes for tabs
 tabs <- tabs[,-c('notes','avg_hh_size','_num_hhs'), with = F]
 tabs$admin_name <- NULL
 tabs$filepath <- NULL
