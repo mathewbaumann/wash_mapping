@@ -1,0 +1,978 @@
+nid,iso3,toilet,sewage,sani,manny,ani,mat
+762,ARG,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,,,mb
+762,ARG,No flush toilet,Not connected to sewage disposal system,latrine_cw,,,mb
+762,ARG,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,,,mb
+762,ARG,NIU (not in universe),Not connected to sewage disposal system,,,,mb
+762,ARG,Flush toilet,Not connected to sewage disposal system,flush_cw,,,mb
+762,ARG,Unknown,Unknown,,,,mb
+762,ARG,NIU (not in universe),NIU (not in universe),,,,mb
+767,ARG,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,,,mb
+767,ARG,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,,,mb
+767,ARG,"Non-flush, latrine",Not connected to sewage disposal system,latrine_cw,,,mb
+767,ARG,Flush toilet,Not connected to sewage disposal system,flush_cw,,,mb
+767,ARG,No toilet,Not connected to sewage disposal system,open,,,mb
+767,ARG,NIU (not in universe),NIU (not in universe),,,,mb
+105321,ARG,Flush toilet,,flush_cw,,,mb
+105321,ARG,No toilet,,open,,,mb
+105321,ARG,"Non-flush, other and unspecified",,,,,mb
+854,AUT,Flush toilet,,flush_cw,,,mb
+854,AUT,No flush toilet,,latrine_cw,,,mb
+854,AUT,NIU (not in universe),,,,,mb
+859,AUT,Flush toilet,,flush_cw,,,mb
+859,AUT,No flush toilet,,latrine_cw,,,mb
+859,AUT,NIU (not in universe),,,,,mb
+367419,BEN,no toilet,not connected to sewage disposal system,open,,,mb
+367419,BEN,"non-flush, latrine",not connected to sewage disposal system,unimp,,,mb
+367419,BEN,flush toilet,not connected to sewage disposal system,flush_unimp,,,mb
+367419,BEN,"non-flush, latrine",connected to sewage system or septic tank,septic,,,mb
+367419,BEN,flush toilet,connected to sewage system or septic tank,flush_imp_septic,,,mb
+367419,BEN,unknown,unknown,,,,mb
+367419,BEN,"non-flush, other and unspecified",not connected to sewage disposal system,,,,mb
+367419,BEN,no toilet,connected to sewage system or septic tank,septic,,,mb
+367419,BEN,"non-flush, other and unspecified",connected to sewage system or septic tank,septic,,,mb
+105389,BFA,No toilet,Not connected to sewage disposal system,open,,,mb
+105389,BFA,"Non-flush, latrine",Not connected to sewage disposal system,unimp,,,mb
+105389,BFA,No toilet,Septic tank (private sewage disposal),septic,,,mb
+105389,BFA,"Non-flush, other and unspecified",Not connected to sewage disposal system,,,,mb
+105389,BFA,"Non-flush, latrine",Septic tank (private sewage disposal),septic,,,mb
+105389,BFA,Unknown,Unknown, ,,,mb
+105389,BFA,"Non-flush, other and unspecified",Unknown,,,,mb
+105389,BFA,Flush toilet,Not connected to sewage disposal system,flush_unimp,,,mb
+105389,BFA,No toilet,Unknown,open,,,mb
+105389,BFA,Unknown,Not connected to sewage disposal system,,,,mb
+105389,BFA,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,,,mb
+105389,BFA,"Non-flush, latrine",Unknown,latrine_cw,,,mb
+105389,BFA,"Non-flush, other and unspecified",Septic tank (private sewage disposal),septic,,,mb
+105389,BFA,Unknown,Septic tank (private sewage disposal),septic,,,mb
+105389,BFA,Flush toilet,Unknown,flush_imp,,,mb
+105403,BFA,No toilet,Not connected to sewage disposal system,open,mg,ad,
+105403,BFA,"Non-flush, latrine",Not connected to sewage disposal system,unimp,mg,ad,
+105403,BFA,Flush toilet,Not connected to sewage disposal system,flush_unimp,mg,ad,
+105403,BFA,"Non-flush, latrine",Septic tank (private sewage disposal),septic,mg,ad,
+105403,BFA,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,mg,ad,
+105403,BFA,No toilet,Unknown,open,mg,ad,
+105403,BFA,"Non-flush, latrine",Unknown,latrine_cw,mg,ad,
+105403,BFA,Flush toilet,Unknown,flush_imp,mg,ad,
+105403,BFA,No toilet,,open,mg,ad,
+105403,BFA,"Non-flush, latrine",,latrine_cw,mg,ad,
+105403,BFA,Flush toilet,,flush_cw,mg,ad,
+105403,BFA,No toilet,Septic tank (private sewage disposal),septic,mg,ad,
+105403,BFA,"Non-flush, other and unspecified",Not connected to sewage disposal system,,mg,ad,
+105403,BFA,"Non-flush, other and unspecified",Unknown,,mg,ad,
+105403,BFA,"Non-flush, other and unspecified",Septic tank (private sewage disposal),septic,mg,ad,
+105403,BFA,"Non-flush, other and unspecified",,,mg,ad,
+105403,BFA,Unknown,Not connected to sewage disposal system,,mg,ad,
+105403,BFA,Unknown,Unknown,,mg,ad,
+105403,BFA,Unknown,Septic tank (private sewage disposal),septic,mg,ad,
+105403,BFA,Unknown,,,mg,ad,
+104913,BGD,No toilet,,open,,,mb
+104913,BGD,"Have toilet, type not specified",,latrine_cw,,,mb
+104913,BGD,Unknown,,,,,mb
+1362,BOL,"Have toilet, type not specified",Not connected to sewage disposal system,unimp,,,mb
+1362,BOL,No toilet,Not connected to sewage disposal system,open,,,mb
+1362,BOL,"Have toilet, type not specified",Sewage system (public sewage disposal),sewer,,,mb
+1362,BOL,NIU (not in universe),NIU (not in universe),,,,mb
+1362,BOL,"Have toilet, type not specified",Septic tank (private sewage disposal),septic,,,mb
+30309,BRA,,Not connected to sewage disposal system,,,,mb
+30309,BRA,,NIU (not in universe),,,,mb
+30309,BRA,,Septic tank (private sewage disposal),septic,,,mb
+30309,BRA,,Sewage system (public sewage disposal),,,,mb
+30309,BRA,,Unknown,,,,mb
+38230,BRA,,Not connected to sewage disposal system,,,,mb
+38230,BRA,,Septic tank (private sewage disposal),septic,,,mb
+38230,BRA,,Sewage system (public sewage disposal),,,,mb
+38230,BRA,,NIU (not in universe),,,,mb
+105322,BRA,,,,,,mb
+294198,BWA,"Non-flush, latrine",,latrine_cw,,,mb
+294198,BWA,Flush toilet,,flush_cw,,,mb
+294198,BWA,No toilet,,open,,,mb
+294198,BWA,NIU (not in universe),,,,,mb
+294198,BWA,Unknown,,,,,mb
+294198,BWA,"Non-flush, other and unspecified",,,,,mb
+294205,BWA,"Have toilet, type not specified",,latrine_cw,mg,ad,
+294205,BWA,NIU (not in universe),,,mg,ad,
+294205,BWA,"Non-flush, latrine",,latrine_cw,mg,ad,
+294205,BWA,Flush toilet,,flush_cw,mg,ad,
+294205,BWA,No toilet,,open,mg,ad,
+294205,BWA,Unknown,,,mg,ad,
+294235,BWA,NIU (not in universe),,,mg,ad,
+294235,BWA,"Non-flush, latrine",,latrine_cw,mg,ad,
+294235,BWA,Flush toilet,,flush_cw,mg,ad,
+294235,BWA,No toilet,,open,mg,ad,
+294235,BWA,"Non-flush, other and unspecified",,,mg,ad,
+294235,BWA,,,,mg,ad,
+105800,CMR,"Have toilet, type not specified",NIU (not in universe),latrine_cw,mg,ad,
+105800,CMR,"Have toilet, type not specified",Not connected to sewage disposal system,unimp,mg,ad,
+105800,CMR,"Have toilet, type not specified",,latrine_cw,mg,ad,
+105800,CMR,"Non-flush, latrine",Not connected to sewage disposal system,unimp,mg,ad,
+105800,CMR,Flush toilet,Not connected to sewage disposal system,flush_unimp,mg,ad,
+105800,CMR,No toilet,Not connected to sewage disposal system,open,mg,ad,
+105800,CMR,NIU (not in universe),NIU (not in universe),,mg,ad,
+105800,CMR,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,mg,ad,
+105800,CMR,"Non-flush, latrine",NIU (not in universe),latrine_cw,mg,ad,
+105800,CMR,Flush toilet,NIU (not in universe),flush_cw,mg,ad,
+105800,CMR,No toilet,NIU (not in universe),open,mg,ad,
+105800,CMR,"Non-flush, latrine",,latrine_cw,mg,ad,
+105800,CMR,Flush toilet,,flush_cw,mg,ad,
+105800,CMR,No toilet,,open,mg,ad,
+105800,CMR,NIU (not in universe),Not connected to sewage disposal system,,mg,ad,
+105800,CMR,NIU (not in universe),,,mg,ad,
+105800,CMR,"Have toilet, type not specified",Septic tank (private sewage disposal),septic,mg,ad,
+105800,CMR,NIU (not in universe),Septic tank (private sewage disposal),septic,mg,ad,
+105800,CMR,No toilet,Septic tank (private sewage disposal),septic,mg,ad,
+105800,CMR,"Non-flush, latrine",Septic tank (private sewage disposal),septic,mg,ad,
+3019,COL,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,,,mb
+3019,COL,"Non-flush, latrine",Not connected to sewage disposal system,unimp,,,mb
+3019,COL,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,,,mb
+3019,COL,No toilet,Not connected to sewage disposal system,open,,,mb
+3024,COL,flush toilet,,flush_cw,,,mb
+3024,COL,"non-flush, other and unspecified",,,,,mb
+3024,COL,no toilet,,open,,,mb
+3024,COL,"non-flush, latrine",,latrine_cw,,,mb
+3029,COL,Flush toilet,,flush_cw,,,mb
+3029,COL,No toilet,,open,,,mb
+3029,COL,"Non-flush, latrine",,latrine_cw,,,mb
+3029,COL,Unknown,,,,,mb
+3243,CRI,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,,,mb
+3243,CRI,No toilet,Not connected to sewage disposal system,open,,,mb
+3243,CRI,"Non-flush, latrine",Not connected to sewage disposal system,unimp,,,mb
+3243,CRI,NIU (not in universe),NIU (not in universe),,,,mb
+3243,CRI,"Non-flush, other and unspecified",Not connected to sewage disposal system,,,,mb
+3243,CRI,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,,,mb
+227111,CRI,,,,,,mb
+43729,DEU,No flush toilet,,latrine_cw,,,mb
+43729,DEU,Flush toilet,,flush_cw,,,mb
+43738,DEU,No toilet,Septic tank (private sewage disposal),septic,,,mb
+43738,DEU,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,,,mb
+43738,DEU,Flush toilet,Not connected to sewage disposal system,flush_cw,,,mb
+43738,DEU,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,,,mb
+43738,DEU,No toilet,Sewage system (public sewage disposal),sewer,,,mb
+43738,DEU,No toilet,Not connected to sewage disposal system,open,,,mb
+43738,DEU,"Non-flush, latrine",Septic tank (private sewage disposal),septic,,,mb
+43738,DEU,Flush toilet,NIU (not in universe),flush_cw,,,mb
+43738,DEU,"Non-flush, latrine",Not connected to sewage disposal system,latrine_cw,,,mb
+43738,DEU,"Non-flush, latrine",Sewage system (public sewage disposal),sewer,,,mb
+43738,DEU,No toilet,NIU (not in universe),open,,,mb
+43738,DEU,"Non-flush, latrine",NIU (not in universe),latrine_cw,,,mb
+43738,DEU,NIU (not in universe),NIU (not in universe),,,,mb
+3544,ECU,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,,,mb
+3544,ECU,"Non-flush, latrine",Not connected to sewage disposal system,unimp,,,mb
+3544,ECU,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,,,mb
+3544,ECU,No toilet,Not connected to sewage disposal system,open,,,mb
+3544,ECU,"Non-flush, latrine",Septic tank (private sewage disposal),septic,,,mb
+3544,ECU,Flush toilet,Not connected to sewage disposal system,flush_unimp,,,mb
+3544,ECU,No toilet,Septic tank (private sewage disposal),septic,,,mb
+3544,ECU,"Non-flush, latrine",Sewage system (public sewage disposal),latrine_cw,,,mb
+3544,ECU,No toilet,Sewage system (public sewage disposal),open,,,mb
+3544,ECU,NIU (not in universe),NIU (not in universe),,,,mb
+105801,ECU,"Have toilet, type not specified",,latrine_cw,,,mb
+105801,ECU,No toilet,,open,,,mb
+105801,ECU,NIU (not in universe),,,,,mb
+35572,EGY,"Have toilet, type not specified",Connected to sewage system or septic tank,septic,,,mb
+35572,EGY,No toilet,Connected to sewage system or septic tank,septic,,,mb
+35572,EGY,No toilet,Not connected to sewage disposal system,open,,,mb
+35572,EGY,"Have toilet, type not specified",Not connected to sewage disposal system,unimp,,,mb
+35578,EGY,"Have toilet, type not specified",NIU (not in universe),latrine_cw,mg,ad,
+35578,EGY,"Have toilet, type not specified",Not connected to sewage disposal system,unimp,mg,ad,
+35578,EGY,"Have toilet, type not specified",Sewage system (public sewage disposal),sewer,mg,ad,
+35578,EGY,NIU (not in universe),NIU (not in universe),,mg,ad,
+35578,EGY,NIU (not in universe),Not connected to sewage disposal system,,mg,ad,
+35578,EGY,NIU (not in universe),Sewage system (public sewage disposal),,mg,ad,
+35578,EGY,"Have toilet, type not specified",Septic tank (private sewage disposal),septic,mg,ad,
+35578,EGY,NIU (not in universe),Septic tank (private sewage disposal),septic,mg,ad,
+35578,EGY,No toilet,Sewage system (public sewage disposal),open,mg,ad,
+35578,EGY,No toilet,Septic tank (private sewage disposal),septic,mg,ad,
+35578,EGY,No toilet,Not connected to sewage disposal system,open,mg,ad,
+35578,EGY,No toilet,NIU (not in universe),open,mg,ad,
+35578,EGY,,Sewage system (public sewage disposal),,mg,ad,
+35578,EGY,,Septic tank (private sewage disposal),septic,mg,ad,
+35578,EGY,,NIU (not in universe),,mg,ad,
+35578,EGY,,Not connected to sewage disposal system,,mg,ad,
+294258,EGY,"Have toilet, type not specified",,latrine_cw,,,mb
+294258,EGY,No toilet,,open,,,mb
+294258,EGY,Unknown,,,,,mb
+227200,ESP,"Have toilet, type not specified",Sewage system (public sewage disposal),sewer,,,mb
+227200,ESP,"Have toilet, type not specified",Not connected to sewage disposal system,latrine_cw,,,mb
+227200,ESP,No toilet,Sewage system (public sewage disposal),sewer,,,mb
+227200,ESP,"Have toilet, type not specified",NIU (not in universe),,,,mb
+227200,ESP,No toilet,Not connected to sewage disposal system,open,,,mb
+227200,ESP,No toilet,NIU (not in universe),open,,,mb
+227113,ETH,NIU (not in universe),,,,,mb
+227113,ETH,No toilet,,open,,,mb
+227113,ETH,"Non-flush, latrine",,latrine_cw,,,mb
+227113,ETH,Unknown,,,,,mb
+227113,ETH,Flush toilet,,flush_Cw,,,mb
+227133,ETH,NIU (not in universe),,,mg,ad,
+227133,ETH,No toilet,,open,mg,ad,
+227133,ETH,"Non-flush, latrine",,latrine_cw,mg,ad,
+227133,ETH,Flush toilet,,flush_cw,mg,ad,
+227133,ETH,,,,mg,ad,
+105813,FJI,Flush toilet,,flush_cw,,,mb
+105813,FJI,"Non-flush, latrine",,latrine_cw,,,mb
+105813,FJI,"Have toilet, type not specified",,latrine_cw,,,mb
+105813,FJI,Unknown,,,,,mb
+105813,FJI,No toilet,,open,,,mb
+105823,FJI,Flush toilet,,flush_cw,,,mb
+105823,FJI,"Non-flush, latrine",,latrine_cw,,,mb
+105823,FJI,No toilet,,open,,,mb
+105823,FJI,"Have toilet, type not specified",,latrine_cw,,,mb
+38508,GHA,NIU (not in universe),,,mg,ad,
+38508,GHA,"Non-flush, other and unspecified",,,mg,ad,
+38508,GHA,No toilet,,open,mg,ad,
+38508,GHA,Flush toilet,,flush_cw,mg,ad,
+38508,GHA,"Non-flush, latrine",,latrine_cw,mg,ad,
+38508,GHA,Unknown,,,mg,ad,
+151306,GHA,NIU (not in universe),NIU (not in universe),,mg,ad,
+151306,GHA,NIU (not in universe),Not connected to sewage disposal system,,mg,ad,
+151306,GHA,No toilet,Not connected to sewage disposal system,open,mg,ad,
+151306,GHA,"Non-flush, latrine",Not connected to sewage disposal system,unimp,mg,ad,
+151306,GHA,Flush toilet,Not connected to sewage disposal system,flush_unimp,mg,ad,
+151306,GHA,No toilet,NIU (not in universe),open,mg,ad,
+151306,GHA,"Non-flush, latrine",NIU (not in universe),latrine_cw,mg,ad,
+151306,GHA,Flush toilet,NIU (not in universe),flush_cw,mg,ad,
+151306,GHA,NIU (not in universe),,,mg,ad,
+151306,GHA,"Non-flush, latrine",Connected to sewage system or septic tank,septic,mg,ad,
+151306,GHA,Flush toilet,Connected to sewage system or septic tank,flush_imp_septic,mg,ad,
+151306,GHA,NIU (not in universe),Connected to sewage system or septic tank,septic,mg,ad,
+151306,GHA,No toilet,,open,mg,ad,
+151306,GHA,"Non-flush, latrine",,latrine_cw,mg,ad,
+151306,GHA,Flush toilet,,flush_cw,mg,ad,
+151306,GHA,No toilet,Connected to sewage system or septic tank,septic,mg,ad,
+151306,GHA,"Non-flush, other and unspecified",NIU (not in universe),,mg,ad,
+151306,GHA,"Non-flush, other and unspecified",Not connected to sewage disposal system,,mg,ad,
+151306,GHA,"Non-flush, other and unspecified",,,mg,ad,
+151306,GHA,"Non-flush, other and unspecified",Connected to sewage system or septic tank,septic,mg,ad,
+151306,GHA,Unknown,NIU (not in universe),,mg,ad,
+151306,GHA,Unknown,Not connected to sewage disposal system,,mg,ad,
+151306,GHA,Unknown,Connected to sewage system or septic tank,septic,mg,ad,
+151306,GHA,Unknown,,,mg,ad,
+39257,GIN,,,,,,mb
+367563,HND,flush toilet,septic tank (private sewage disposal),flush_imp_septic,,,mb
+367563,HND,no toilet,not connected to sewage disposal system,open,,,mb
+367563,HND,"non-flush, latrine",not connected to sewage disposal system,unimp,,,mb
+367563,HND,flush toilet,sewage system (public sewage disposal),flush_imp_sewer,,,mb
+367563,HND,niu (not in universe),niu (not in universe),,,,mb
+106473,HTI,"Non-flush, latrine",,latrine_cw,,,mb
+106473,HTI,"Non-flush, other and unspecified",,,,,mb
+106473,HTI,No toilet,,open,,,mb
+106473,HTI,Flush toilet,,flush_cw,,,mb
+106473,HTI,NIU (not in universe),,,,,mb
+56546,IDN,,Not connected to sewage disposal system,,,,mb
+56546,IDN,,Connected to sewage system or septic tank,septic,,,mb
+56546,IDN,,Unknown,,,,mb
+56550,IDN,"Have toilet, type not specified",Not connected to sewage disposal system,unimp,,,mb
+56550,IDN,No toilet,Not connected to sewage disposal system,open,,,mb
+56550,IDN,"Non-flush, other and unspecified",Not connected to sewage disposal system,,,,mb
+56550,IDN,Flush toilet,Connected to sewage system or septic tank,flush_imp_septic,,,mb
+56550,IDN,Unknown,Unknown,,,,mb
+56558,IDN,"Non-flush, other and unspecified",Not connected to sewage disposal system,unimp,,,mb
+56558,IDN,Flush toilet,Connected to sewage system or septic tank,flush_imp_septic,,,mb
+56558,IDN,No toilet,Not connected to sewage disposal system,open,,,mb
+56558,IDN,Flush toilet,Not connected to sewage disposal system,flush_unimp,,,mb
+56558,IDN,NIU (not in universe),NIU (not in universe),,,,mb
+56558,IDN,NIU (not in universe),Not connected to sewage disposal system,,,,mb
+56558,IDN,NIU (not in universe),Unknown,,,,mb
+56565,IDN,,Connected to sewage system or septic tank,septic,,,mb
+56565,IDN,,Not connected to sewage disposal system,,,,mb
+56565,IDN,,Unknown,,,,mb
+56569,IDN,No toilet,Not connected to sewage disposal system,open,,,mb
+56569,IDN,"Non-flush, other and unspecified",Not connected to sewage disposal system,,,,mb
+56569,IDN,"Non-flush, latrine",Not connected to sewage disposal system,unimp,,,mb
+56569,IDN,"Have toilet, type not specified",Not connected to sewage disposal system,unimp,,,mb
+56569,IDN,Flush toilet,Connected to sewage system or septic tank,flush_imp_septic,,,mb
+56573,IDN,flush toilet,Connected to sewage system or septic tank,flush_imp_septic,,,mb
+56573,IDN,no toilet,Not connected to sewage disposal system,open,,,mb
+56573,IDN,"non-flush, latrine",Not connected to sewage disposal system,unimp,,,mb
+56573,IDN,"non-flush, other and unspecified",Not connected to sewage disposal system,,,,mb
+56573,IDN,"have toilet, type not specified",Not connected to sewage disposal system,unimp,,,mb
+56573,IDN,unknown,Unknown,,,,mb
+39396,IRN,flush toilet,,flush_cw,,,mb
+39396,IRN,no flush toilet,,latrine_cw,,,mb
+39404,IRQ,"have toilet, type not specified",Sewage system (public sewage disposal),sewer,,,mb
+39404,IRQ,"have toilet, type not specified",Not connected to sewage disposal system,unimp,,,mb
+39404,IRQ,"have toilet, type not specified",Septic tank (private sewage disposal),septic,,,mb
+39404,IRQ,no toilet,Sewage system (public sewage disposal),open,,,mb
+39404,IRQ,no toilet,Not connected to sewage disposal system,open,,,mb
+39404,IRQ,no toilet,Septic tank (private sewage disposal),septic,,,mb
+39404,IRQ,unknown,Septic tank (private sewage disposal),septic,,,mb
+39404,IRQ,unknown,Unknown,,,,mb
+39404,IRQ,niu (not in universe),NIU (not in universe),,,,mb
+39404,IRQ,unknown,Not connected to sewage disposal system,,,,mb
+39404,IRQ,niu (not in universe),Septic tank (private sewage disposal),septic,,,mb
+39404,IRQ,unknown,Sewage system (public sewage disposal),,,,mb
+39404,IRQ,niu (not in universe),Sewage system (public sewage disposal),,,,mb
+39404,IRQ,no toilet,Unknown,open,,,mb
+39404,IRQ,niu (not in universe),Not connected to sewage disposal system,,,,mb
+39404,IRQ,"have toilet, type not specified",Unknown,latrine_cw,,,mb
+39450,JAM,Flush toilet,,flush_cw,,,mb
+39450,JAM,Unknown,,,,,mb
+39450,JAM,"Non-flush, latrine",,latrine_cw,,,mb
+39450,JAM,NIU (not in universe),,,,,mb
+39450,JAM,No toilet,,open,,,mb
+39455,JOR,"Have toilet, type not specified",Connected to sewage system or septic tank,septic,,,mb
+39455,JOR,NIU (not in universe),NIU (not in universe),,,,mb
+39455,JOR,"Have toilet, type not specified",Not connected to sewage disposal system,unimp,,,mb
+39455,JOR,No toilet,Not connected to sewage disposal system,open,,,mb
+39476,KEN,"Non-flush, latrine",Not connected to sewage disposal system,unimp,,,mb
+39476,KEN,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,,,mb
+39476,KEN,NIU (not in universe),NIU (not in universe),,,,mb
+39476,KEN,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,,,mb
+39476,KEN,"Non-flush, other and unspecified",Not connected to sewage disposal system,,,,mb
+39476,KEN,No toilet,Not connected to sewage disposal system,open,,,mb
+39476,KEN,Unknown,Unknown,,,,mb
+39481,KEN,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,mg,ad,
+39481,KEN,No toilet,Sewage system (public sewage disposal),open,mg,ad,
+39481,KEN,No toilet,Septic tank (private sewage disposal),septic,mg,ad,
+39481,KEN,"Non-flush, other and unspecified",Not connected to sewage disposal system,,mg,ad,
+39481,KEN,"Non-flush, latrine",Sewage system (public sewage disposal),latrine_cw,mg,ad,
+39481,KEN,"Non-flush, latrine",Septic tank (private sewage disposal),septic,mg,ad,
+39481,KEN,"Non-flush, other and unspecified",Unknown,,mg,ad,
+39481,KEN,"Non-flush, other and unspecified",,,mg,ad,
+39481,KEN,Flush toilet,Not connected to sewage disposal system,flush_unimp,mg,ad,
+39481,KEN,"Non-flush, latrine",Not connected to sewage disposal system,unimp,mg,ad,
+39481,KEN,No toilet,Not connected to sewage disposal system,open,mg,ad,
+39481,KEN,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,mg,ad,
+39481,KEN,"Non-flush, other and unspecified",Sewage system (public sewage disposal),latrine_cw,mg,ad,
+39481,KEN,"Non-flush, other and unspecified",Septic tank (private sewage disposal),septic,mg,ad,
+39481,KEN,Flush toilet,Unknown,flush_imp,mg,ad,
+39481,KEN,"Non-flush, latrine",Unknown,latrine_cw,mg,ad,
+39481,KEN,No toilet,Unknown,open,mg,ad,
+39481,KEN,Flush toilet,,flush_cw,mg,ad,
+39481,KEN,"Non-flush, latrine",,latrine_cw,mg,ad,
+39481,KEN,No toilet,,open,mg,ad,
+39481,KEN,Unknown,Not connected to sewage disposal system,,mg,ad,
+39481,KEN,Unknown,Unknown,,mg,ad,
+39481,KEN,Unknown,Sewage system (public sewage disposal),,mg,ad,
+39481,KEN,Unknown,Septic tank (private sewage disposal),septic,mg,ad,
+39481,KEN,Unknown,,,mg,ad,
+106512,KEN,,Sewage system (public sewage disposal),,mg,ad,
+106512,KEN,,Septic tank (private sewage disposal),septic,mg,ad,
+106512,KEN,,NIU (not in universe),,mg,ad,
+106512,KEN,,Not connected to sewage disposal system,,mg,ad,
+39466,KGZ,,Not connected to sewage disposal system,,,,mb
+39466,KGZ,,Connected to sewage system or septic tank,septic,,,mb
+39466,KGZ,,NIU (not in universe),,,,mb
+35322,KHM,no toilet,,open,,,mb
+35322,KHM,niu (not in universe),,,,,mb
+35322,KHM,"have toilet, type not specified",,latrine_cw,,,mb
+151310,LBR,No toilet,Not connected to sewage disposal system,open,mg,ad,
+151310,LBR,"Non-flush, latrine",Not connected to sewage disposal system,unimp,mg,ad,
+151310,LBR,Flush toilet,Not connected to sewage disposal system,flush_unimp,mg,ad,
+151310,LBR,"Non-flush, latrine",Connected to sewage system or septic tank,septic,mg,ad,
+151310,LBR,Flush toilet,Connected to sewage system or septic tank,flush_imp_septic,mg,ad,
+151310,LBR,No toilet,,open,mg,ad,
+151310,LBR,"Non-flush, latrine",,latrine_cw,mg,ad,
+151310,LBR,Flush toilet,,flush_cw,mg,ad,
+151310,LBR,No toilet,Connected to sewage system or septic tank,septic,mg,ad,
+151310,LBR,"Non-flush, other and unspecified",Not connected to sewage disposal system,,mg,ad,
+151310,LBR,"Non-flush, other and unspecified",,,mg,ad,
+151310,LBR,"Non-flush, other and unspecified",Connected to sewage system or septic tank,septic,mg,ad,
+43028,LCA,"Non-flush, latrine",Not connected to sewage disposal system,latrine_cw,,,mb
+43028,LCA,No toilet,Not connected to sewage disposal system,open,,,mb
+43028,LCA,"Non-flush, other and unspecified",Not connected to sewage disposal system,,,,mb
+43028,LCA,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,,,mb
+43028,LCA,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,,,mb
+43028,LCA,Unknown,Unknown,,,,mb
+43055,LCA,"Non-flush, latrine",Not connected to sewage disposal system,latrine_cw,,,mb
+43055,LCA,No toilet,Not connected to sewage disposal system,open,,,mb
+43055,LCA,"Non-flush, other and unspecified",Not connected to sewage disposal system,,,,mb
+43055,LCA,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,,,mb
+43055,LCA,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,,,mb
+367585,LSO,"non-flush, latrine",,latrine_cw,,,mb
+367585,LSO,no toilet,,open,,,mb
+367585,LSO,flush toilet,,flush_cw,,,mb
+56488,MAR,"Have toilet, type not specified",,latrine_cw,,,mb
+56488,MAR,No toilet,,open,,,mb
+56488,MAR,Unknown,,,,,mb
+56488,MAR,NIU (not in universe),,,,,mb
+56492,MAR,NIU (not in universe),NIU (not in universe),,mg,ad,
+56492,MAR,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,mg,ad,
+56492,MAR,NIU (not in universe),Not connected to sewage disposal system,,mg,ad,
+56492,MAR,NIU (not in universe),Sewage system (public sewage disposal),,mg,ad,
+56492,MAR,NIU (not in universe),Unknown,,mg,ad,
+56492,MAR,NIU (not in universe),Septic tank (private sewage disposal),septic,mg,ad,
+56492,MAR,NIU (not in universe),,,mg,ad,
+56492,MAR,"Non-flush, other and unspecified",NIU (not in universe),,mg,ad,
+56492,MAR,No toilet,Sewage system (public sewage disposal),open,mg,ad,
+56492,MAR,No toilet,Septic tank (private sewage disposal),septic,mg,ad,
+56492,MAR,"Non-flush, other and unspecified",Not connected to sewage disposal system,,mg,ad,
+56492,MAR,"Non-flush, latrine",Sewage system (public sewage disposal),latrine_cw,mg,ad,
+56492,MAR,"Non-flush, latrine",Septic tank (private sewage disposal),septic,mg,ad,
+56492,MAR,"Non-flush, other and unspecified",Unknown,,mg,ad,
+56492,MAR,"Non-flush, other and unspecified",,,mg,ad,
+56492,MAR,Unknown,NIU (not in universe),,mg,ad,
+56492,MAR,Unknown,Not connected to sewage disposal system,,mg,ad,
+56492,MAR,"Non-flush, other and unspecified",Sewage system (public sewage disposal),latrine_cw,mg,ad,
+56492,MAR,"Non-flush, other and unspecified",Septic tank (private sewage disposal),septic,mg,ad,
+56492,MAR,Unknown,Unknown,,mg,ad,
+56492,MAR,Unknown,Sewage system (public sewage disposal),,mg,ad,
+56492,MAR,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,mg,ad,
+56492,MAR,Unknown,Septic tank (private sewage disposal),septic,mg,ad,
+56492,MAR,Flush toilet,Not connected to sewage disposal system,flush_unimp,mg,ad,
+56492,MAR,No toilet,Not connected to sewage disposal system,open,mg,ad,
+56492,MAR,"Non-flush, latrine",Not connected to sewage disposal system,unimp,mg,ad,
+56492,MAR,Flush toilet,Unknown,flush_imp,mg,ad,
+56492,MAR,Unknown,,,mg,ad,
+56492,MAR,No toilet,Unknown,open,mg,ad,
+56492,MAR,"Non-flush, latrine",Unknown,latrine_cw,mg,ad,
+56492,MAR,Flush toilet,NIU (not in universe),flush_cw,mg,ad,
+56492,MAR,No toilet,NIU (not in universe),open,mg,ad,
+56492,MAR,"Non-flush, latrine",NIU (not in universe),latrine_cw,mg,ad,
+56492,MAR,Flush toilet,,flush_cw,mg,ad,
+56492,MAR,No toilet,,open,mg,ad,
+56492,MAR,"Non-flush, latrine",,latrine_cw,mg,ad,
+43771,MEX,No toilet,Not connected to sewage disposal system,open,,,mb
+43771,MEX,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,,,mb
+43771,MEX,"Non-flush, other and unspecified",Not connected to sewage disposal system,unimp,,,mb
+43771,MEX,Unknown,Unknown,,,,mb
+43771,MEX,"Non-flush, other and unspecified",Septic tank (private sewage disposal),septic,,,mb
+43771,MEX,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,,,mb
+43771,MEX,No toilet,Unknown,open,,,mb
+43771,MEX,Flush toilet,Not connected to sewage disposal system,flush_unimp,,,mb
+43771,MEX,Unknown,Not connected to sewage disposal system,,,,mb
+43771,MEX,No toilet,Septic tank (private sewage disposal),septic,,,mb
+43771,MEX,"Non-flush, other and unspecified",Unknown,,,,mb
+43771,MEX,"Non-flush, other and unspecified",Sewage system (public sewage disposal),latrine_cw,,,mb
+43771,MEX,Flush toilet,Unknown,flush_imp,,,mb
+43771,MEX,No toilet,Sewage system (public sewage disposal),open,,,mb
+43771,MEX,Unknown,Sewage system (public sewage disposal),,,,mb
+43771,MEX,Unknown,Septic tank (private sewage disposal),septic,,,mb
+43776,MEX,,Sewage system (public sewage disposal),,,,mb
+43776,MEX,,Septic tank (private sewage disposal),septic,,,mb
+43776,MEX,,Not connected to sewage disposal system,,,,mb
+43776,MEX,,Unknown,,,,mb
+43776,MEX,,NIU (not in universe),,,,mb
+56480,MEX,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,,,mb
+56480,MEX,"Non-flush, other and unspecified",Septic tank (private sewage disposal),septic,,,mb
+56480,MEX,No toilet,Not connected to sewage disposal system,open,,,mb
+56480,MEX,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,,,mb
+56480,MEX,"Have toilet, type not specified",Not connected to sewage disposal system,unimp,,,mb
+56480,MEX,"Non-flush, other and unspecified",Not connected to sewage disposal system,,,,mb
+56480,MEX,"Non-flush, other and unspecified",Sewage system (public sewage disposal),latrine_cw,,,mb
+56480,MEX,No toilet,Sewage system (public sewage disposal),open,,,mb
+56480,MEX,No toilet,Septic tank (private sewage disposal),septic,,,mb
+56480,MEX,No toilet,Unknown,open,,,mb
+56480,MEX,Flush toilet,Not connected to sewage disposal system,flush_unimp,,,mb
+56480,MEX,Unknown,Unknown,,,,mb
+56480,MEX,Flush toilet,Unknown,flush_imp,,,mb
+56480,MEX,"Have toilet, type not specified",Septic tank (private sewage disposal),septic,,,mb
+56480,MEX,Unknown,Not connected to sewage disposal system,,,,mb
+56480,MEX,NIU (not in universe),NIU (not in universe),,,,mb
+56480,MEX,"Non-flush, other and unspecified",Unknown,,,,mb
+56480,MEX,"Have toilet, type not specified",Unknown,latrine_cw,,,mb
+56480,MEX,Unknown,Septic tank (private sewage disposal),septic,,,mb
+56480,MEX,"Have toilet, type not specified",Sewage system (public sewage disposal),sewer,,,mb
+56480,MEX,Unknown,Sewage system (public sewage disposal),,,,mb
+294574,MEX,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,,,mb
+294574,MEX,No toilet,Not connected to sewage disposal system,open,,,mb
+294574,MEX,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,,,mb
+294574,MEX,"Non-flush, other and unspecified",Sewage system (public sewage disposal),latrine_cw,,,mb
+294574,MEX,"Non-flush, latrine",Not connected to sewage disposal system,unimp,,,mb
+294574,MEX,"Non-flush, latrine",Septic tank (private sewage disposal),septic,,,mb
+294574,MEX,"Non-flush, other and unspecified",Not connected to sewage disposal system,,,,mb
+294574,MEX,Flush toilet,Not connected to sewage disposal system,flush_unimp,,,mb
+294574,MEX,No toilet,Sewage system (public sewage disposal),open,,,mb
+294574,MEX,"Non-flush, other and unspecified",Septic tank (private sewage disposal),septic,,,mb
+294574,MEX,No toilet,Septic tank (private sewage disposal),septic,,,mb
+294574,MEX,"Non-flush, latrine",Sewage system (public sewage disposal),latrine_cw,,,mb
+294574,MEX,Flush toilet,Unknown,flush_imp,,,mb
+294574,MEX,Unknown,Unknown,,,,mb
+294574,MEX,NIU (not in universe),NIU (not in universe),,,,mb
+294574,MEX,No toilet,Unknown,open,,,mb
+294574,MEX,Unknown,Not connected to sewage disposal system,,,,mb
+294574,MEX,"Non-flush, other and unspecified",Unknown,,,,mb
+294574,MEX,"Non-flush, latrine",Unknown,latrine_cw,,,mb
+294574,MEX,Unknown,Septic tank (private sewage disposal),septic,,,mb
+294574,MEX,Unknown,Sewage system (public sewage disposal),,,,mb
+40235,MLI,"Non-flush, latrine",,latrine_cw,mg,ad,
+40235,MLI,No toilet,,open,mg,ad,
+40235,MLI,Flush toilet,,flush_cw,mg,ad,
+40235,MLI,Unknown,,,mg,ad,
+151311,MLI,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,mg,ad,
+151311,MLI,"Non-flush, latrine",Not connected to sewage disposal system,unimp,mg,ad,
+151311,MLI,Flush toilet,Not connected to sewage disposal system,flush_unimp,mg,ad,
+151311,MLI,No toilet,Not connected to sewage disposal system,open,mg,ad,
+151311,MLI,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,mg,ad,
+151311,MLI,"Non-flush, latrine",Unknown,latrine_cw,mg,ad,
+151311,MLI,Flush toilet,Unknown,flush_imp,mg,ad,
+151311,MLI,No toilet,Unknown,open,mg,ad,
+151311,MLI,No toilet,Septic tank (private sewage disposal),septic,mg,ad,
+151311,MLI,No toilet,Sewage system (public sewage disposal),open,mg,ad,
+151311,MLI,"Non-flush, latrine",Septic tank (private sewage disposal),septic,mg,ad,
+151311,MLI,"Non-flush, latrine",Sewage system (public sewage disposal),latrine_cw,mg,ad,
+151311,MLI,Unknown,Not connected to sewage disposal system,,mg,ad,
+151311,MLI,Unknown,Unknown,,mg,ad,
+151311,MLI,Unknown,Septic tank (private sewage disposal),septic,mg,ad,
+151311,MLI,Unknown,Sewage system (public sewage disposal),,mg,ad,
+40790,MNG,,,,,,mb
+40796,MNG,"Have toilet, type not specified",,latrine_cw,,,mb
+40796,MNG,No toilet,,open,,,mb
+227142,MOZ,"Non-flush, latrine",,latrine_cw,,,mb
+227142,MOZ,Flush toilet,,flush_Cw,,,mb
+227142,MOZ,"Non-flush, other and unspecified",,,,,mb
+227142,MOZ,NIU (not in universe),,,,,mb
+227142,MOZ,No toilet,,open,,,mb
+227143,MOZ,NIU (not in universe),,,mg,ad,
+227143,MOZ,"Non-flush, latrine",,latrine_cw,mg,ad,
+227143,MOZ,Flush toilet,,flush_cw,mg,ad,
+227143,MOZ,No toilet,,open,mg,ad,
+227143,MOZ,,,,mg,ad,
+40155,MWI,"Non-flush, latrine",,latrine_cw,,,mb
+40155,MWI,No toilet,,open,,,mb
+40155,MWI,Flush toilet,,flush_cw,,,mb
+40155,MWI,NIU (not in universe),,,,,mb
+40155,MWI,"Non-flush, other and unspecified",,,,,mb
+40179,MWI,NIU (not in universe),,,mg,ad,
+40179,MWI,"Non-flush, latrine",,latrine_cw,mg,ad,
+40179,MWI,No toilet,,open,mg,ad,
+40179,MWI,Flush toilet,,flush_cw,mg,ad,
+40179,MWI,Unknown,,,mg,ad,
+40179,MWI,,,,mg,ad,
+40186,MWI,NIU (not in universe),,,mg,ad,
+40186,MWI,"Non-flush, other and unspecified",,,mg,ad,
+40186,MWI,"Non-flush, latrine",,latrine_cw,mg,ad,
+40186,MWI,Flush toilet,,flush_cw,mg,ad,
+40186,MWI,No toilet,,open,mg,ad,
+40780,MYS,Flush toilet,,flush_cw,,,mb
+40780,MYS,"Non-flush, other and unspecified",,,,,mb
+40780,MYS,NIU (not in universe),,,,,mb
+40780,MYS,No toilet,,open,,,mb
+40780,MYS,"Non-flush, latrine",,latrine_cw,,,mb
+40785,MYS,Flush toilet,,flush_cw,,,mb
+40785,MYS,"Non-flush, latrine",,latrine_cw,,,mb
+40785,MYS,No toilet,,open,,,mb
+40785,MYS,"Non-flush, other and unspecified",,,,,mb
+151312,NGA,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,mg,ad,
+151312,NGA,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,mg,ad,
+151312,NGA,No toilet,Septic tank (private sewage disposal),septic,mg,ad,
+151312,NGA,No toilet,Sewage system (public sewage disposal),open,mg,ad,
+151312,NGA,Flush toilet,Not connected to sewage disposal system,flush_unimp,mg,ad,
+151312,NGA,"Non-flush, latrine",Not connected to sewage disposal system,unimp,mg,ad,
+151312,NGA,No toilet,Not connected to sewage disposal system,open,mg,ad,
+151312,NGA,Flush toilet,Unknown,flush_imp,mg,ad,
+151312,NGA,"Non-flush, latrine",Unknown,latrine_cw,mg,ad,
+151312,NGA,No toilet,Unknown,open,mg,ad,
+151312,NGA,Flush toilet,,flush_cw,mg,ad,
+151312,NGA,"Non-flush, latrine",,latrine_cw,mg,ad,
+151312,NGA,No toilet,,open,mg,ad,
+151312,NGA,"Non-flush, other and unspecified",Not connected to sewage disposal system,,mg,ad,
+151312,NGA,"Non-flush, latrine",Septic tank (private sewage disposal),septic,mg,ad,
+151312,NGA,"Non-flush, latrine",Sewage system (public sewage disposal),latrine_cw,mg,ad,
+151312,NGA,"Non-flush, other and unspecified",Unknown,,mg,ad,
+151312,NGA,"Non-flush, other and unspecified",,,mg,ad,
+151312,NGA,"Non-flush, other and unspecified",Septic tank (private sewage disposal),septic,mg,ad,
+151312,NGA,"Non-flush, other and unspecified",Sewage system (public sewage disposal),latrine_cw,mg,ad,
+151312,NGA,Unknown,Not connected to sewage disposal system,,mg,ad,
+151312,NGA,Unknown,Unknown,,mg,ad,
+151312,NGA,Unknown,Septic tank (private sewage disposal),septic,mg,ad,
+151312,NGA,Unknown,Sewage system (public sewage disposal),,mg,ad,
+151312,NGA,Unknown,,,mg,ad,
+151313,NGA,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,mg,ad,
+151313,NGA,No toilet,Septic tank (private sewage disposal),septic,mg,ad,
+151313,NGA,No toilet,Sewage system (public sewage disposal),open,mg,ad,
+151313,NGA,"Non-flush, latrine",Not connected to sewage disposal system,unimp,mg,ad,
+151313,NGA,Flush toilet,Not connected to sewage disposal system,flush_unimp,mg,ad,
+151313,NGA,No toilet,Not connected to sewage disposal system,open,mg,ad,
+151313,NGA,"Non-flush, latrine",Unknown,latrine_cw,mg,ad,
+151313,NGA,Flush toilet,Unknown,flush_imp,mg,ad,
+151313,NGA,No toilet,Unknown,open,mg,ad,
+151313,NGA,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,mg,ad,
+151313,NGA,"Non-flush, latrine",,latrine_cw,mg,ad,
+151313,NGA,Flush toilet,,flush_cw,mg,ad,
+151313,NGA,No toilet,,open,mg,ad,
+151313,NGA,"Non-flush, other and unspecified",Not connected to sewage disposal system,,mg,ad,
+151313,NGA,"Non-flush, latrine",Septic tank (private sewage disposal),septic,mg,ad,
+151313,NGA,"Non-flush, latrine",Sewage system (public sewage disposal),latrine_cw,mg,ad,
+151313,NGA,"Non-flush, other and unspecified",Unknown,,mg,ad,
+151313,NGA,"Non-flush, other and unspecified",,,mg,ad,
+151313,NGA,"Non-flush, other and unspecified",Septic tank (private sewage disposal),septic,mg,ad,
+151313,NGA,"Non-flush, other and unspecified",Sewage system (public sewage disposal),latrine_cw,mg,ad,
+151313,NGA,Unknown,Not connected to sewage disposal system,,mg,ad,
+151313,NGA,Unknown,Unknown,,mg,ad,
+151313,NGA,Unknown,Septic tank (private sewage disposal),septic,mg,ad,
+151313,NGA,Unknown,Sewage system (public sewage disposal),,mg,ad,
+151313,NGA,Unknown,,,mg,ad,
+151314,NGA,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,mg,ad,
+151314,NGA,No toilet,Septic tank (private sewage disposal),septic,mg,ad,
+151314,NGA,No toilet,Sewage system (public sewage disposal),open,mg,ad,
+151314,NGA,"Non-flush, latrine",Unknown,latrine_cw,mg,ad,
+151314,NGA,Flush toilet,Unknown,flush_imp,mg,ad,
+151314,NGA,No toilet,Unknown,open,mg,ad,
+151314,NGA,"Non-flush, other and unspecified",Not connected to sewage disposal system,,mg,ad,
+151314,NGA,"Non-flush, latrine",Not connected to sewage disposal system,unimp,mg,ad,
+151314,NGA,Flush toilet,Not connected to sewage disposal system,flush_unimp,mg,ad,
+151314,NGA,No toilet,Not connected to sewage disposal system,open,mg,ad,
+151314,NGA,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,mg,ad,
+151314,NGA,"Non-flush, latrine",,latrine_cw,mg,ad,
+151314,NGA,Flush toilet,,flush_cw,mg,ad,
+151314,NGA,No toilet,,open,mg,ad,
+151314,NGA,"Non-flush, latrine",Septic tank (private sewage disposal),septic,mg,ad,
+151314,NGA,"Non-flush, latrine",Sewage system (public sewage disposal),latrine_cw,mg,ad,
+151314,NGA,"Non-flush, other and unspecified",Unknown,,mg,ad,
+151314,NGA,"Non-flush, other and unspecified",,,mg,ad,
+151314,NGA,"Non-flush, other and unspecified",Septic tank (private sewage disposal),septic,mg,ad,
+151314,NGA,"Non-flush, other and unspecified",Sewage system (public sewage disposal),latrine_cw,mg,ad,
+151314,NGA,Unknown,Not connected to sewage disposal system,,mg,ad,
+151314,NGA,Unknown,Unknown,,mg,ad,
+151314,NGA,Unknown,Septic tank (private sewage disposal),septic,mg,ad,
+151314,NGA,Unknown,Sewage system (public sewage disposal),,mg,ad,
+151314,NGA,Unknown,,,mg,ad,
+151317,NGA,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,mg,ad,
+151317,NGA,No toilet,Septic tank (private sewage disposal),septic,mg,ad,
+151317,NGA,No toilet,Sewage system (public sewage disposal),open,mg,ad,
+151317,NGA,"Non-flush, other and unspecified",Not connected to sewage disposal system,,mg,ad,
+151317,NGA,"Non-flush, latrine",Not connected to sewage disposal system,unimp,mg,ad,
+151317,NGA,Flush toilet,Not connected to sewage disposal system,flush_unimp,mg,ad,
+151317,NGA,No toilet,Not connected to sewage disposal system,open,mg,ad,
+151317,NGA,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,mg,ad,
+151317,NGA,"Non-flush, latrine",Septic tank (private sewage disposal),septic,mg,ad,
+151317,NGA,"Non-flush, latrine",Sewage system (public sewage disposal),latrine_cw,mg,ad,
+151317,NGA,"Non-flush, latrine",Unknown,latrine_cw,mg,ad,
+151317,NGA,Flush toilet,Unknown,flush_imp,mg,ad,
+151317,NGA,No toilet,Unknown,open,mg,ad,
+151317,NGA,"Non-flush, latrine",,latrine_cw,mg,ad,
+151317,NGA,Flush toilet,,flush_cw,mg,ad,
+151317,NGA,No toilet,,open,mg,ad,
+151317,NGA,"Non-flush, other and unspecified",Unknown,,mg,ad,
+151317,NGA,"Non-flush, other and unspecified",,,mg,ad,
+151317,NGA,"Non-flush, other and unspecified",Septic tank (private sewage disposal),septic,mg,ad,
+151317,NGA,"Non-flush, other and unspecified",Sewage system (public sewage disposal),latrine_cw,mg,ad,
+151317,NGA,Unknown,Not connected to sewage disposal system,,mg,ad,
+151317,NGA,Unknown,Unknown,,mg,ad,
+151317,NGA,Unknown,,,mg,ad,
+151317,NGA,Unknown,Septic tank (private sewage disposal),septic,mg,ad,
+151317,NGA,Unknown,Sewage system (public sewage disposal),,mg,ad,
+56516,NIC,No toilet,Not connected to sewage disposal system,open,,,mb
+56516,NIC,"Non-flush, latrine",Not connected to sewage disposal system,unimp,,,mb
+56516,NIC,Flush toilet,Not connected to sewage disposal system,flush_unimp,,,mb
+56516,NIC,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,,,mb
+56516,NIC,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,,,mb
+56516,NIC,NIU (not in universe),NIU (not in universe),,,,mb
+56516,NIC,Unknown,Unknown,,,,mb
+56520,NIC,No toilet,Not connected to sewage disposal system,open,,,mb
+56520,NIC,"Non-flush, latrine",Not connected to sewage disposal system,unimp,,,mb
+56520,NIC,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,,,mb
+56520,NIC,NIU (not in universe),NIU (not in universe),,,,mb
+56520,NIC,Flush toilet,Not connected to sewage disposal system,flush_unimp,,,mb
+56520,NIC,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,,,mb
+40907,PAN,"Non-flush, latrine",Not connected to sewage disposal system,unimp,,,mb
+40907,PAN,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,,,mb
+40907,PAN,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,,,mb
+40907,PAN,No toilet,Not connected to sewage disposal system,open,,,mb
+40907,PAN,NIU (not in universe),NIU (not in universe),,,,mb
+41262,PER,No toilet,Not connected to sewage disposal system,open,,,mb
+41262,PER,"Non-flush, latrine",Not connected to sewage disposal system,unimp,,,mb
+41262,PER,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,,,mb
+41262,PER,"Non-flush, other and unspecified",Not connected to sewage disposal system,,,,mb
+41262,PER,NIU (not in universe),NIU (not in universe),,,,mb
+41267,PER,No toilet,Not connected to sewage disposal system,open,,,mb
+41267,PER,"Non-flush, latrine",Not connected to sewage disposal system,unimp,,,mb
+41267,PER,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,,,mb
+41267,PER,"Non-flush, other and unspecified",Not connected to sewage disposal system,,,,mb
+41267,PER,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,,,mb
+41267,PER,NIU (not in universe),NIU (not in universe),,,,mb
+41272,PHL,Flush toilet,,flush_cw,,,mb
+41272,PHL,No toilet,,open,,,mb
+41272,PHL,"Non-flush, latrine",,latrine_cw,,,mb
+41272,PHL,"Non-flush, other and unspecified",,,,,mb
+41296,PHL,Flush toilet,,flush_cw,,,mb
+41296,PHL,"Non-flush, other and unspecified",,,,,mb
+41296,PHL,No toilet,,open,,,mb
+41296,PHL,"Non-flush, latrine",,latrine_cw,,,mb
+227162,PRY,"Non-flush, latrine",,latrine_cw,,,mb
+227162,PRY,NIU (not in universe),,,,,mb
+227162,PRY,Flush toilet,,flush_cw,,,mb
+227162,PRY,No toilet,,open,,,mb
+227162,PRY,Unknown,,,,,mb
+227167,PRY,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,,,mb
+227167,PRY,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,,,mb
+227167,PRY,"Non-flush, latrine",Not connected to sewage disposal system,unimp,,,mb
+227167,PRY,Unknown,Unknown,,,,mb
+227167,PRY,No toilet,NIU (not in universe),open,,,mb
+227167,PRY,NIU (not in universe),NIU (not in universe),,,,mb
+41083,PSE,flush toilet,Not connected to sewage disposal system,flush_unimp,,,mb
+41083,PSE,"non-flush, latrine",Not connected to sewage disposal system,unimp,,,mb
+41083,PSE,flush toilet,Connected to sewage system or septic tank,flush_imp_septic,,,mb
+41083,PSE,no toilet,Not connected to sewage disposal system,open,,,mb
+41083,PSE,"non-flush, latrine",Connected to sewage system or septic tank,septic,,,mb
+41083,PSE,no toilet,Unknown,open,,,mb
+41083,PSE,unknown,Unknown,,,,mb
+41083,PSE,flush toilet,Unknown,flush_imp,,,mb
+41083,PSE,"non-flush, latrine",Unknown,latrine_cw,,,mb
+41083,PSE,unknown,Connected to sewage system or septic tank,septic,,,mb
+41083,PSE,unknown,Not connected to sewage disposal system,,,,mb
+41083,PSE,no toilet,Connected to sewage system or septic tank,septic,,,mb
+41088,PSE,Flush toilet,Not connected to sewage disposal system,flush_unimp,,,mb
+41088,PSE,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,,,mb
+41088,PSE,Unknown,Unknown,,,,mb
+41088,PSE,"Non-flush, latrine",Not connected to sewage disposal system,unimp,,,mb
+41088,PSE,Unknown,Not connected to sewage disposal system,,,,mb
+41088,PSE,"Non-flush, latrine",Sewage system (public sewage disposal),latrine_cw,,,mb
+41088,PSE,No toilet,Not connected to sewage disposal system,open,,,mb
+41088,PSE,Unknown,Sewage system (public sewage disposal),,,,mb
+41088,PSE,Flush toilet,Unknown,flush_imp,,,mb
+41088,PSE,No toilet,Sewage system (public sewage disposal),open,,,mb
+41088,PSE,NIU (not in universe),NIU (not in universe),,,,mb
+42361,RWA,"Non-flush, latrine",,latrine_cw,,,mb
+42361,RWA,Flush toilet,,flush_cw,,,mb
+42361,RWA,No toilet,,open,,,mb
+42361,RWA,"Non-flush, other and unspecified",,,,,mb
+42361,RWA,Unknown,,,,,mb
+42432,RWA,NIU (not in universe),,,mg,ad,
+42432,RWA,"Non-flush, other and unspecified",,,mg,ad,
+42432,RWA,"Non-flush, latrine",,latrine_cw,mg,ad,
+42432,RWA,Flush toilet,,flush_cw,mg,ad,
+42432,RWA,No toilet,,open,mg,ad,
+42432,RWA,Unknown,,,mg,ad,
+367645,RWA,"non-flush, latrine",not connected to sewage disposal system,unimp,,,mb
+367645,RWA,"non-flush, latrine",sewage system (public sewage disposal),latrine_cw,,,mb
+367645,RWA,unknown,not connected to sewage disposal system,,,,mb
+367645,RWA,flush toilet,not connected to sewage disposal system,flush_unimp,,,mb
+367645,RWA,"non-flush, latrine",unknown,latrine_cw,,,mb
+367645,RWA,flush toilet,sewage system (public sewage disposal),flush_imp_sewer,,,mb
+367645,RWA,unknown,unknown,,,,mb
+367645,RWA,"non-flush, other and unspecified",not connected to sewage disposal system,,,,mb
+367645,RWA,unknown,sewage system (public sewage disposal),,,,mb
+367645,RWA,no toilet,not connected to sewage disposal system,open,,,mb
+367645,RWA,no toilet,sewage system (public sewage disposal),open,,,mb
+367645,RWA,flush toilet,unknown,flush_imp,,,mb
+367645,RWA,"non-flush, other and unspecified",unknown,,,,mb
+367645,RWA,"non-flush, other and unspecified",sewage system (public sewage disposal),latrine_cw,,,mb
+367645,RWA,no toilet,unknown,open,,,mb
+43167,SDN,No toilet,,open,,,mb
+43167,SDN,"Non-flush, other and unspecified",,,,,mb
+43167,SDN,"Non-flush, latrine",,latrine_cw,,,mb
+43167,SDN,Flush toilet,,flush_cw,,,mb
+43142,SEN,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,mg,ad,
+43142,SEN,No toilet,Septic tank (private sewage disposal),septic,mg,ad,
+43142,SEN,No toilet,Sewage system (public sewage disposal),open,mg,ad,
+43142,SEN,"Non-flush, other and unspecified",Not connected to sewage disposal system,,mg,ad,
+43142,SEN,"Non-flush, latrine",Septic tank (private sewage disposal),septic,mg,ad,
+43142,SEN,"Non-flush, latrine",Sewage system (public sewage disposal),latrine_cw,mg,ad,
+43142,SEN,"Non-flush, other and unspecified",,,mg,ad,
+43142,SEN,"Non-flush, other and unspecified",Septic tank (private sewage disposal),septic,mg,ad,
+43142,SEN,"Non-flush, latrine",Not connected to sewage disposal system,unimp,mg,ad,
+43142,SEN,No toilet,Not connected to sewage disposal system,open,mg,ad,
+43142,SEN,Flush toilet,Not connected to sewage disposal system,flush_unimp,mg,ad,
+43142,SEN,"Non-flush, other and unspecified",Sewage system (public sewage disposal),latrine_cw,mg,ad,
+43142,SEN,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,mg,ad,
+43142,SEN,"Non-flush, latrine",,latrine_cw,mg,ad,
+43142,SEN,No toilet,,open,mg,ad,
+43142,SEN,Flush toilet,,flush_cw,mg,ad,
+11661,SLE,No toilet,,open,mg,ad,
+11661,SLE,"Non-flush, latrine",,latrine_cw,mg,ad,
+11661,SLE,Flush toilet,,flush_cw,mg,ad,
+11661,SLE,"Non-flush, other and unspecified",,,mg,ad,
+11661,SLE,Unknown,,,mg,ad,
+56472,SLV,"Non-flush, latrine",Not connected to sewage disposal system,unimp,,,mb
+56472,SLV,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,,,mb
+56472,SLV,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,,,mb
+56472,SLV,No toilet,Not connected to sewage disposal system,open,,,mb
+56472,SLV,"Non-flush, other and unspecified",Not connected to sewage disposal system,,,,mb
+56472,SLV,NIU (not in universe),NIU (not in universe),,,,mb
+56476,SLV,"non-flush, latrine",Not connected to sewage disposal system,unimp,,,mb
+56476,SLV,flush toilet,Not connected to sewage disposal system,flush_unimp,,,mb
+56476,SLV,flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,,,mb
+56476,SLV,flush toilet,Septic tank (private sewage disposal),flush_imp_septic,,,mb
+56476,SLV,no toilet,Not connected to sewage disposal system,open,,,mb
+56476,SLV,"non-flush, latrine",Septic tank (private sewage disposal),septic,,,mb
+56476,SLV,niu (not in universe),NIU (not in universe),,,,mb
+56476,SLV,"non-flush, latrine",Sewage system (public sewage disposal),latrine_cw,,,mb
+56476,SLV,no toilet,Septic tank (private sewage disposal),septic,,,mb
+56476,SLV,no toilet,Sewage system (public sewage disposal),open,,,mb
+106548,SSD,"Non-flush, latrine",,latrine_cw,mg,ad,
+106548,SSD,No toilet,,open,mg,ad,
+106548,SSD,Flush toilet,,flush_cw,mg,ad,
+106548,SSD,"Non-flush, other and unspecified",,,mg,ad,
+43226,THA,"Non-flush, latrine",One,latrine_cw,,,mb
+43226,THA,"Non-flush, latrine",None,unimp,,,mb
+43226,THA,No toilet,None,open,,,mb
+43226,THA,Flush toilet,Two,flush_cw,,,mb
+43226,THA,Flush toilet,None,flush_unimp,,,mb
+43226,THA,"Non-flush, latrine",Two,latrine_cw,,,mb
+43226,THA,Flush toilet,One,flush_cw,,,mb
+43226,THA,NIU (not in universe),NIU (not in universe),,,,mb
+43226,THA,"Non-flush, other and unspecified",None,,,,mb
+43226,THA,Unknown,None,,,,mb
+43226,THA,No toilet,One,open,,,mb
+43226,THA,"Non-flush, latrine",Unknown,latrine_cw,,,mb
+43226,THA,"Non-flush, latrine",Three,latrine_cw,,,mb
+43226,THA,"Non-flush, other and unspecified",One,,,,mb
+43226,THA,No toilet,Two,open,,,mb
+43226,THA,"Non-flush, latrine",Four,latrine_cw,,,mb
+43226,THA,Unknown,One,,,,mb
+43226,THA,"Non-flush, latrine",Five,latrine_cw,,,mb
+43226,THA,No toilet,Unknown,open,,,mb
+43226,THA,Unknown,Unknown,,,,mb
+43226,THA,"Non-flush, latrine",Seven,latrine_cw,,,mb
+43226,THA,"Non-flush, latrine",Eight or more,latrine_cw,,,mb
+43226,THA,Flush toilet,Four,flush_cw,,,mb
+43226,THA,Flush toilet,Eight or more,flush_cw,,,mb
+43226,THA,"Non-flush, other and unspecified",Unknown,,,,mb
+43226,THA,Flush toilet,Unknown,flush_imp,,,mb
+43226,THA,Flush toilet,Six,flush_cw,,,mb
+43226,THA,"Non-flush, latrine",Six,latrine_cw,,,mb
+43226,THA,Flush toilet,Three,flush_cw,,,mb
+43226,THA,No toilet,Four,open,,,mb
+43226,THA,"Non-flush, other and unspecified",Two,,,,mb
+43226,THA,Flush toilet,Five,flush_cw,,,mb
+43226,THA,Unknown,Two,,,,mb
+43226,THA,Flush toilet,Seven,flush_cw,,,mb
+43226,THA,Unknown,Eight or more,,,,mb
+43226,THA,Unknown,Seven,,,,mb
+43231,THA,"Non-flush, latrine",,latrine_cw,,,mb
+43231,THA,Flush toilet,,flush_cw,,,mb
+43231,THA,No toilet,,open,,,mb
+43231,THA,Unknown,,,,,mb
+43231,THA,NIU (not in universe),,,,,mb
+43231,THA,"Non-flush, other and unspecified",,,,,mb
+294806,TTO,flush toilet,,flush_cw,,,mb
+294806,TTO,"non-flush, latrine",,latrine_cw,,,mb
+294806,TTO,no toilet,,open,,,mb
+294806,TTO,unknown,,,,,mb
+294806,TTO,"non-flush, other and unspecified",,,,,mb
+294807,TTO,flush toilet,,flush_cw,,,mb
+294807,TTO,"non-flush, latrine",,latrine_cw,,,mb
+294807,TTO,niu (not in universe),,,,,mb
+294807,TTO,unknown,,,,,mb
+43207,TZA,"Non-flush, latrine",,latrine_cw,,,mb
+43207,TZA,No toilet,,open,,,mb
+43207,TZA,Flush toilet,,flush_cw,,,mb
+43207,TZA,Unknown,,,,,mb
+43212,TZA,NIU (not in universe),,,mg,ad,
+43212,TZA,"Non-flush, other and unspecified",,,mg,ad,
+43212,TZA,"Non-flush, latrine",,latrine_cw,mg,ad,
+43212,TZA,Flush toilet,,flush_cw,mg,ad,
+43212,TZA,No toilet,,open,mg,ad,
+294725,TZA,"Non-flush, latrine",,latrine_cw,mg,ad,
+294725,TZA,Flush toilet,,flush_cw,mg,ad,
+294725,TZA,No toilet,,open,mg,ad,
+294725,TZA,"Non-flush, other and unspecified",,,mg,ad,
+43328,UGA,NIU (not in universe),,,mg,ad,
+43328,UGA,"Non-flush, other and unspecified",,,mg,ad,
+43328,UGA,"Non-flush, latrine",,latrine_cw,mg,ad,
+43328,UGA,No toilet,,open,mg,ad,
+43328,UGA,Flush toilet,,flush_cw,mg,ad,
+43334,UGA,"Non-flush, latrine",,latrine_cw,,,mb
+43334,UGA,No toilet,,open,,,mb
+43334,UGA,"Non-flush, other and unspecified",,,,,mb
+43334,UGA,Unknown,,,,,mb
+43334,UGA,Flush toilet,,flush_cw,,,mb
+43334,UGA,NIU (not in universe),,,,,mb
+56538,URY,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,,,mb
+56538,URY,NIU (not in universe),NIU (not in universe),,,,mb
+56538,URY,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,,,mb
+56538,URY,"Non-flush, latrine",Septic tank (private sewage disposal),septic,,,mb
+56538,URY,No toilet,Not connected to sewage disposal system,open,,,mb
+56538,URY,"Non-flush, latrine",Not connected to sewage disposal system,unimp,,,mb
+56538,URY,"Non-flush, latrine",Sewage system (public sewage disposal),latrine_cw,,,mb
+56538,URY,Flush toilet,Not connected to sewage disposal system,flush_unimp,,,mb
+151322,URY,NIU (not in universe),NIU (not in universe),,,,mb
+151322,URY,Unknown,Unknown,,,,mb
+151322,URY,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,,,mb
+151322,URY,No toilet,NIU (not in universe),open,,,mb
+151322,URY,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,,,mb
+151322,URY,"Non-flush, latrine",Septic tank (private sewage disposal),septic,,,mb
+151322,URY,"Non-flush, latrine",Sewage system (public sewage disposal),latrine_cw,,,mb
+151322,URY,"Non-flush, latrine",Not connected to sewage disposal system,unimp,,,mb
+151322,URY,Flush toilet,Not connected to sewage disposal system,flush_unimp,,,mb
+43407,VEN,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,,,mb
+43407,VEN,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,,,mb
+43407,VEN,No toilet,Not connected to sewage disposal system,open,,,mb
+43407,VEN,"Non-flush, latrine",Not connected to sewage disposal system,unimp,,,mb
+43407,VEN,Unknown,Unknown,,,,mb
+43407,VEN,NIU (not in universe),NIU (not in universe),,,,mb
+43412,VEN,No toilet,Not connected to sewage disposal system,open,,,mb
+43412,VEN,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,,,mb
+43412,VEN,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,,,mb
+43412,VEN,"Non-flush, latrine",Not connected to sewage disposal system,unimp,,,mb
+43412,VEN,NIU (not in universe),NIU (not in universe),,,,mb
+43412,VEN,"Non-flush, other and unspecified",Not connected to sewage disposal system,,,,mb
+43571,VNM,Unknown,Unknown,,,,mb
+43571,VNM,No toilet,Not connected to sewage disposal system,open,,,mb
+43571,VNM,Flush toilet,Connected to sewage system or septic tank,flush_imp_septic,,,mb
+43571,VNM,"Non-flush, other and unspecified",Not connected to sewage disposal system,,,,mb
+43718,VNM,flush toilet,Connected to sewage system or septic tank,flush_imp_septic,,,mb
+43718,VNM,"non-flush, other and unspecified",Not connected to sewage disposal system,,,,mb
+43718,VNM,no toilet,Not connected to sewage disposal system,open,,,mb
+43718,VNM,niu (not in universe),Unknown,,,,mb
+43718,VNM,unknown,Unknown,,,,mb
+43726,VNM,,,,,,mb
+43146,ZAF,Flush toilet,,flush_cw,,,mb
+43146,ZAF,No toilet,,open,,,mb
+43146,ZAF,"Non-flush, latrine",,latrine_cw,,,mb
+43146,ZAF,NIU (not in universe),,,,,mb
+43146,ZAF,"Non-flush, other and unspecified",,,,,mb
+43146,ZAF,Unknown,,,,,mb
+43152,ZAF,NIU (not in universe),NIU (not in universe),,mg,ad,
+43152,ZAF,Flush toilet,Sewage system (public sewage disposal),flush_imp_sewer,mg,ad,
+43152,ZAF,NIU (not in universe),Not connected to sewage disposal system,,mg,ad,
+43152,ZAF,NIU (not in universe),Sewage system (public sewage disposal),,mg,ad,
+43152,ZAF,NIU (not in universe),Septic tank (private sewage disposal),septic,mg,ad,
+43152,ZAF,NIU (not in universe),,,mg,ad,
+43152,ZAF,"Non-flush, other and unspecified",NIU (not in universe),,mg,ad,
+43152,ZAF,No toilet,Sewage system (public sewage disposal),open,mg,ad,
+43152,ZAF,No toilet,Septic tank (private sewage disposal),septic,mg,ad,
+43152,ZAF,"Non-flush, other and unspecified",Not connected to sewage disposal system,,mg,ad,
+43152,ZAF,"Non-flush, latrine",Sewage system (public sewage disposal),latrine_cw,mg,ad,
+43152,ZAF,"Non-flush, latrine",Septic tank (private sewage disposal),septic,mg,ad,
+43152,ZAF,"Non-flush, other and unspecified",,,mg,ad,
+43152,ZAF,"Non-flush, other and unspecified",Sewage system (public sewage disposal),latrine_cw,mg,ad,
+43152,ZAF,"Non-flush, other and unspecified",Septic tank (private sewage disposal),septic,mg,ad,
+43152,ZAF,Flush toilet,Not connected to sewage disposal system,flush_unimp,mg,ad,
+43152,ZAF,No toilet,Not connected to sewage disposal system,open,mg,ad,
+43152,ZAF,"Non-flush, latrine",Not connected to sewage disposal system,unimp,mg,ad,
+43152,ZAF,Flush toilet,Septic tank (private sewage disposal),flush_imp_septic,mg,ad,
+43152,ZAF,Flush toilet,NIU (not in universe),flush_cw,mg,ad,
+43152,ZAF,No toilet,NIU (not in universe),open,mg,ad,
+43152,ZAF,"Non-flush, latrine",NIU (not in universe),latrine_cw,mg,ad,
+43152,ZAF,Flush toilet,,flush_cw,mg,ad,
+43152,ZAF,No toilet,,open,mg,ad,
+43152,ZAF,"Non-flush, latrine",,latrine_cw,mg,ad,
+43158,ZAF,NIU (not in universe),,,mg,ad,
+43158,ZAF,"Non-flush, other and unspecified",,,mg,ad,
+43158,ZAF,Flush toilet,,flush_cw,mg,ad,
+43158,ZAF,"Non-flush, latrine",,latrine_cw,mg,ad,
+43158,ZAF,No toilet,,open,mg,ad,
+227194,ZAF,flush toilet,,flush_cw,,,mb
+227194,ZAF,"non-flush, other and unspecified",,,,,mb
+227194,ZAF,niu (not in universe),,,,,mb
+227194,ZAF,no toilet,,open,,,mb
+227194,ZAF,"non-flush, latrine",,latrine_cw,,,mb
+151323,ZMB,Flush toilet,Connected to sewage system or septic tank,flush_imp_septic,,,mb
+151323,ZMB,"Non-flush, latrine",Not connected to sewage disposal system,unimp,,,mb
+151323,ZMB,No toilet,Not connected to sewage disposal system,open,,,mb
+151323,ZMB,"Non-flush, other and unspecified",Not connected to sewage disposal system,,,,mb
+151323,ZMB,Unknown,Unknown,,,,mb
+151323,ZMB,Flush toilet,Not connected to sewage disposal system,flush_unimp,,,mb
+151323,ZMB,NIU (not in universe),NIU (not in universe),,,,mb
+151325,ZMB,No toilet,Connected to sewage system or septic tank,septic,mg,ad,
+151325,ZMB,"Non-flush, other and unspecified",Not connected to sewage disposal system,,mg,ad,
+151325,ZMB,"Non-flush, latrine",Connected to sewage system or septic tank,septic,mg,ad,
+151325,ZMB,No toilet,Not connected to sewage disposal system,open,mg,ad,
+151325,ZMB,"Non-flush, latrine",Not connected to sewage disposal system,unimp,mg,ad,
+151325,ZMB,Flush toilet,Not connected to sewage disposal system,flush_unimp,mg,ad,
+151325,ZMB,Flush toilet,Connected to sewage system or septic tank,flush_imp_septic,mg,ad,
+151325,ZMB,No toilet,,open,mg,ad,
+151325,ZMB,"Non-flush, latrine",,latrine_cw,mg,ad,
+151325,ZMB,Flush toilet,,flush_cw,mg,ad,
+151325,ZMB,"Non-flush, other and unspecified",,,mg,ad,
+151325,ZMB,"Non-flush, other and unspecified",Connected to sewage system or septic tank,septic,mg,ad,
+151326,ZMB,No toilet,Connected to sewage system or septic tank,septic,mg,ad,
+151326,ZMB,"Non-flush, other and unspecified",Not connected to sewage disposal system,,mg,ad,
+151326,ZMB,"Non-flush, latrine",Connected to sewage system or septic tank,septic,mg,ad,
+151326,ZMB,No toilet,Not connected to sewage disposal system,open,mg,ad,
+151326,ZMB,"Non-flush, latrine",Not connected to sewage disposal system,unimp,mg,ad,
+151326,ZMB,Flush toilet,Not connected to sewage disposal system,flush_unimp,mg,ad,
+151326,ZMB,Flush toilet,Connected to sewage system or septic tank,flush_imp_septic,mg,ad,
+151326,ZMB,No toilet,,open,mg,ad,
+151326,ZMB,"Non-flush, latrine",,latrine_cw,mg,ad,
+151326,ZMB,Flush toilet,,flush_cw,mg,ad,
+151326,ZMB,"Non-flush, other and unspecified",,,mg,ad,
+151326,ZMB,"Non-flush, other and unspecified",Connected to sewage system or septic tank,septic,mg,ad,
+367747,ZWE,no toilet,,open,,,mb
+367747,ZWE,"non-flush, latrine",,latrine_cw,,,mb
+367747,ZWE,unknown,,,,,mb
+367747,ZWE,niu (not in universe),,,,,mb
+367747,ZWE,flush toilet,,flush_cw,,,mb
+367747,ZWE,"non-flush, other and unspecified",,,,,mb

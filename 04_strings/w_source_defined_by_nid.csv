@@ -1158,7 +1158,7 @@ nid,iso3,year_start,w_source_drink,sdg,jmp
 10373,PRY,2002,tajamar - río dentro propiedad,surface,surface
 10373,PRY,2002,tajamar - río otro,surface,surface
 10373,PRY,2002,tajamar - río vecino,surface,surface
-10377,PRY,2003,aljibe canilla pública,piped_imp,basic
+10377,PRY,2003,aljibe canilla pública,imp,basic
 10377,PRY,2003,aljibe dentro propiedad,imp,basic
 10377,PRY,2003,aljibe dentro vivienda,imp,basic
 10377,PRY,2003,aljibe fuera viv. dentro propiedad,imp,basic
@@ -1727,7 +1727,7 @@ nid,iso3,year_start,w_source_drink,sdg,jmp
 13693,VNM,2004,"bought water (in tank, bottle)",bottled,basic
 13693,VNM,2004,filtered spring water,spring_cw,spring_cw
 13693,VNM,2004,other,,
-13693,VNM,2004,private tap water,piped_cw,basic
+13693,VNM,2004,private tap water,piped,basic
 13693,VNM,2004,public tap water,piped_imp,basic
 13693,VNM,2004,rain water,imp,basic
 13693,VNM,2004,rivers. lakes. ponds,surface,surface
@@ -5194,7 +5194,7 @@ nid,iso3,year_start,w_source_drink,sdg,jmp
 76705,IDN,2012,protected well in yard/polt,well_imp,well_imp
 76705,IDN,2012,public tap/standpipe,piped_imp,basic
 76705,IDN,2012,rainwater,imp,basic
-76705,IDN,2012,refill water,imp,basic
+76705,IDN,2012,refill water,bottled,basic
 76705,IDN,2012,river/stream,surface,surface
 76705,IDN,2012,spring,spring_cw,spring_cw
 76705,IDN,2012,tanker truck,imp,basic
@@ -5572,7 +5572,7 @@ nid,iso3,year_start,w_source_drink,sdg,jmp
 90707,LKA,2000,other (specify),,
 90707,LKA,2000,protected well outside premises,well_imp,well_imp
 90707,LKA,2000,protected well within premises,well_imp,well_imp
-90707,LKA,2000,public taps/street taps (mainline),piped_cw,basic
+90707,LKA,2000,public taps/street taps (mainline),piped_imp,basic
 90707,LKA,2000,river/tank/streams etc.,surface,surface
 90707,LKA,2000,tap within unit/premises (mainline),piped,basic
 90707,LKA,2000,tube well,imp,basic
@@ -8269,7 +8269,7 @@ nid,iso3,year_start,w_source_drink,sdg,jmp
 235348,IRQ,2012,open well / covered well,well_cw,well_cw
 235348,IRQ,2012,other,,
 235348,IRQ,2012,pond lake,surface,surface
-235348,IRQ,2012,pubic network tap,piped_cw,basic
+235348,IRQ,2012,pubic network tap,piped_imp,basic
 235348,IRQ,2012,public network: housing unit connected,piped,basic
 235348,IRQ,2012,river/canal/creek/ wheel,surface,surface
 235348,IRQ,2012,spring,spring_cw,spring_cw
@@ -9570,7 +9570,7 @@ nid,iso3,year_start,w_source_drink,sdg,jmp
 286773,SLE,2016,unprotected spring,spring_unimp,spring_unimp
 286773,SLE,2016,unprotected well,well_unimp,well_unimp
 286773,SLE,2016,water sachets,bottled,basic
-286780,UGA,2016,bicycle with jerrycans,imp,basic
+286780,UGA,2016,bicycle with jerrycans,bottled,basic
 286780,UGA,2016,bottled water,bottled,basic
 286780,UGA,2016,other,,
 286780,UGA,2016,piped into dwelling,piped,basic
@@ -9596,7 +9596,7 @@ nid,iso3,year_start,w_source_drink,sdg,jmp
 286781,IDN,2017,protected well,well_imp,well_imp
 286781,IDN,2017,public tap/standpipe,piped_imp,basic
 286781,IDN,2017,rainwater,imp,basic
-286781,IDN,2017,refilled water,imp,basic
+286781,IDN,2017,refilled water,bottled,basic
 286781,IDN,2017,river/dam/lake/ponds/stream/canal/irrigation channel,surface,surface
 286781,IDN,2017,tanker truck,imp,basic
 286781,IDN,2017,tube well or borehole,imp,basic
@@ -10871,7 +10871,7 @@ nid,iso3,year_start,w_source_drink,sdg,jmp
 395694,IDN,2017,others,,
 395694,IDN,2017,piped,piped_cw,basic
 395694,IDN,2017,rainwater,imp,basic
-395694,IDN,2017,refill water,imp,basic
+395694,IDN,2017,refill water,bottled,basic
 395694,IDN,2017,surface water such as (river / lake / reservoir / pond / irrigation),surface,surface
 395694,IDN,2017,the spring is protected,spring_imp,spring_imp
 395694,IDN,2017,the well is not protected,well_unimp,well_unimp
