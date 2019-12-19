@@ -38,13 +38,13 @@ lapply(packages, library, character.only = T)
 increment <- 1
 
 #### Load functions ####
-for (file_type in c('ipums')){
+for (file_type in c('pt','poly','ipums')){
   message(paste("Loading",file_type, "data"))
   rm(pt_collapse)
   message('Loading Data...')
   # Load data
   if (!("pt_collapse" %in% ls()) & file_type == 'pt') {
-    pt_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/points_', input_version, '.feather')))
+    pt_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/points_', input_version)))
     pt_collapse$w_source_drink <- tolower(pt_collapse$w_source_drink)
     pt_collapse$w_source_other <- tolower(pt_collapse$w_source_other)
     pt_collapse$t_type <- tolower(pt_collapse$t_type)
@@ -53,7 +53,8 @@ for (file_type in c('ipums')){
   } 
   
   if (!("pt_collapse" %in% ls()) & file_type == 'poly') {
-    pt1_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly1_', input_version, '.feather')))
+    #dataset too large for one feather
+    pt1_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly1_', input_version)))
     pt2_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly2_', input_version, '.feather')))
     pt3_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly3_', input_version, '.feather')))
     pt4_collapse <- as.data.table(read_feather(paste0(l,'LIMITED_USE/LU_GEOSPATIAL/geo_matched/wash/poly4_', input_version, '.feather')))
@@ -71,6 +72,7 @@ for (file_type in c('ipums')){
     pt_collapse$w_source_drink <- tolower(pt_collapse$w_source_drink)
     pt_collapse$w_source_other <- tolower(pt_collapse$w_source_other)
     
+    #hot fix for one string
     pt_collapse[nid %in% c(14063, 14027) & t_type %like% '/ANOTHER HOUSEHOLD', t_type := "neighbour's/another household's pit latrine"]
     pt_collapse$t_type <- tolower(pt_collapse$t_type)
     pt_collapse$sewage <- tolower(pt_collapse$sewage)
@@ -78,9 +80,13 @@ for (file_type in c('ipums')){
   }
   
   if(file_type != 'ipums'){
-    #concatenate t_type and sewage
+    #concatenate t_type and sewage, get rid of extra whitespace
+    #ipums is seperated by t_type and sewage, we should swap to 
+    #this method but string matching is already done for this way
     pt_collapse[!is.na(sewage) & !is.na(t_type), t_type := paste0(t_type, ' ', sewage)]
     pt_collapse[is.na(t_type) & !is.na(sewage), t_type := sewage]
+    pt_collapse[,t_type := trimws(t_t_type)]
+    pt_collapse[,w_source_drink := trimws(w_source_drink)]
   }
   
   if (file_type == 'ipums') {
@@ -150,7 +156,7 @@ for (file_type in c('ipums')){
         } else {
           if (!("definitions" %in% ls())) {
             if (indi_fam == "sani") {
-              definitions <- read.csv(paste0(root,'WORK/11_geospatial/wash/definitions/t_type_defined_by_nid_2019_10_22.csv'),
+              definitions <- read.csv(paste0(root,'WORK/11_geospatial/wash/definitions/t_type_defined_by_nid_2019_12_05.csv'),
                                       encoding="windows-1252", stringsAsFactors = F)
               definitions$iso3 <- substr(definitions$iso3, 1, 3)
               definitions <- unique(definitions)
@@ -159,13 +165,11 @@ for (file_type in c('ipums')){
                                         NA, definitions$sdg)
               definitions$t_type <- ifelse(definitions$t_type == "" | is.na(definitions$t_type),
                                            NA, definitions$t_type)
-              #definitions <- definitions[-4729,]
             } else {
-              definitions <- read.csv(paste0(root,'WORK/11_geospatial/wash/definitions/w_source_defined_by_nid_2019_10_22.csv'),
+              definitions <- read.csv(paste0(root,'WORK/11_geospatial/wash/definitions/w_source_defined_by_nid_2019_12_05.csv'),
                                       encoding="windows-1252", stringsAsFactors = F) 
               definitions$iso3 <- substr(definitions$iso3, 1, 3)
               definitions <- unique(definitions)
-              #definitions <- select(definitions, w_source_drink, sdg, jmp)
               definitions$w_source_drink <- tolower(definitions$w_source_drink)
               definitions$sdg <- ifelse(definitions$sdg == "" | is.na(definitions$sdg),
                                         NA, definitions$sdg)
@@ -204,18 +208,18 @@ for (file_type in c('ipums')){
         #### Address Missingness ####
         message("Addressing Missingness...")
         
-        # Remove clusters with more than 20% weighted missingness
+        #Remove clusters with more than 20% indicator missingness
         ptdat <- data.table(rm_miss())
         if (nrow(ptdat) == 0) {
           next
         }
         
-        # Remove cluster_ids with missing hhweight or invalid hhs
+        # Remove cluster_ids with missing hhweight
         #ID cluster_ids with missing hhweight
         #decided to use 10% unweighted criteria instead of 0 tolerance
         missing.wts <- idMissing(ptdat, this.var="hhweight", criteria=.1, wt.var=NA)
-        #ID points with hhweight|hh_size<=0 (invalid)
-        #drop clusters with more than 20% invalid, then drop invalid rows 
+        #ID points with hhweight<0 (invalid)
+        #drop clusters with more than 10% invalid, then drop invalid rows 
         invalid.wts <- idMissing(ptdat, this.var="hhweight", criteria=.1, wt.var=NA, check.threshold = T, threshold=0)
         remove.clusters <- c(missing.wts,
                              invalid.wts) %>% unique
@@ -226,6 +230,7 @@ for (file_type in c('ipums')){
         
         
         ptdat <- as.data.table(ptdat)
+        #crosswalk household sizes of 0
         ptdat[hh_size == 0, hh_size := NA]
         
         if (nrow(ptdat) == 0) {

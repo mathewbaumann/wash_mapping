@@ -34,10 +34,10 @@ warning(paste(shp,indic,run_date))
 
 if (indic == 'water') {
   levels <- c('network','piped','imp','unimp','surface')
-  polydat <- as.data.table(read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/water_2019_10_24.feather'))
+  polydat <- as.data.table(read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/water_2019_12_09.feather'))
 } else {
   levels <- c('network','piped','imp','unimp','od')
-  polydat <- as.data.table(read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/sani_2019_10_24.feather'))
+  polydat <- as.data.table(read_feather('/home/j/WORK/11_geospatial/wash/data/cwed/sani_2019_12_09.feather'))
 }
 
 polydat <- subset(polydat, is.na(lat) & !is.na(shapefile) & !is.na(location_code))

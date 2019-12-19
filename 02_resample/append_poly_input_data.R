@@ -49,21 +49,21 @@ format_id <- function(df, indicator) {
 }
 
 if (indi_fam == 'water' ) {
-  exc_nids <- exc$w_include
+  #exc_nids <- exc$w_include
   
-  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/water/network/2019-10-24/'))
+  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/water/network/2019-12-09/'))
   network <- lapply(list.files(), read_convert_weights)
   network <- do.call(rbind, network)
   
-  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/water/imp/2019-10-24/'))
+  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/water/imp/2019-12-09/'))
   imp <- lapply(list.files(), read_convert_weights)
   imp <- do.call(rbind, imp)
   
-  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/water/piped/2019-10-24/'))
+  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/water/piped/2019-12-09/'))
   piped <- lapply(list.files(), read_convert_weights)
   piped <- do.call(rbind, piped)
   
-  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/water/unimp/2019-10-24/'))
+  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/water/unimp/2019-12-09/'))
   unimp <- lapply(list.files(), read_convert_weights)
   unimp <- do.call(rbind, unimp)
   
@@ -181,21 +181,21 @@ if (indi_fam == 'water' ) {
 
 indi_fam <- 'sani'
 if (indi_fam == 'sani' ) {
-  exc_nids <- exc$s_include
+  #exc_nids <- exc$s_include
   
-  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/sani/network/2019-10-24/'))
+  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/sani/network/2019-12-09/'))
   network <- lapply(list.files(), read_convert_weights)
   network <- do.call(rbind, network)
   
-  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/sani/piped/2019-10-24/'))
+  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/sani/piped/2019-12-09/'))
   piped <- lapply(list.files(), read_convert_weights)
   piped <- do.call(rbind, piped)
   
-  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/sani/imp/2019-10-24/'))
+  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/sani/imp/2019-12-09/'))
   imp <- lapply(list.files(), read_convert_weights)
   imp <- do.call(rbind, imp)
   
-  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/sani/unimp/2019-10-24/'))
+  setwd(paste0('/home/j/WORK/11_geospatial/wash/data/resamp/sani/unimp/2019-12-09/'))
   unimp <- lapply(list.files(),read_convert_weights)
   unimp <- do.call(rbind, unimp)
   
@@ -219,7 +219,7 @@ if (indi_fam == 'sani' ) {
   }
   
   imp_denom <- select(imp, s_imp, merge_id)
-  piped_denom <- select(piped, s_piped, N, merge_id)
+  piped_denom <- select(piped, s_piped, merge_id)
 
   
   imp <- left_join(imp, piped_denom, by = 'merge_id')

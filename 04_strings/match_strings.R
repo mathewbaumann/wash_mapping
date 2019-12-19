@@ -63,21 +63,23 @@ packaged$sewage <- tolower(packaged$sewage)
 
 packaged[!is.na(sewage) & !is.na(t_type), t_type := paste0(t_type, ' ', sewage)]
 packaged[is.na(t_type) & !is.na(sewage), t_type := sewage]
+packaged[,t_type := trimws(t_type)]
+packaged[,w_source_drink := trimws(w_source_drink)]
 
 packaged <- unique(packaged[,c('nid','iso3','year_start','w_source_drink','t_type')])
 packaged <- subset(packaged, !iso3 %in% subset(stg_mast, Stage == 3)$iso3) %>% subset(year_start > 1999)
 
 
-w <- fread(paste0(j, "WORK/11_geospatial/wash/definitions/", "w_source_defined_by_nid_2019_09_20.csv"))
-t <- fread(paste0(j, "WORK/11_geospatial/wash/definitions/", "t_type_defined_by_nid_2019_09_23.csv"))
+w <- fread(paste0(j, "WORK/11_geospatial/wash/definitions/", "w_source_defined_by_nid_2019_12_12.csv"))
+t <- fread(paste0(j, "WORK/11_geospatial/wash/definitions/", "t_type_defined_by_nid_2019_12_12.csv"))
 
 
-w_new <- merge(unique(packaged[,c('nid','iso3','year_start','w_source_drink')]), w, by = c('nid','iso3','year_start','w_source_drink'), all.x = T)
-t_new <- merge(unique(packaged[,c('nid','iso3','year_start','t_type')]), t, by = c('nid','iso3','year_start','t_type'), all.x = T)
+w_new <- merge(unique(packaged[,c('nid','iso3','year_start','w_source_drink')]), w, by = c('nid','iso3','year_start','w_source_drink'), all.x = T, all.y = T)
+t_new <- merge(unique(packaged[,c('nid','iso3','year_start','t_type')]), t, by = c('nid','iso3','year_start','t_type'), all.x = T, all.y = T)
 
-w_new <- subset(w_new, !is.na(sdg))
-t_new <- subset(t_new, !is.na(sdg))
+w_new <- subset(w_new, (!is.na(w_source_drink)) & (w_source_drink != ''))
+t_new <- subset(t_new, (!is.na(t_type)) & (t_type != ''))
 
 
-write.csv(w_new, paste0(j, "WORK/11_geospatial/wash/definitions/", "w_source_defined_by_nid_2019_09_27.csv"))
-write.csv(t_new, paste0(j, "WORK/11_geospatial/wash/definitions/", "t_type_defined_by_nid_2019_09_27.csv"))
+write.csv(w_new, paste0(j, "WORK/11_geospatial/wash/definitions/", "w_source_defined_by_nid_2019_12_16.csv"), row.names = F)
+write.csv(t_new, paste0(j, "WORK/11_geospatial/wash/definitions/", "t_type_defined_by_nid_2019_12_16.csv"), row.names = F)

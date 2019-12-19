@@ -58,6 +58,7 @@ define_indi <- function(mydat = ptdat, var_family = indi_fam, define = definitio
                    )
   }
 
+  #not currently used
   if (var_family == 'hw') {
     mydat <- mydat %>%
               mutate(hw_unimp = ifelse(is.na(mydat$hw_soap) & is.na(mydat$hw_water), NA,

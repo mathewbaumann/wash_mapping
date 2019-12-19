@@ -23,30 +23,6 @@ cw_water <- function(mydat) {
 			ipiped_pct <- piped_imp/(piped + piped_imp)
 			detach(cw_sub)
 		} else {
-			  # Define regions
-			  # sssa_hi <- c('NAM','BWA','ZAF')
-			  # cssa <- c('CAF','GAB','GNQ','COD','COG','AGO','STP')
-			  # name_hi <- c('MAR','DZA','TUN','LBY','EGY')
-			  # essa_hilo <- c('SDN','ERI','DJI','SOM','ETH','SSD',
-			  #                'SSD','UGA','KEN','RWA','BDI','TZA',
-			  #                'MWI','MOZ','ZMB','MDG','ZWE','SWZ','LSO',
-			  #                'COM')
-			  # wssa <- c('CPV','SEN','GMB','GIN','GNB','SLE','MLI','LBR',
-			  #           'CIV','GHA','TGO','BEN','NGA','NER','TCD','CMR',
-			  #           'BFA','MRT')
-			  # africa <- c(sssa_hi, cssa, name_hi, essa_hilo, wssa)
-
-			  # Assign regions
-			  # region <- NA
-			  # region <- ifelse(!(i %in% africa), 'not-africa',
-			  #  			  ifelse(i %in% sssa_hi, 'sssa_hi',
-			  # 			    ifelse(i %in% cssa, 'cssa',
-			  #                 ifelse(i %in% name_hi, 'name_hi',
-			  #  				    ifelse(i %in% essa_hilo, 'essa_hilo',
-			  # 					  ifelse(i %in% wssa, 'wssa', NA
-			  # 					  	))))))
-
-		  
   		  regions <- read.csv('/home/j/WORK/11_geospatial/diarrhea/01_data/00_identifiers/geoid_stg2.csv')
   		  regions <- regions[,c('iso3', 'region')]
   		  regions$iso3 <- as.character(regions$iso3)
@@ -66,9 +42,7 @@ cw_water <- function(mydat) {
   		      region <- regi
   		    }
   		  }
-		  
-  		  
-  		  
+
 			  cw_reg <- filter(cw_dat, reg == region)
 			  cw_reg <- cw_reg %>% 
 			  			group_by(reg) %>%
@@ -161,29 +135,6 @@ cw_sani <- function(mydat) {
 			iflush_pct <- flush_imp/(flush_imp + flush_unimp)
 			detach(cw_sub)
 		} else {
-			  # Define regions
-			  # sssa_hi <- c('NAM','BWA','ZAF')
-			  # cssa <- c('CAF','GAB','GNQ','COD','COG','AGO','STP')
-			  # name_hi <- c('MAR','DZA','TUN','LBY','EGY')
-			  # essa_hilo <- c('SDN','ERI','DJI','SOM','ETH','SSD',
-			  #                'SSD','UGA','KEN','RWA','BDI','TZA',
-			  #                'MWI','MOZ','ZMB','MDG','ZWE','SWZ','LSO',
-			  #                'COM')
-			  # wssa <- c('CPV','SEN','GMB','GIN','GNB','SLE','MLI','LBR',
-			  #           'CIV','GHA','TGO','BEN','NGA','NER','TCD','CMR',
-			  #           'BFA','MRT')
-			  # africa <- c(sssa_hi, cssa, name_hi, essa_hilo, wssa)
-			  # 
-			  # # Assign regions
-			  # region <- NA
-			  # region <- ifelse(!(i %in% africa), 'not-africa',
-			  #  			  ifelse(i %in% sssa_hi, 'sssa_hi',
-			  # 			    ifelse(i %in% cssa, 'cssa',
-			  #                 ifelse(i %in% name_hi, 'name_hi',
-			  #  				    ifelse(i %in% essa_hilo, 'essa_hilo',
-			  # 					  ifelse(i %in% wssa, 'wssa', NA
-			  # 					  	))))))
-		  
   		  regions <- read.csv('/home/j/WORK/11_geospatial/diarrhea/01_data/00_identifiers/geoid_stg2.csv')
   		  regions <- regions[,c('iso3', 'region')]
   		  regions$iso3 <- as.character(regions$iso3)
@@ -238,20 +189,6 @@ cw_sani <- function(mydat) {
 			subdat$flush_cw <- 0
 		}
 
-		# subdat <- subdat %>%
-		# 		 mutate(imp = imp + 
-		# 		 			  (ilatrine_pct * latrine_cw) + latrine_imp +
-		# 		 			  (iflush_pct * flush_cw) + flush_imp,
-		# 		 		unimp = unimp + 
-		# 		 				(latrine_cw * (1 - ilatrine_pct)) + latrine_unimp +
-		# 		 				(flush_cw * (1 - iflush_pct)) + flush_unimp,
-		# 		 		od = od) %>%
-		# 		 rename(N = total_hh) %>%
-		# 		 select(nid, iso3, survey_series, 
-		# 		 		lat, long, shapefile, location_code,
-		# 		 		year_start, int_year, year_median, sum_old_N,
-		# 		 		N, sum_of_sample_weights, 
-		# 		 		imp, unimp, od, row_id)
 		subdat <- subdat %>%
 		  mutate(piped = (iflush_pct * flush_cw) + flush_imp + s_piped,
 		         imp = imp + 
